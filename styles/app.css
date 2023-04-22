@@ -1,0 +1,222 @@
+body {
+	font-family: "Inter", sans-serif;
+	font-size: 16px;
+	margin: 0;
+}
+
+.font-xl {
+	font-size: 1.5rem;
+}
+
+.bg-black {
+	background-color: #000;
+}
+
+.text-white {
+	color: #FFF;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.flex {
+	display: flex;
+}
+
+.modal {
+  position: fixed;
+  top: 4rem;
+  bottom: 4rem;
+  left: 4rem;
+  right: 4rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+}
+
+.min-w-20 {
+	min-width: 20rem;
+}
+
+.p-1 {
+	padding: 1rem;
+}
+
+.bg-gray-800 {
+	background-color: #111827;
+}
+
+.list-none {
+	list-style: none;
+}
+
+.p-0 {
+	padding: 0;
+}
+
+.m-0 {
+	margin: 0;
+}
+
+.font-lg {
+	font-size: 1.25rem;
+}
+
+.font-semibold {
+	font-weight: 600;
+}
+
+.py-1 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.px-1 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.app-logo {
+	margin: 0 0 0 0;
+}
+
+#app-menu-main {
+	margin-top: 0.5rem;
+	font-family: "Inter", sans-serif;
+}
+
+#app-menu-main li {
+	border-radius: 0.5rem;
+	color: #79808D;
+	font-size: 1.05rem;
+}
+
+#app-menu-main li a {
+	color: #79808D;
+}
+
+#app-menu-main li:hover {
+	background-color: #1F2937;
+	color: #FFF;
+}
+
+.items-center {
+	align-items: center;
+}
+
+#app-footer {
+	margin: 2px 0 0 0;
+	padding: 0.5rem;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+}
+
+#app-footer .app-logo svg {
+	width: 32px;
+	height: 32px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 1rem 0;
+}
+
+button {
+	background-color: #111827;
+	color: #FFF;
+	padding: 0.5rem 1rem;
+	font-weight: 600;
+	font-family: "Inter", sans-serif;
+	border-radius: 0.5rem;
+	border: solid 1px #1F2937;
+}
+
+button:hover {
+	opacity: 0.7;
+}
+
+.gap-1 {
+	gap: 1rem;
+}
+
+select {
+	min-width: 10rem;
+	max-width: 30rem;
+	width: 15rem;
+	padding: 0.25rem 0.4rem;
+	border: solid 1px #FFF;
+	border-radius: 0.25rem;
+	margin: 0.5rem 0;
+}
+
+input {
+	min-width: 10rem;
+	max-width: 30rem;
+	width: 15rem;
+	border: solid 1px #FFF;
+	background-color: #FFF;
+	padding: 0.25rem 0.4rem;
+	font-size: 0.95rem;
+	border-radius: 0.25rem;
+	margin: 0.5rem 0;
+}
+
+form {
+	border: #FFF;
+	padding: 0.5rem;
+}
+
+.mr-0\.125 {
+	margin-right: 0.125rem;
+}
+
+.w-full {
+	width: 100%;
+}
+
+input[type=submit] {
+	cursor: pointer;
+	background-color: #1F2937;
+	color: #FFF;
+	border: solid 1px #fff;
+	padding: 0.25rem 0.5rem;
+	font-weight: 600;
+	font-size: 1rem;
+	border-radius: 0.5rem;
+}
+
+input[type=submit]:hover {
+	opacity: 0.7;
+}
+
+.app-brand {
+	border-bottom: solid 1px #1F2937;
+	padding-bottom: 0.5rem;
+}
+
+.px-0\.5 {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.py-1 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.grid {
+	display: grid;
+}
+
+#model-list li {
+	grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+	align-items: center;
+	font-size: 0.90rem;
+}
+
+#app-footer {
+	background-color: #111827;
+}
