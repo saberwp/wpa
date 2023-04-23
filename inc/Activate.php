@@ -5,15 +5,34 @@ namespace WPA;
 class Activate {
 
 	// @TODO update tables if they exist instead of creating them.
+	public $app_key;
+	public $app_path_root;
 
-	public function app_path_root() {
-		return WP_CONTENT_DIR . 'tasks/';
+	public function init($app_key) {
+		$this->set_app_key($app_key);
+		$this->set_path_root(WP_CONTENT_DIR . '/wpa/'.$app_key.'/');
+	}
+
+	public function set_app_key($val) {
+		$this->app_key = $val;
+	}
+
+	public function get_app_key($val) {
+		return $this->app_key;
+	}
+
+	public function set_path_root($val) {
+		$this->app_path_root = $val;
+	}
+
+	public function get_path_root() {
+		return $this->app_path_root;
 	}
 
 	public function run() {
 
 	  // Load app def.
-	  $app_def_json = file_get_contents( Plugin::app_path_root() . 'app.json');
+	  $app_def_json = file_get_contents( $this->get_path_root() . 'app.json');
 	  $app_def = json_decode( $app_def_json );
 
 	  global $wpdb;
@@ -23,7 +42,7 @@ class Activate {
 	  foreach ($app_def->models as $model_key) {
 
 			// Load model definition from JSON file
-	    $model_json = file_get_contents( Plugin::app_path_root() . "models/{$model_key}.json" );
+	    $model_json = file_get_contents( $this->get_path_root() . "models/{$model_key}.json" );
 	    $app_def->{$model_key} = json_decode( $model_json );
 			$model = json_decode( $model_json );
 
@@ -48,6 +67,9 @@ class Activate {
 		      switch ($field->type) {
 		        case 'text':
 		          $sql .= "\n" . $field->key . ' varchar(255),';
+		          break;
+						case 'textarea':
+		          $sql .= "\n" . $field->key . ' TEXT,';
 		          break;
 		        case 'int':
 		          $sql .= "\n" . $field->key . ' int(11),';

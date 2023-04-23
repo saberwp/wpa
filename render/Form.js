@@ -10,12 +10,25 @@ class Form {
 
 		// Add fields to form.
 		appDef[app.data.currentModel].fields.forEach((field) => {
-			el.appendChild( this.field(field) )
+
+			if( field.type === 'text' ) {
+				el.appendChild( this.field(field) )
+			}
+
+			if( field.type === 'textarea' ) {
+				const fieldMaker = new TextArea()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
 		})
 
 		// Add relations to form.
 		appDef[app.data.currentModel].relations.forEach((relation) => {
-			el.appendChild( this.fieldRelation(relation) )
+			if( relation.type === 'one' ) {
+				el.appendChild( this.fieldRelation(relation) )
+			}
+
 		})
 
 		el.appendChild( this.saveButton() )
@@ -49,16 +62,20 @@ class Form {
 		return el
 	}
 
+	// Build select elements with option for each record in the referenced data source model.
 	fieldRelation(relation) {
 		const el = document.createElement('select')
 		el.id = 'field-' + relation.model
 		el.name = 'field-' + relation.model
 
-		const option1 = document.createElement('option')
-		option1.value = 4
-		option1.innerHTML = 'Status 1'
-
-		el.appendChild( option1 )
+		const sourceModelKey = relation.model
+		const sourceRecords  = app.data[sourceModelKey].record
+		sourceRecords.forEach((record) => {
+			const option = document.createElement('option')
+			option.value = record.id
+			option.innerHTML = record.title
+			el.appendChild( option )
+		})
 
 		return el
 	}

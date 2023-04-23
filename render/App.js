@@ -12,6 +12,9 @@ class App {
 		this.dm     = new DataManager()
 		this.menus  = new Menu()
 
+		// Set API URL.
+		this.apiUrl = WPA_ApiUrl;
+
 		// Setup DOM elements.
 		this.appContainer()
 
@@ -29,6 +32,7 @@ class App {
 	appContainer() {
 		const el = document.createElement('main')
 		el.id = 'app-container'
+		el.classList.add('bg-gray-800')
 		el.appendChild( this.header() ) // Add header.
 		el.appendChild( this.main() ) // Add header.
 		el.appendChild( this.footer() ) // Add footer.
@@ -38,7 +42,6 @@ class App {
 	header() {
 		const el = document.createElement('header')
 		el.id = 'app-header'
-		el.classList.add('bg-black')
 		el.classList.add('text-white')
 		return el
 	}
@@ -57,7 +60,6 @@ class App {
 		const el = document.createElement('div')
 		el.id = 'app-body'
 		el.classList.add('p-1')
-		el.classList.add('bg-black')
 		el.classList.add('w-full')
 		el.innerHTML = "APP BODY"
 		return el

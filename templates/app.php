@@ -1,8 +1,14 @@
 <?php
 
+// Load app main def.
+global $wp_query;
+$app_dir_name = $wp_query->query_vars['name'];
+$app_main_json = \file_get_contents(WP_CONTENT_DIR . '/wpa/' . $app_dir_name . '/app.json');
+$app_main_def = json_decode( $app_main_json );
+
 require_once(WPA_PATH.'inc/App.php');
 $app = new \WPA\App();
-$app->init();
+$app->init($app_dir_name);
 
 ?>
 
@@ -13,6 +19,7 @@ $app->init();
     <title>App</title>
     <link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/app.css">
 		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Form.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Edit.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Create.js"></script>

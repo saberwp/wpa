@@ -4,14 +4,25 @@ namespace WPA;
 
 class App {
 
-	public function app_path_root() {
-		return WP_CONTENT_DIR . 'tasks/';
+	public $dir_name  = false;
+	public $path_root = false;
+
+	public function dir_name() {
+		return $this->dir_name;
 	}
 
-	public function init() {
+	public function path_root() {
+		return $this->path_root;
+	}
+
+	public function init( $dir_name ) {
+
+		// Set class properties from $dir_name string passed (e.g. "budget").
+		$this->dir_name  = $dir_name;
+		$this->path_root = WP_CONTENT_DIR . '/wpa/'.$this->dir_name.'/';
 
 		// Load app def.
-		$app_def_json = file_get_contents( Plugin::app_path_root() . 'app.json');
+		$app_def_json = file_get_contents( $this->path_root() . 'app.json');
 		$app_def = json_decode( $app_def_json );
 
 
@@ -19,7 +30,7 @@ class App {
 
 		// Load models from $app_def->models array of keys.
 		foreach ($app_def->models as $model_key) {
-			$model_json = file_get_contents( Plugin::app_path_root() . 'models/'.$model_key.'.json');
+			$model_json = file_get_contents( $this->path_root() . 'models/'.$model_key.'.json');
 			$app_def->{$model_key} = json_decode( $model_json );
 			$app_def->{$model_key}->relations = array(); // Set empty relations array to be populated in next processing step.
 		}
@@ -35,7 +46,7 @@ class App {
 	public function relationsInit( $app_def ) {
 
 		foreach ($app_def->models as $model_key) {
-			$model_json = file_get_contents( Plugin::app_path_root() . 'models/'.$model_key.'.json');
+			$model_json = file_get_contents( $this->path_root() . 'models/'.$model_key.'.json');
 			$model = json_decode( $model_json );
 			if( $model->type === 'relation' ) {
 

@@ -1,8 +1,8 @@
 class DataManager {
 
 	fetch(modelKey) {
-		const apiBase = 'http://defmod.local/'
-		const apiUrl = apiBase + 'wp-json/wp/v2/app/' + modelKey;
+
+		const apiUrl = app.apiUrl + 'app/' + modelKey
 
 		fetch(apiUrl, { headers: {
         'API-KEY': 'KR928NV81G01'

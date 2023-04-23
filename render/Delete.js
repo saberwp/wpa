@@ -24,7 +24,7 @@ class Delete {
 		app.recordDeleteFromArray(id)
 
 		// Send API request.
-		fetch("http://defmod.local/wp-json/wp/v2/app/"+app.data.currentModel+'/'+id, {
+		fetch(app.apiUrl+'app/'+app.data.currentModel+'/'+id, {
 				method: "DELETE",
 				body: '{}',
 				headers: {

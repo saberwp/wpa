@@ -12,20 +12,32 @@ namespace WPA;
 class Api {
 
 	public $key = 'KR928NV81G01';
-
-	public function app_path_root() {
-		return WP_CONTENT_DIR . 'tasks/';
-	}
+	public $app_key = false;
+	public $app_path_root;
 
 	public function init() {
-
 		add_action('rest_api_init', [$this, 'register_api_endpoints']);
+	}
 
+	public function set_app_key($val) {
+		$this->app_key = $val;
+	}
+
+	public function get_app_key() {
+		return $this->app_key;
+	}
+
+	public function set_path_root($val) {
+		$this->app_path_root = $val;
+	}
+
+	public function get_path_root() {
+		return $this->app_path_root;
 	}
 
 	public function load_app_def() {
 
-		$app_def_json = file_get_contents(Plugin::app_path_root() . 'app.json');
+		$app_def_json = file_get_contents($this->get_path_root() . 'app.json');
     $app_def = json_decode($app_def_json);
 		return $app_def;
 
@@ -79,7 +91,7 @@ class Api {
 		);
 
 		// Load model definition from JSON file
-    $model_json = file_get_contents( Plugin::app_path_root() . "models/{$model_key}.json" );
+    $model_json = file_get_contents($this->get_path_root().'models/'.$model_key.'.json');
     $model = json_decode( $model_json );
 
 		foreach ($model->fields as $field) {
@@ -122,7 +134,7 @@ class Api {
 	  );
 
 	  // Load model definition from JSON file.
-	  $model_json = file_get_contents(Plugin::app_path_root() . "models/{$model_key}.json");
+	  $model_json = file_get_contents($this->get_path_root().'models/'.$model_key.'.json');
 	  $model = json_decode($model_json);
 
 	  foreach ($model->fields as $field) {
@@ -182,46 +194,63 @@ class Api {
 
 	public function register_api_endpoints() {
 
+		// @TODO move this, it is duplicate of Plugin code because we can't call Plugin() again it has a constructor.
 
-	  $app_def = $this->load_app_def();
+		// Find apps loaded.
+		$wp_content_dir = WP_CONTENT_DIR;
+		$wpa_dir = $wp_content_dir . '/wpa';
 
-	    foreach ($app_def->models as $model_key) {
-	        // Define the route for this model based on the model key.
-	        $route_base = "app/{$model_key}";
+		$app_keys = array_filter( scandir( $wpa_dir ), function( $item ) use ( $wpa_dir ) {
+			return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
+		});
 
-					// Register read list route.
-	        register_rest_route('wp/v2', $route_base, array(
-	            'methods' => 'GET',
-	            'callback' => [$this, 'list_callback'],
-	            //'args' => array(),
-	            'permission_callback' => [$this, 'permission_callback'],
-	        ));
+		// Loop over apps and init API routes.
+		foreach( $app_keys as $app_key ) {
 
-					// Edit one route.
-					register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
-	          'methods' => 'PUT',
-	          'callback' => [$this, 'edit_callback'],
-	          'args' => array('id'),
-	          'permission_callback' => [$this, 'permission_callback'],
-	        ));
+			// Set app key and path root.
+			$this->set_app_key($app_key);
+			$this->set_path_root(WP_CONTENT_DIR . '/wpa/'.$app_key.'/');
 
-					// Create route.
-					register_rest_route('wp/v2', $route_base, array(
-	          'methods' => 'POST',
-	          'callback' => [$this, 'create_callback'],
-	          'args' => array('id'),
-	          'permission_callback' => [$this, 'permission_callback'],
-	        ));
+		  $app_def = $this->load_app_def();
 
-					// Edit one route.
-					register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
-	          'methods' => 'DELETE',
-	          'callback' => [$this, 'delete_callback'],
-	          'args' => array('id'),
-	          'permission_callback' => [$this, 'permission_callback'],
-	        ));
+		    foreach ($app_def->models as $model_key) {
+		        // Define the route for this model based on the model key.
+		        $route_base = "app/{$model_key}";
 
-	    }
+						// Register read list route.
+		        register_rest_route('wp/v2', $route_base, array(
+		            'methods' => 'GET',
+		            'callback' => [$this, 'list_callback'],
+		            //'args' => array(),
+		            'permission_callback' => [$this, 'permission_callback'],
+		        ));
+
+						// Edit one route.
+						register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
+		          'methods' => 'PUT',
+		          'callback' => [$this, 'edit_callback'],
+		          'args' => array('id'),
+		          'permission_callback' => [$this, 'permission_callback'],
+		        ));
+
+						// Create route.
+						register_rest_route('wp/v2', $route_base, array(
+		          'methods' => 'POST',
+		          'callback' => [$this, 'create_callback'],
+		          'args' => array('id'),
+		          'permission_callback' => [$this, 'permission_callback'],
+		        ));
+
+						// Edit one route.
+						register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
+		          'methods' => 'DELETE',
+		          'callback' => [$this, 'delete_callback'],
+		          'args' => array('id'),
+		          'permission_callback' => [$this, 'permission_callback'],
+		        ));
+
+		    }
+			}
 		}
 
 		public function permission_callback() {

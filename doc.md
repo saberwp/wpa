@@ -1,4 +1,4 @@
-# DefMod Docs
+# WPA Docs
 
 ## Create Process
 /render/Create.js
@@ -22,12 +22,12 @@ Process starts in Form() and Edit.update() is used to send the request.
 
 ## TODO
 
-Fix inc/Api.php so it doesn't use "thing" but instead uses the model. Currently when creating tasks, the "thing" table is referenced in the SQL.
+  1. Load app at defined locations in app.js. 
 
 ## Ported HTML intro
 
-<h1>Welcome to DefMod</h1>
-<p>DefMod applications are apps built from "definition models". </p>
+<h1>Welcome to WPA (WordPress Application Framework)</h1>
+<p>WPA applications are apps built from "definition models". </p>
 <p>Definitions are JSON files. The most important is the definition for 1 or more models that make the data structure of the app.</p>
 <h2>Renderer</h2>
 <p>App definitions are processed and constructed into the app UI with all it's logic and storage capabilities using the renderer.</p>

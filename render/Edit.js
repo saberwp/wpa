@@ -43,7 +43,7 @@ class Edit {
 		app.data[app.data.currentModel].index = app.recordIndex(app.data[app.data.currentModel].record)
 
 		// Send API request.
-		fetch("http://defmod.local/wp-json/wp/v2/app/"+app.data.currentModel+'/'+record.id, {
+		fetch(app.apiUrl+'app/'+app.data.currentModel+'/'+record.id, {
 				method: "PUT",
 				body: JSON.stringify(record),
 				headers: {

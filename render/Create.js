@@ -35,7 +35,7 @@ class Create {
 		app.data[app.data.currentModel].index = app.recordIndex( app.data[app.data.currentModel].record )
 
 		// Send API request.
-		fetch("http://defmod.local/wp-json/wp/v2/app/"+app.data.currentModel, {
+		fetch(app.apiUrl+'app/'+app.data.currentModel, {
 				method: "POST",
 				body: JSON.stringify(record),
 				headers: {
