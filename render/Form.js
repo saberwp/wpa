@@ -105,8 +105,6 @@ class Form {
 			const id = data['field-id']
 			const title = data['field-title']
 
-			console.log('title: '+title)
-
 			if( 0 === parseInt(id) ) {
 
 				const obj = {

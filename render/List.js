@@ -53,10 +53,6 @@ class List {
 		const container = document.getElementById('model-list')
 		container.innerHTML = '' // Clear any existing records.
 		const data = app.currentModelRecordStore()
-
-		console.log('data from data store in refresh:')
-		console.log(data)
-
 		this.dataInsert(container, data)
 		this.init()
 	}
@@ -74,8 +70,6 @@ class List {
 		el.appendChild( this.listItemId(item) )
 		el.appendChild( this.listItemTitle(item) )
 		appDef[app.data.currentModel].fields.forEach(( field ) => {
-			console.log('loop over fields in list item, item should have fields here:')
-			console.log(item)
 			el.appendChild( this.listItemField(item, field) )
 		})
 		el.appendChild( this.listItemEditButton(item) )

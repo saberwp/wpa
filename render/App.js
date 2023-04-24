@@ -123,8 +123,6 @@ class App {
 	// Screens have same key as model for the model screens, and then there are other screens defined.
 	display(screen) {
 
-		console.log('screen is '+screen)
-
 		// Set current model data.
 		app.data.currentModel = screen
 
@@ -171,7 +169,6 @@ class App {
 	}
 
 	menuClickHandler(e) {
-		console.log(e)
 		const screen = e.target.getAttribute('screen')
 		this.display(screen)
 	}
@@ -235,14 +232,9 @@ class App {
     // Convert the id property to an integer
     record.id = parseInt(record.id, 10);
 
-		console.log('recordReplace')
-		console.log(record.id)
-
     // Find the object with a matching id and replace it with the updated object
     for (let i = 0; i < records.length; i++) {
       if ( parseInt(records[i].id) === record.id) {
-
-				console.log('record found...')
         records[i] = record;
         return;
       }
@@ -252,9 +244,6 @@ class App {
 
 	recordDeleteFromObject(id) {
 		const index = this.currentModelIndexStore();
-
-		console.log('index in recordDeleteFromObject')
-		console.log(index)
 
 		if (index.hasOwnProperty(id)) {
 			delete index[id];

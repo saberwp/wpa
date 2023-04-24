@@ -3,12 +3,12 @@
 // Load app main def.
 global $wp_query;
 $app_dir_name = $wp_query->query_vars['name'];
-$app_main_json = \file_get_contents(WP_CONTENT_DIR . '/wpa/' . $app_dir_name . '/app.json');
+$app_main_json = \file_get_contents(WP_CONTENT_DIR . '/wpa/' . $GLOBALS['wpa_app_dir_name'] . '/app.json');
 $app_main_def = json_decode( $app_main_json );
 
 require_once(WPA_PATH.'inc/App.php');
 $app = new \WPA\App();
-$app->init($app_dir_name);
+$app->init($GLOBALS['wpa_app_dir_name']);
 
 ?>
 

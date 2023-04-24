@@ -2,8 +2,6 @@ class Delete {
 
 	init() {
 
-		console.log('init delete...')
-
 		// Bind the class instance to the click handler function
 		this.handleDeleteClick = this.handleDeleteClick.bind(this);
 
@@ -24,7 +22,7 @@ class Delete {
 		app.recordDeleteFromArray(id)
 
 		// Send API request.
-		fetch(app.apiUrl+'app/'+app.data.currentModel+'/'+id, {
+		fetch(app.apiUrl+appDef.key+'/'+app.data.currentModel+'/'+id, {
 				method: "DELETE",
 				body: '{}',
 				headers: {
@@ -39,7 +37,6 @@ class Delete {
 			return response.json();
 		})
 		.then((responseJson) => {
-			console.log("DEL COMPLETE")
 			console.log(responseJson);
 		})
 		.catch((error) => {
@@ -50,7 +47,6 @@ class Delete {
 
 	handleDeleteClick(e) {
 
-		console.log('deleting...')
 		const id = e.target.getAttribute('object-id')
 		const record = app.record(id)
 
@@ -75,9 +71,6 @@ class Delete {
 
 		console.log('deleting confirmed...')
 		const id = e.target.getAttribute('object-id')
-
-		console.log('ID in confirm:')
-		console.log(id)
 
 		const record = app.record(id)
 

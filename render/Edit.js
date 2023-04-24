@@ -35,15 +35,12 @@ class Edit {
 
 	update(record) {
 
-		console.log('Edit.update')
-		console.log(record)
-
 		// Local store.
 		app.recordReplace(record)
 		app.data[app.data.currentModel].index = app.recordIndex(app.data[app.data.currentModel].record)
 
 		// Send API request.
-		fetch(app.apiUrl+'app/'+app.data.currentModel+'/'+record.id, {
+		fetch(app.apiUrl+appDef.key+'/'+app.data.currentModel+'/'+record.id, {
 				method: "PUT",
 				body: JSON.stringify(record),
 				headers: {

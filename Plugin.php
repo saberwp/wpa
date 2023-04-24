@@ -38,16 +38,6 @@ class Plugin {
 			// @TODO echo out base url in script so app init can add it to app.apiUrl.
 		});
 
-		// @TODO
-		// Parse installed apps and if activated, do init process for each installed app.
-
-		// Find 1+ apps, check activation status and then init.
-
-		// Create the list of apps, included inactive apps for rendering in the admin.
-
-		// Create the admin page for viewing all installed apps.
-
-
 
 		/*****
 
@@ -58,24 +48,14 @@ class Plugin {
 		$api = new \WPA\Api();
 		$api->init();
 
-		// App routes.
-
-		add_filter( 'template_include', [$this, 'routes'] );
+		// Routes init.
+		require_once(WPA_PATH.'inc/Router.php');
+		$r = new \WPA\Router();
+		$r->init();
 
 	}
 
-	public function routes( $template ) {
 
-		$app_keys = $this->installed_apps();
-
-		global $wp_query;
-
-		if ( isset( $wp_query->query_vars['name'] ) && in_array( $wp_query->query_vars['name'], $app_keys ) ) {
-			$new_template = WPA_PATH.'templates/app.php';
-			return $new_template;
-		}
-		return $template;
-	}
 
 	// Activation hook.
 	// Do install of apps folder under wp-content/uploads.

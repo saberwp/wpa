@@ -11,8 +11,6 @@ class Create {
 	}
 
 	handleCreateClick(e) {
-
-		console.log('creating...')
 		const idField = document.getElementById('field-id')
 		idField.value = 0
 
