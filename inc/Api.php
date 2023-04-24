@@ -31,7 +31,7 @@ class Api {
 		$this->app_path_root = $val;
 	}
 
-	public function get_path_root() {
+	public static function get_path_root() {
 		return $this->app_path_root;
 	}
 
@@ -49,6 +49,7 @@ class Api {
 		// Get model key from API path.
 		$route = $request->get_route();
     $route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
     $model_key = $route_parts[4];
 
 		// Load data.
@@ -116,8 +117,9 @@ class Api {
 		return rest_ensure_response($response);
 	}
 
-	public function create_callback($request) {
-	  // Get model key from API path.
+	public static function create_callback($request) {
+
+		// Get model key from API path.
 	  $route = $request->get_route();
 	  $route_parts = explode('/', $route);
 	  $model_key = $route_parts[4];
@@ -127,14 +129,15 @@ class Api {
 
 	  // Do DB insert.
 	  global $wpdb;
-	  $table_name = $this->make_table_name( $model_key );
+	  $table_name = self::make_table_name( $model_key );
 
 	  $data = array(
 	    'title' => $json_data['title'],
 	  );
 
 	  // Load model definition from JSON file.
-	  $model_json = file_get_contents($this->get_path_root().'models/'.$model_key.'.json');
+		$api = new Api;
+	  $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
 	  $model = json_decode($model_json);
 
 	  foreach ($model->fields as $field) {
@@ -150,7 +153,12 @@ class Api {
 	    // Handle insert error.
 	    $response = new \stdClass;
 	    $response->success = false;
-	    $response->message = 'Error processing request.';
+	    $response->message = 'Error processing insert request.';
+			$response->model_key = $model_key;
+			$response->table_name = $table_name;
+			$response->insert_data = $insert_data;
+			$response->path_root = $api->get_path_root();
+			$response->model_json = $model_json;
 	    return rest_ensure_response($response);
 	  } else {
 	    // Handle insert success.
@@ -159,6 +167,11 @@ class Api {
 	    $response->message = 'Request processed successfully.';
 	    $response->model_id = $wpdb->insert_id;
 	    $response->result = $result;
+			$response->model_key = $model_key;
+			$response->table_name = $table_name;
+			$response->insert_data = $insert_data;
+			$response->path_root = $api->get_path_root();
+			$response->model_json = $model_json;
 	    return rest_ensure_response($response);
 	  }
 	}
@@ -236,7 +249,7 @@ class Api {
 						// Create route.
 						register_rest_route('wp/v2', $route_base, array(
 		          'methods' => 'POST',
-		          'callback' => [$this, 'create_callback'],
+		          'callback' => ['\\WPA\Api', 'create_callback'],
 		          'args' => array('id'),
 		          'permission_callback' => [$this, 'permission_callback'],
 		        ));
@@ -266,7 +279,7 @@ class Api {
 
 		}
 
-	private function make_table_name( $model_key ) {
+	private static function make_table_name( $model_key ) {
 		global $wpdb;
 		return $wpdb->prefix . 'app_' . $model_key;
 	}
