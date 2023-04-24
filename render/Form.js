@@ -21,6 +21,18 @@ class Form {
 				el.appendChild( fieldEl )
 			}
 
+			if( field.type === 'select' ) {
+				const fieldMaker = new Select()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
+			if( field.type === 'relation_select' ) {
+				const fieldMaker = new Select()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
 		})
 
 		// Add relations to form.

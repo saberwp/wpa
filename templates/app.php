@@ -20,6 +20,7 @@ $app->init($GLOBALS['wpa_app_dir_name']);
     <link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/app.css">
 		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/fields/Select.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Form.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Edit.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Create.js"></script>

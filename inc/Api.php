@@ -78,11 +78,12 @@ class Api {
 
 	}
 
-	public function edit_callback($request) {
+	public static function edit_callback($request) {
 
 		// Get model key from API path.
 		$route = $request->get_route();
 		$route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
 		$model_key = $route_parts[4];
 
 		// Get ID.
@@ -91,23 +92,34 @@ class Api {
 		// Get request body.
 		$json_data = $request->get_json_params();
 
+		// Setup API object.
+		$api = new Api;
+		$api->set_app_key($app_key);
+		$api->set_path_root($app_key);
+
 		// Do DB update.
 		global $wpdb;
-		$table_name = $this->make_table_name( $model_key );
+		$table_name = $api->make_table_name( $model_key );
 
 		$data = array(
 			'title' => $json_data['title'],
 		);
 
 		// Load model definition from JSON file
-    $model_json = file_get_contents($this->get_path_root().'models/'.$model_key.'.json');
+    $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
     $model = json_decode( $model_json );
 
+		$relations_exist = 0;
 		foreach ($model->fields as $field) {
 		  // Add to $data query using $field->key and matching key from $json_data.
-		  if (isset($json_data[$field->key])) {
+		  if (isset($json_data[$field->key]) && $field->type !== 'relation_select') {
 		    $data[$field->key] = $json_data[$field->key];
 		  }
+
+			// Flag special handling for relation select fields.
+			if (isset($json_data[$field->key]) && $field->type === 'relation_select') {
+				$relations_exist = 1;
+			}
 		}
 
 		$where = array(
@@ -122,7 +134,40 @@ class Api {
 		$response->model_id = $id;
 		$response->result = $result;
 
+		// If relations exist, do relations handling.
+		if( $relations_exist === 1 ) {
+			$response->relations = $api->relations_process($model, $id, $json_data, $data);
+		}
+
 		return rest_ensure_response($response);
+	}
+
+	// $id is the record id for the main model record.
+	public function relations_process($model, $id, $json_data, $data) {
+
+		$result = new \stdClass;
+
+		foreach ($model->fields as $field) {
+			// Handling for relation select fields.
+			if (isset($json_data[$field->key]) && $field->type === 'relation_select') {
+
+				// 1- Load the related model using $model field data (or $json_data?).
+
+				// 2- Find out what the table name is from the $related_model key.
+
+				// 3- Query relation table to find this combination of $id and the related model id.
+
+				// 4- If relation record exists, check if the value is different.
+
+				// 5- If value is different, update the value with query.
+
+				// 6- If relation record does not exist, insert it into relation table. 
+
+			}
+		}
+
+		return $result;
+
 	}
 
 	public static function create_callback($request) {
@@ -253,7 +298,7 @@ class Api {
 						// Edit one route.
 						register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
 		          'methods' => 'PUT',
-		          'callback' => [$this, 'edit_callback'],
+		          'callback' => ['\\WPA\Api', 'edit_callback'],
 		          'args' => array('id'),
 		          'permission_callback' => [$this, 'permission_callback'],
 		        ));

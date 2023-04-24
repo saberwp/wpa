@@ -262,13 +262,3 @@ class App {
 
 
 }
-
-// @TODO
-
-// Load 2+ models dynamically with full function.
-// Sort table by ID with sorter UI
-// Create DB tables on install.
-// Create API routes and use them to save data.
-// Deal with the possibility that the edit loaded into the save form is deleted. Possibly clear form at start delete?
-// Make title field optional. Handle this in the form and list.
-// Add sorting for other fields, configured in AppDef as list.columns. OR config in model.fields.
