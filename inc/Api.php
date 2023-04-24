@@ -1,5 +1,13 @@
 <?php
 
+/* @TODO
+
+-- Load key from DB or env file.
+-- Refactor register_api_endpoints() to avoid double foreach loop, separate single setup.
+
+
+*/
+
 /*
  * API Class
  *
@@ -27,11 +35,11 @@ class Api {
 		return $this->app_key;
 	}
 
-	public function set_path_root($val) {
-		$this->app_path_root = $val;
+	public function set_path_root($app_key) {
+		$this->app_path_root = WP_CONTENT_DIR . '/wpa/'.$app_key.'/';
 	}
 
-	public static function get_path_root() {
+	public function get_path_root() {
 		return $this->app_path_root;
 	}
 
@@ -122,6 +130,7 @@ class Api {
 		// Get model key from API path.
 	  $route = $request->get_route();
 	  $route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
 	  $model_key = $route_parts[4];
 
 	  // Get request body.
@@ -129,7 +138,7 @@ class Api {
 
 	  // Do DB insert.
 	  global $wpdb;
-	  $table_name = self::make_table_name( $model_key );
+	  $table_name = self::make_table_name($model_key);
 
 	  $data = array(
 	    'title' => $json_data['title'],
@@ -137,6 +146,8 @@ class Api {
 
 	  // Load model definition from JSON file.
 		$api = new Api;
+		$api->set_app_key($app_key);
+		$api->set_path_root($app_key);
 	  $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
 	  $model = json_decode($model_json);
 
@@ -156,7 +167,7 @@ class Api {
 	    $response->message = 'Error processing insert request.';
 			$response->model_key = $model_key;
 			$response->table_name = $table_name;
-			$response->insert_data = $insert_data;
+			$response->insert_data = $data;
 			$response->path_root = $api->get_path_root();
 			$response->model_json = $model_json;
 	    return rest_ensure_response($response);
@@ -169,7 +180,7 @@ class Api {
 	    $response->result = $result;
 			$response->model_key = $model_key;
 			$response->table_name = $table_name;
-			$response->insert_data = $insert_data;
+			$response->insert_data = $data;
 			$response->path_root = $api->get_path_root();
 			$response->model_json = $model_json;
 	    return rest_ensure_response($response);
@@ -222,13 +233,14 @@ class Api {
 
 			// Set app key and path root.
 			$this->set_app_key($app_key);
-			$this->set_path_root(WP_CONTENT_DIR . '/wpa/'.$app_key.'/');
+			$this->set_path_root($app_key);
 
 		  $app_def = $this->load_app_def();
 
 		    foreach ($app_def->models as $model_key) {
+
 		        // Define the route for this model based on the model key.
-		        $route_base = "app/{$model_key}";
+		        $route_base = $app_key.'/'.$model_key;
 
 						// Register read list route.
 		        register_rest_route('wp/v2', $route_base, array(

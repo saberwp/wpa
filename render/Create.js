@@ -35,7 +35,7 @@ class Create {
 		app.data[app.data.currentModel].index = app.recordIndex( app.data[app.data.currentModel].record )
 
 		// Send API request.
-		fetch(app.apiUrl+'app/'+app.data.currentModel, {
+		fetch(app.apiUrl+appDef.key+'/'+app.data.currentModel, {
 				method: "POST",
 				body: JSON.stringify(record),
 				headers: {
