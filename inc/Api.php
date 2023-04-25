@@ -90,7 +90,7 @@ class Api {
 		$id = $request->get_param('id');
 
 		// Get request body.
-		$json_data = $request->get_json_params();
+		$form_data = $request->get_json_params();
 
 		// Setup API object.
 		$api = new Api;
@@ -101,8 +101,8 @@ class Api {
 		global $wpdb;
 		$table_name = $api->make_table_name( $model_key );
 
-		$data = array(
-			'title' => $json_data['title'],
+		$edit_data = array(
+			'title' => $form_data['title'],
 		);
 
 		// Load model definition from JSON file
@@ -112,12 +112,12 @@ class Api {
 		$relations_exist = 0;
 		foreach ($model->fields as $field) {
 		  // Add to $data query using $field->key and matching key from $json_data.
-		  if (isset($json_data[$field->key]) && $field->type !== 'relation_select') {
-		    $data[$field->key] = $json_data[$field->key];
+		  if (isset($form_data[$field->key]) && $field->type !== 'relation_select') {
+		    $edit_data[$field->key] = $form_data[$field->key];
 		  }
 
 			// Flag special handling for relation select fields.
-			if (isset($json_data[$field->key]) && $field->type === 'relation_select') {
+			if (isset($form_data[$field->key]) && $field->type === 'relation_select') {
 				$relations_exist = 1;
 			}
 		}
@@ -126,7 +126,7 @@ class Api {
 		  'id' => $id,
 		);
 
-		$result = $wpdb->update($table_name, $data, $where);
+		$result = $wpdb->update($table_name, $edit_data, $where);
 
 		$response = new \stdClass;
 		$response->success = true;
@@ -136,32 +136,78 @@ class Api {
 
 		// If relations exist, do relations handling.
 		if( $relations_exist === 1 ) {
-			$response->relations = $api->relations_process($model, $id, $json_data, $data);
+			$response->relations = $api->relations_process($api, $model, $id, $form_data);
 		}
 
 		return rest_ensure_response($response);
 	}
 
 	// $id is the record id for the main model record.
-	public function relations_process($model, $id, $json_data, $data) {
+	// @param $model Definition for the model being edited, e.g. Task model.
+	// @param $id ID for the model record being edited.
+	// @param $form_data Array form values submitted during the edit.
+	public function relations_process($api, $model, $id, $form_data) {
 
+		global $wpdb;
 		$result = new \stdClass;
 
 		foreach ($model->fields as $field) {
+
 			// Handling for relation select fields.
-			if (isset($json_data[$field->key]) && $field->type === 'relation_select') {
+			if (isset($form_data[$field->key]) && $field->type === 'relation_select') {
 
-				// 1- Load the related model using $model field data (or $json_data?).
+				// Load task_status model def.
+				$relation_model_json = file_get_contents( $api->get_path_root() . '/models/' . $field->relation->model . '.json');
+				$relation_model = json_decode( $relation_model_json );
 
-				// 2- Find out what the table name is from the $related_model key.
+				// Parse the 2 database column names from $relation_model.
+				if( $field->relation->side === 'left' ) {
+					$first_col = $relation_model->relations->right->model . '_id';
+					$second_col = $relation_model->relations->left->model . '_id';
+				}
 
-				// 3- Query relation table to find this combination of $id and the related model id.
+				if( $field->relation->side === 'right' ) {
+					$first_col = $relation_model->relations->left->model . '_id';
+					$second_col = $relation_model->relations->right->model . '_id';
+				}
 
-				// 4- If relation record exists, check if the value is different.
+				// Get the relation ID from the form data.
+				$relation_id = $form_data[$field->key];
 
-				// 5- If value is different, update the value with query.
+				$table_name = $this->make_table_name($field->relation->model);
+				$query = "SELECT * FROM $table_name WHERE $first_col = $id";
+				$row = $wpdb->get_row($query);
 
-				// 6- If relation record does not exist, insert it into relation table. 
+				// If relation record exists, check if the value is different.
+				$unchanged = 1;
+				if($row) {
+
+					if($row->{$first_col} !== $id || $row->{$second_col} !== $relation_id) {
+						$unchanged = 0;
+					}
+
+					// If value is same, exit now.
+					if( ! $unchanged ) {
+
+						// Do update.
+						$edit_data = [];
+						$edit_data[$first_col] = $id;
+						$edit_data[$second_col] = $relation_id;
+						$where = array(
+						  'id' => $row->id,
+						);
+						$result->{$field->key} = $wpdb->update($table_name, $edit_data, $where);
+					}
+
+				}
+
+				// If relation record does not exist, insert it into relation table.
+				if( ! $row ) {
+					$insert_data = [];
+					$insert_data[$first_col] = $id;
+					$insert_data[$second_col] = $relation_id;
+					$result->{$field->key} = $wpdb->insert($table_name, $insert_data);
+				}
 
 			}
 		}

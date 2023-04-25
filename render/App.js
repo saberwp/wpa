@@ -154,7 +154,7 @@ class App {
 
 	screenTitle() {
 		const el = document.createElement('h2')
-		el.innerHTML = 'Screen Title'
+		el.innerHTML = '' // @TODO make dynamic if needed?
 		return el
 	}
 

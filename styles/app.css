@@ -131,13 +131,6 @@ body {
 	height: 32px;
 }
 
-form {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	margin: 1rem 0;
-}
-
 button {
 	background-color: #111827;
 	color: #FFF;
@@ -156,31 +149,48 @@ button:hover {
 	gap: 1rem;
 }
 
+/* Form & Fields */
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 1rem 0;
+	border: solid 1px #1F2937;
+	padding: 1.25rem 1.75rem;
+	border-radius: 0.25rem;
+	min-width: 10rem;
+	max-width: 20rem;
+}
+
 select {
 	min-width: 10rem;
-	max-width: 30rem;
-	width: 15rem;
-	padding: 0.25rem 0.4rem;
+	max-width: 20rem;
+	width: 100%;
+	padding: 0.4rem 0.6rem;
 	border: solid 1px #FFF;
 	border-radius: 0.25rem;
 	margin: 0.5rem 0;
+	font-size: 0.9rem;
 }
 
 input {
 	min-width: 10rem;
-	max-width: 30rem;
-	width: 15rem;
+	max-width: 20rem;
+	width: 100%;
 	border: solid 1px #FFF;
 	background-color: #FFF;
-	padding: 0.25rem 0.4rem;
-	font-size: 0.95rem;
+	padding: 0.4rem 0.6rem;
+	font-size: 0.9rem;
 	border-radius: 0.25rem;
 	margin: 0.5rem 0;
 }
 
-form {
-	border: #FFF;
-	padding: 0.5rem;
+textarea {
+	padding: 0.4rem 0.6rem;
+	font-size: 0.9rem;
+	border-radius: 0.25rem;
+	margin: 0.5rem 0;
 }
 
 .mr-0\.125 {
@@ -229,6 +239,18 @@ input[type=submit]:hover {
 	grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
 	align-items: center;
 	font-size: 0.90rem;
+	font-weight: 400;
+	border-bottom: solid 1px #1F2937;
+}
+
+#model-list li h3 {
+	font-size: 0.95rem;
+	font-weight: 500;
+}
+
+#model-list button {
+	font-size: 0.80rem;
+	font-weight: 400;
 }
 
 #app-footer {
