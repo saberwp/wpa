@@ -33,6 +33,13 @@ class Form {
 				el.appendChild( fieldEl )
 			}
 
+			// Relation Select Multiple /render/fields/SelectMultiple.js
+			if( field.type === 'relation_select_multiple' ) {
+				const fieldMaker = new RelationSelectMultiple()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
 		})
 
 		// Add relations to form.

@@ -32,7 +32,6 @@ class App {
 		foreach ($app_def->models as $model_key) {
 			$model_json = file_get_contents( $this->path_root() . 'models/'.$model_key.'.json');
 			$app_def->{$model_key} = json_decode( $model_json );
-			$app_def->{$model_key}->relations = array(); // Set empty relations array to be populated in next processing step.
 		}
 
 		// Init relations.
@@ -46,6 +45,7 @@ class App {
 	public function relationsInit( $app_def ) {
 
 		foreach ($app_def->models as $model_key) {
+
 			$model_json = file_get_contents( $this->path_root() . 'models/'.$model_key.'.json');
 			$model = json_decode( $model_json );
 			if( $model->type === 'relation' ) {
@@ -55,9 +55,11 @@ class App {
 				$relation_right = $model->relations->right;
 
 				// Add to left model using definition of right model.
+				$app_def->{$model->relations->left->model}->relations = [];
 				$app_def->{$model->relations->left->model}->relations[] = $relation_right;
 
 				// Add to right model using definition of left model.
+				$app_def->{$model->relations->right->model}->relations = [];
 				$app_def->{$model->relations->right->model}->relations[] = $relation_left;
 
 			}
