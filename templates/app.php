@@ -9,6 +9,9 @@ $app_main_def = json_decode( $app_main_json );
 require_once(WPA_PATH.'inc/App.php');
 $app = new \WPA\App();
 $app->init($GLOBALS['wpa_app_dir_name']);
+if( $app->brand_styles ) {
+	$app->brand_styles_render();
+}
 
 ?>
 

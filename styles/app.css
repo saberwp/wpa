@@ -132,13 +132,13 @@ body {
 }
 
 button {
-	background-color: #111827;
+	background-color: var(--primary-color);
 	color: #FFF;
 	padding: 0.5rem 1rem;
 	font-weight: 600;
 	font-family: "Inter", sans-serif;
 	border-radius: 0.5rem;
-	border: solid 1px #1F2937;
+	border: solid 1px var(--primary-color);
 }
 
 button:hover {
@@ -254,9 +254,10 @@ input[type=submit]:hover {
 }
 
 #app-footer {
-	background-color: #111827;
+	background-color: var(--primary-color);
 }
 
 #app-sidebar {
 	border-right: solid 1px #FFF;
+	min-height: 100vh;
 }

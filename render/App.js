@@ -32,7 +32,12 @@ class App {
 	appContainer() {
 		const el = document.createElement('main')
 		el.id = 'app-container'
-		el.classList.add('bg-gray-800')
+		if( appDef.brand && appDef.brand.app_container_background ) {
+			el.classList.add('app-container-background')
+		} else {
+			el.classList.add('bg-gray-800')
+		}
+
 		el.appendChild( this.header() ) // Add header.
 		el.appendChild( this.main() ) // Add header.
 		el.appendChild( this.footer() ) // Add footer.

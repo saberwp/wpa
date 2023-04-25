@@ -4,8 +4,9 @@ namespace WPA;
 
 class App {
 
-	public $dir_name  = false;
-	public $path_root = false;
+	public $dir_name     = false;
+	public $path_root    = false;
+	public $brand_styles = false;
 
 	public function dir_name() {
 		return $this->dir_name;
@@ -37,8 +38,55 @@ class App {
 		// Init relations.
 		$app_def = $this->relationsInit($app_def);
 
+		// Add brand to app def.
+		$app_def = $this->brandDefinition($app_def);
+
 		// Render JSON app_def.
 		echo '<script>var appDef = ' . json_encode( $app_def ) . '</script>';
+
+	}
+
+	public function brandDefinition($app_def) {
+		if( ! file_exists( $this->path_root() . 'brand.json' ) ) { return $app_def; }
+
+		// Add definition.
+		$brand_json = file_get_contents( $this->path_root() . 'brand.json');
+		$app_def->brand = json_decode( $brand_json );
+
+		// Flag that there are brand styles for this app.
+		$this->brand_styles = true;
+
+		return $app_def;
+	}
+
+	public function brand_styles_render() {
+
+		$brand_json = file_get_contents( $this->path_root() . 'brand.json');
+		$brand = json_decode( $brand_json );
+
+		echo "\n";
+		echo "\n";
+		echo '<style>';
+		foreach ($brand as $key => $value) {
+
+			echo "\n";
+
+			if( $key === 'app_container_background') {
+				$class_name = '.' . str_replace('_', '-', $key);
+		    echo $class_name . ' {' . "\n";
+				echo "\t" . 'background-color: ' . $value . ';';
+				echo "\n" . '}' . "\n";
+			}
+
+			if( $key === 'primary_color') {
+				$class_name = '--' . str_replace('_', '-', $key);
+				echo ':root {' . "\n";
+				echo "\t" . $class_name . ': ' . $value . ';';
+				echo "\n" . '}' . "\n";
+			}
+
+		}
+		echo '</style>';
 
 	}
 
