@@ -39,9 +39,10 @@ class Admin {
 			   return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
 			});
 
-			foreach( $apps as $app ) {
-
-				echo $app . '<br />';
+			foreach( $apps as $app_dir_name ) {
+				$app_def = wpa_load_app_def($app_dir_name);
+				echo '<h2>'.$app_def->title.'</h2>';
+				echo '<a href="'.site_url($app_def->location->path).'">Launch App</a>';
 
 			}
 

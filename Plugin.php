@@ -14,6 +14,14 @@ class Plugin {
 
 	public function __construct() {
 
+		// Require functional API.
+		require_once(WPA_PATH.'inc/functions.php');
+
+		// App Repo init.
+		require_once(WPA_PATH.'inc/AppRepo.php');
+		$ar = new AppRepo;
+		$ar->download();
+
 		// Admin init.
 		require_once(WPA_PATH.'inc/Admin.php');
 		$api = new \WPA\Admin();
