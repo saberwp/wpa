@@ -14,13 +14,20 @@ class Plugin {
 
 	public function __construct() {
 
+		// Admin enqueue scripts.
+		add_action( 'admin_enqueue_scripts', [$this, 'admin_scripts'] );
+
+
 		// Require functional API.
 		require_once(WPA_PATH.'inc/functions.php');
 
-		// App Repo init.
+		// Init app manager.
+		require_once(WPA_PATH.'inc/AppManager.php');
+		$am = new AppManager();
+		$am->init();
+
+		// App Repo include
 		require_once(WPA_PATH.'inc/AppRepo.php');
-		$ar = new AppRepo;
-		$ar->download();
 
 		// Admin init.
 		require_once(WPA_PATH.'inc/Admin.php');
@@ -106,6 +113,11 @@ class Plugin {
 
 		return $app_keys;
 
+	}
+
+	public function admin_scripts() {
+		wp_enqueue_script( 'wpa-admin', WPA_URL.'js/admin.js', array(), '1.0.0', true );
+		wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
 	}
 
 }

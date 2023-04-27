@@ -29,6 +29,11 @@ class Admin {
 
 	public function main_content() {
 
+		$am = new AppManager;
+		$available_apps = $am->available();
+
+		// @TODO check which apps are installed by parsing over /wp-content/wpa/*.
+
 	    echo '<div class="wpa-admin-wrap"><h1>WPA</h1></div>';
 
 			// Find apps loaded.
@@ -39,10 +44,23 @@ class Admin {
 			   return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
 			});
 
-			foreach( $apps as $app_dir_name ) {
-				$app_def = wpa_load_app_def($app_dir_name);
-				echo '<h2>'.$app_def->title.'</h2>';
-				echo '<a href="'.site_url($app_def->location->path).'">Launch App</a>';
+			foreach( $available_apps as $available_app ) {
+
+				// Check if installed, then load app def from install if it is.
+				$installed = wpa_app_installed($available_app->key);
+				if( $installed) {
+					$app_def = wpa_load_app_def($available_app->key);
+				}
+
+				echo '<h2>'.$available_app->title.'</h2>';
+
+				if($installed) {
+					echo '<a href="'.site_url($app_def->location->path).'">Launch App</a>';
+				}
+
+				if(!$installed) {
+					echo '<button class="wpa-app-install-button" app-key="'.$available_app->key.'">Install App</button>';
+				}
 
 			}
 

@@ -1,0 +1,17 @@
+[
+	{
+		"key": "sleep_manager",
+		"title": "Sleep Manager",
+		"repo_url": "https://github.com/saberwp/wpa-sleep"
+	},
+	{
+		"key": "budgets",
+		"title": "Budget Buddy",
+		"repo_url": "https://github.com/saberwp/wpa-budget-buddy"
+	},
+	{
+		"key": "tasks",
+		"title": "Tasker",
+		"repo_url": "https://github.com/saberwp/wpa-tasker"
+	}
+]
