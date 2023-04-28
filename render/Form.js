@@ -42,14 +42,6 @@ class Form {
 
 		})
 
-		// Add relations to form.
-		appDef[app.data.currentModel].relations.forEach((relation) => {
-			if( relation.type === 'one' ) {
-				el.appendChild( this.fieldRelation(relation) )
-			}
-
-		})
-
 		el.appendChild( this.saveButton() )
 		return el
 	}
@@ -78,24 +70,6 @@ class Form {
 		el.placeholder = field.placeholder
 		el.id = 'field-' + field.key
 		el.name = 'field-' + field.key
-		return el
-	}
-
-	// Build select elements with option for each record in the referenced data source model.
-	fieldRelation(relation) {
-		const el = document.createElement('select')
-		el.id = 'field-' + relation.model
-		el.name = 'field-' + relation.model
-
-		const sourceModelKey = relation.model
-		const sourceRecords  = app.data[sourceModelKey].record
-		sourceRecords.forEach((record) => {
-			const option = document.createElement('option')
-			option.value = record.id
-			option.innerHTML = record.title
-			el.appendChild( option )
-		})
-
 		return el
 	}
 
