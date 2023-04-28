@@ -44,16 +44,6 @@ class Plugin {
 	        return;
 	    }
 
-	    $rest_url = rest_url();
-			$api_url = $rest_url . 'wp/v2/';
-
-			/*
-			echo '<script>';
-			echo 'var WPA_ApiUrl = "' . $api_url . '"';
-			echo '</script>';
-			*/
-
-			// @TODO echo out base url in script so app init can add it to app.apiUrl.
 		});
 
 

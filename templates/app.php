@@ -21,6 +21,18 @@ if( $app->brand_styles ) {
     <meta charset="utf-8">
     <title>App</title>
     <link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/app.css">
+
+		<?php
+			// Render base URL for the API.
+			$rest_url = rest_url();
+			$api_url = $rest_url . 'wp/v2/';
+
+
+			echo '<script>';
+			echo 'var WPA_ApiUrl = "' . $api_url . '"';
+			echo '</script>';
+		?>
+
 		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/Select.js"></script>
