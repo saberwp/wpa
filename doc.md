@@ -22,7 +22,7 @@ Process starts in Form() and Edit.update() is used to send the request.
 
 ## TODO
 
-  1. Load app at defined locations in app.js. 
+  1. Load app at defined locations in app.js.
 
 ## Ported HTML intro
 
@@ -33,3 +33,13 @@ Process starts in Form() and Edit.update() is used to send the request.
 <p>App definitions are processed and constructed into the app UI with all it's logic and storage capabilities using the renderer.</p>
 <h2>Tired of WordPress Scaling Limitations?</h2>
 <p>When you use the default post types, meta storage and other WordPress features, there are pros and cons to consider. The biggest setback you'll face on a site with a lot of data driven features, is scalability and site performance issues.</p>
+
+
+## TODO
+
+Use __() in PHP to enable translation.
+   Use "wpa" as localization path.
+
+Refactor Api::relations_process().
+  See if loop is needed there. Can we loop once earlier and do a process callback on each field by type?
+	Can processing for this field be moved to the FieldType def?	 

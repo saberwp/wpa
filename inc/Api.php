@@ -19,7 +19,7 @@ namespace WPA;
 
 class Api {
 
-	public $key = 'KR928NV81G01';
+	public $key = 'KR928NV81G01';  // @TODO security issue, remove key.
 	public $app_key = false;
 	public $app_path_root;
 
@@ -52,6 +52,9 @@ class Api {
 	}
 
 	// Define the API route handler function.
+	// @param $order_by
+	// @param $order_dir
+	// @param $limit
 	public function list_callback($request) {
 
 		// Get model key from API path.

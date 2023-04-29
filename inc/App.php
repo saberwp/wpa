@@ -26,9 +26,6 @@ class App {
 		$app_def_json = file_get_contents( $this->path_root() . 'app.json');
 		$app_def = json_decode( $app_def_json );
 
-
-		// @TODO loop over models here to do this.
-
 		// Load models from $app_def->models array of keys.
 		foreach ($app_def->models as $model_key) {
 			$model_json = file_get_contents( $this->path_root() . 'models/'.$model_key.'.json');
@@ -42,6 +39,8 @@ class App {
 		$app_def = $this->brandDefinition($app_def);
 
 		// Render JSON app_def.
+		// How to merge this with JS/app as app.def?
+		// @TODO ensure this is done only on WPA app pages.
 		echo '<script>var appDef = ' . json_encode( $app_def ) . '</script>';
 
 	}
@@ -111,11 +110,7 @@ class App {
 				$app_def->{$model->relations->right->model}->relations[] = $relation_left;
 
 			}
-
 		}
-
 		return $app_def;
-
 	}
-
 }

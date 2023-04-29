@@ -12,6 +12,8 @@ class Router {
 	}
 
 
+	// @TODO Add support for WP Admin routes.
+
 	public function routes( $template ) {
 
 		$plugin = new Plugin;
@@ -20,6 +22,7 @@ class Router {
 
 		global $wp_query;
 
+		// Detect route in query vars.
 		if ( isset( $wp_query->query_vars['name'] ) && in_array( $wp_query->query_vars['name'], $app_paths ) ) {
 
 			// Set global to indicate the app key for the current app, because this is needed in the app template.
@@ -72,10 +75,7 @@ class Router {
 			'app_paths' => $app_paths,
 			'app_map'   => $app_map
 		];
-
+		
 		return $app_data;
-
 	}
-
-
 }
