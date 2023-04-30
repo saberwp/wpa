@@ -133,13 +133,19 @@ Future ideas.
 			 // @TODO Update field value store with new record ID.
 			 // @TODO Update list of selected records.
 
-			 console.log('inline create button click...')
+			 // Make save form to put into modal.
+
+			 const modelDef = appDef.budget_item
+			 const formClass = new Form()
+			 const formEl = formClass.makeForModel(modelDef)
+			 formClass.addSubmitEventHandler(formEl)
+
 			 const modalContentEl = document.createElement('div')
-			 modalContentEl.innerHTML = 'Create new record inline...'
+			 modalContentEl.appendChild(formEl) // Add form element to the modal. 1
 			 const modal = new Modal()
 			 modal.setContent(modalContentEl)
-
 			 modal.open()
+
 		 })
 		 return el
 	 }

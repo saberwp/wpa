@@ -1,5 +1,56 @@
 class Form {
 
+	/* @param modelDef the definition of the model to build the form for. */
+	makeForModel(modelDef) {
+		const el = document.createElement('form')
+		el.id = 'save-form'
+		el.name = 'save-form'
+
+		el.appendChild( this.fieldId() )
+		el.appendChild( this.fieldTitle() )
+
+		// Add fields to form.
+		modelDef.fields.forEach((field) => {
+
+			if( field.type === 'text' ) {
+				el.appendChild( this.field(field) )
+			}
+
+			if( field.type === 'textarea' ) {
+				const fieldMaker = new TextArea()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
+			if( field.type === 'select' ) {
+				const fieldMaker = new Select()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
+			if( field.type === 'relation_select' ) {
+				const fieldMaker = new Select()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
+			// Relation Select Multiple /render/fields/SelectMultiple.js
+			if( field.type === 'relation_select_multiple' ) {
+				const fieldMaker = new RelationSelectMultiple()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
+		})
+
+		el.appendChild( this.saveButton() )
+		return el
+	}
+
+	/*
+	 * Make Form
+	 * Automatically uses app.data.currentModel to build the form.
+	 */
 	make() {
 		const el = document.createElement('form')
 		el.id = 'save-form'
@@ -80,6 +131,28 @@ class Form {
 		el.id = 'button-save'
 		return el
 	}
+
+	addSubmitEventHandler(formEl) {
+		formEl.addEventListener('submit', (event) => {
+			event.preventDefault();
+			console.log('event listener submit addSubmitEventHandler')
+			const formValues = this.formDataParse(formEl)
+			console.log('formValues')
+			console.log(formValues)
+
+			// We need access to the model here, which is different from app current model.
+			// Setup similar store for "inlineCreate.currentModel"?
+
+		})
+	}
+
+	// Parse data from form given the element.
+	formDataParse(formEl) {
+		const formData = new FormData(formEl);
+		const data = Object.fromEntries(formData.entries());
+		return data
+	}
+
 
 	submit() {
 
