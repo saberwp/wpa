@@ -8,9 +8,12 @@
 
  class RelationSelectMultiple {
 
+	 relationModel = false
+
+	 // Relation model key is defined in field.relation.model.
 	 make(field) {
-		 const relationModel = appDef[field.relation.model]
-		 const choicesRelationDef = relationModel.relations[field.relation.side]
+		 this.relationModel = appDef[field.relation.model]
+		 const choicesRelationDef = this.relationModel.relations[field.relation.side]
 		 if(choicesRelationDef.type !== 'many') {
 			 console.error('Model relations in Relation Select Field did not validate as type=many.')
 		 }
@@ -90,12 +93,26 @@
 		 return el
 	 }
 
+	 // Catch wpa_record_created event and do the relationship create between the new record and the edited base record.
 	 relateInlineCreatedRecordEvent() {
 		 document.addEventListener('wpa_record_created', (event) => {
  			console.log('caught record created event')
 			console.log(event)
-			console.log('what is this:')
-			console.log(this)
+
+			if(event.detail.model_key !== 'budget_item') {
+				console.log('caught processing of item that is not budget...')
+				return;
+			}
+
+			const record = {
+				id: 0,
+				budget_id: 4,
+				budget_item_id: event.detail.record_id
+			}
+
+			// model should be budget_budget_item.
+			app.create.recordModel(this.relationModel, record)
+
  		});
 	 }
 

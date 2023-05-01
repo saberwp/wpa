@@ -27,6 +27,11 @@ class Create {
 	}
 
 	recordModel(model, record) {
+
+		console.log('at recordModel, model/record')
+		console.log(model)
+		console.log(record)
+
 		app.data[model.key].record.unshift(record)
 		app.data[model.key].index = app.recordIndex( app.data[model.key].record )
 
@@ -36,6 +41,11 @@ class Create {
 
 	// Send API request.
 	request(model, record) {
+
+		console.log('at request(), model/record')
+		console.log(model)
+		console.log(record)
+
 		fetch(app.apiUrl+appDef.key+'/'+model.key, {
 				method: "POST",
 				body: JSON.stringify(record),

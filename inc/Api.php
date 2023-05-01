@@ -234,9 +234,7 @@ class Api {
 	  global $wpdb;
 	  $table_name = self::make_table_name($model_key);
 
-	  $data = array(
-	    'title' => $json_data['title'],
-	  );
+
 
 	  // Load model definition from JSON file.
 		$api = new Api;
@@ -245,13 +243,24 @@ class Api {
 	  $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
 	  $model = json_decode($model_json);
 
-	  foreach ($model->fields as $field) {
-	    // Add to $data query using $field->key and matching key from $json_data.
-	    if (isset($json_data[$field->key])) {
-	      $data[$field->key] = $json_data[$field->key];
-	    }
-	  }
+		if($model->type === 'relation') {
+			$api = new Api;
+			$data = $api->createRelationInsertData($model, $json_data);
+		} else {
+			// Init data for insert.
+			$data = array(
+		    'title' => $json_data['title'],
+		  );
 
+		  foreach ($model->fields as $field) {
+		    // Add to $data query using $field->key and matching key from $json_data.
+		    if (isset($json_data[$field->key])) {
+		      $data[$field->key] = $json_data[$field->key];
+		    }
+		  }
+		}
+
+		// Do database insert.
 	  $result = $wpdb->insert($table_name, $data);
 
 	  if ($result === false) {
@@ -279,6 +288,13 @@ class Api {
 			$response->model_json = $model_json;
 	    return rest_ensure_response($response);
 	  }
+	}
+
+	public function createRelationInsertData($model, $form_data) {
+		$insert_data = ['id' => 0];
+		$insert_data[$model->relations->left->model.'_id']  = $form_data[$model->relations->left->model.'_id'];
+		$insert_data[$model->relations->right->model.'_id'] = $form_data[$model->relations->right->model.'_id'];
+		return $insert_data;
 	}
 
 	public function delete_callback($request) {
