@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name: WPA (WordPress Application Framework)
- * Version: 1.0.5
+ * Version: 1.0.6
  */
 
 namespace WPA;

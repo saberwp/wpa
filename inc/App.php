@@ -4,6 +4,7 @@ namespace WPA;
 
 class App {
 
+	public $def          = false;
 	public $dir_name     = false;
 	public $path_root    = false;
 	public $brand_styles = false;
@@ -38,17 +39,19 @@ class App {
 		// Add brand to app def.
 		$app_def = $this->brandDefinition($app_def);
 
-		// Render JSON app_def.
-		// How to merge this with JS/app as app.def?
-		// @TODO ensure this is done only on WPA app pages.
-		echo '<script>var appDef = ' . json_encode( $app_def ) . '</script>';
+		// Stash app def into property.
+		$this->def = $app_def;
 
+	}
+
+	public function render_app_def_script() {
+		echo '<script>var appDef = ' . json_encode( $this->def ) . '</script>';
 	}
 
 	public function brandDefinition($app_def) {
 		if( ! file_exists( $this->path_root() . 'brand.json' ) ) { return $app_def; }
 
-		// Add definition.
+		// Add def.
 		$brand_json = file_get_contents( $this->path_root() . 'brand.json');
 		$app_def->brand = json_decode( $brand_json );
 
@@ -97,15 +100,15 @@ class App {
 			$model = json_decode( $model_json );
 			if( $model->type === 'relation' ) {
 
-				// Get definition for each side of the relation.
+				// Get def for each side of the relation.
 				$relation_left  = $model->relations->left;
 				$relation_right = $model->relations->right;
 
-				// Add to left model using definition of right model.
+				// Add to left model using def of right model.
 				$app_def->{$model->relations->left->model}->relations = [];
 				$app_def->{$model->relations->left->model}->relations[] = $relation_right;
 
-				// Add to right model using definition of left model.
+				// Add to right model using def of left model.
 				$app_def->{$model->relations->right->model}->relations = [];
 				$app_def->{$model->relations->right->model}->relations[] = $relation_left;
 

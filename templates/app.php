@@ -20,6 +20,11 @@ if( $app->brand_styles ) {
   <head>
     <meta charset="utf-8">
     <title>App</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/app.css">
 
 		<?php
@@ -32,7 +37,7 @@ if( $app->brand_styles ) {
 			echo 'var WPA_ApiUrl = "' . $api_url . '"';
 			echo '</script>';
 		?>
-
+		<?php $app->render_app_def_script(); ?>
 		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/Select.js"></script>
@@ -47,10 +52,12 @@ if( $app->brand_styles ) {
 		<script src="<?php echo WPA_URL; ?>render/App.js"></script>
   </head>
   <body>
-    <!-- page content -->
+		<script>
+			const app = new App()
+
+			// Add appDef to app object.
+			// @TODO improve this by fetching the appDef by request?
+			app.def = appDef
+		</script>
   </body>
 </html>
-
-<script>
-const app = new App()
-</script>

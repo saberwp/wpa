@@ -135,15 +135,27 @@ class Form {
 	addSubmitEventHandler(formEl) {
 		formEl.addEventListener('submit', (event) => {
 			event.preventDefault();
-			console.log('event listener submit addSubmitEventHandler')
 			const formValues = this.formDataParse(formEl)
-			console.log('formValues')
-			console.log(formValues)
+			if( 0 === parseInt(formValues['field-id']) ) {
+				let record = {
+					id: 0,
+					title: formValues['field-title']
+				}
+				record = this.definedFieldValues(record, app.data.currentModelInline, formValues)
+				app.create.recordModel(app.data.currentModelInline, record)
 
-			// We need access to the model here, which is different from app current model.
-			// Setup similar store for "inlineCreate.currentModel"?
+			}
 
 		})
+	}
+
+	// For a drafted record, add the defined field values from the model.
+	// Form values passed in values param.
+	definedFieldValues(record, model, values) {
+		model.fields.forEach((field) => {
+			record[field.key] = values['field-'+field.key]
+		})
+		return record
 	}
 
 	// Parse data from form given the element.
@@ -159,34 +171,21 @@ class Form {
 		const formElement = document.getElementById('save-form');
 
 		formElement.addEventListener('submit', (event) => {
-			// Prevent the default form submission behavior
 			event.preventDefault();
-
-			// Perform any other actions needed for the form submission
-			// For example, you can retrieve the form data using FormData
 			const formData = new FormData(formElement);
 			const data = Object.fromEntries(formData.entries());
-			console.log(data);
-
 			const id = data['field-id']
 			const title = data['field-title']
-
 			if( 0 === parseInt(id) ) {
-
 				const obj = {
 					id: 0,
 					title: title
 				}
-
 				appDef[app.data.currentModel].fields.forEach((field) => {
 					obj[field.key] = data['field-'+field.key]
 				})
-
-				// Create record.
 				app.create.create(obj)
-
 			} else {
-
 				const record = {
 					id: id,
 					title: title
@@ -197,10 +196,7 @@ class Form {
 				app.edit.update(record)
 
 			}
-
-			// Update list.
 			app.list.refresh()
-
 		});
 
 	}

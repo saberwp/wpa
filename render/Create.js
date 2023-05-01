@@ -26,6 +26,45 @@ class Create {
 
 	}
 
+	recordModel(model, record) {
+		app.data[model.key].record.unshift(record)
+		app.data[model.key].index = app.recordIndex( app.data[model.key].record )
+
+		// Send API request.
+		this.request(model, record)
+	}
+
+	// Send API request.
+	request(model, record) {
+		fetch(app.apiUrl+appDef.key+'/'+model.key, {
+				method: "POST",
+				body: JSON.stringify(record),
+				headers: {
+				"Content-Type": "application/json",
+				"API-KEY": "KR928NV81G01"
+			},
+		})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			return response.json();
+		})
+		.then((responseJson) => {
+			console.log(responseJson)
+			const event = new CustomEvent('wpa_record_created', {
+				detail: {
+					model_key:responseJson.model_key,
+					record_id:responseJson.model_id
+				}
+			})
+			document.dispatchEvent(event)
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
+
 	create(record) {
 
 		// Update local data store.

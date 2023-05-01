@@ -203,12 +203,10 @@ class App {
 
 	recordIndex(records) {
 	  const index = {};
-
 	  for (let i = 0; i < records.length; i++) {
 	    const record = records[i];
 	    index[record.id] = record;
 	  }
-
 	  return index;
 	}
 

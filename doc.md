@@ -42,4 +42,20 @@ Use __() in PHP to enable translation.
 
 Refactor Api::relations_process().
   See if loop is needed there. Can we loop once earlier and do a process callback on each field by type?
-	Can processing for this field be moved to the FieldType def?	 
+	Can processing for this field be moved to the FieldType def?
+
+### Create.recordModel(model, record)
+
+@param model full model object with model.key and model.fields.
+@record draft record object for creation, fully populated with field data.
+
+Sends fetch [POST] to the given model create route.
+
+### Create Inline Process
+
+1. Create.recordModel(model, record)
+2. Create.request(model, record)
+
+## Form.definedFieldValues(record, model, values)
+
+Adds form values to the defined model field for a given record
