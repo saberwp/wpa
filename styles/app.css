@@ -45,6 +45,8 @@ body {
   right: 4rem;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 9999;
+	color: #FFF;
+	padding: 2rem;
 }
 
 .min-w-20 {
@@ -263,5 +265,5 @@ input[type=submit]:hover {
 }
 
 .menu-item-active {
-	background: red;
+	background: #FFF;
 }

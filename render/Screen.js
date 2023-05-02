@@ -1,11 +1,18 @@
 class Screen {
 
+	renderSingle(screenKey, recordId) {
+		const route = new Route()
+		route.setScreenHash(screenKey+'/'+recordId)
+		const screen = new ScreenModel()
+		screen.renderSingle(screenKey, recordId)
+	}
+
 	render(screenKey) {
+
+		console.log('rendering with screenkey')
 
 		const route = new Route()
 		route.setScreenHash(screenKey)
-
-		console.log(screenKey)
 
 		// Dashboard handler.
 		if(screenKey === 'dashboard') {

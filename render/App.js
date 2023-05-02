@@ -35,8 +35,14 @@ class App {
 	load() {
 		// Init routing.
 		this.route = new Route
-		const screenKey = this.route.getScreenKeyFromHash()
-		this.route.render(screenKey)
+		const route = this.route.get()
+		const screenKey = route[0]
+		const recordId = route[1] ? route[1] : false;
+		if(recordId) {
+			this.route.renderSingle(screenKey, recordId)
+		} else {
+			this.route.render(screenKey)
+		}
 	}
 
 	appContainer() {
