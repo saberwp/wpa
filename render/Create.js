@@ -11,6 +11,18 @@ class Create {
 	}
 
 	handleCreateClick(e) {
+		const modal = new Modal()
+		const formContent = app.form.make()
+		modal.setHeaderLabel('Create '+appDef[app.data.currentModel].title)
+		modal.setContent(formContent)
+		modal.open()
+	}
+
+	/*
+	 * Prepare the form for create by clearing data.
+	 */
+	formPrepare() {
+
 		const idField = document.getElementById('field-id')
 		idField.value = 0
 

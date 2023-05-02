@@ -8,19 +8,20 @@ class ScreenModel {
 		app.data.currentModel = screenKey
 
 		// Data load.
-		app.dataLoad()
+		app.dm.fetch(screenKey)
 
 		const body = document.getElementById('app-body')
 		body.innerHTML = ''
-		body.appendChild(app.screenTitle())
+		body.appendChild(app.shell.screenTitle())
 		body.appendChild(app.create.button())
-		body.appendChild(app.form.make())
+
 
 		// List make.
 		body.appendChild(app.list.make())
 
 		// Save form submit init.
-		app.form.submit()
+		// body.appendChild(app.form.make())
+		// app.form.submit()
 
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', () => {
@@ -36,11 +37,11 @@ class ScreenModel {
 	renderSingle(screenKey, recordId) {
 
 		app.data.currentModel = screenKey
-		app.dataLoad()
+		app.dm.fetch(screenKey)
 
 		const body = document.getElementById('app-body')
 		body.innerHTML = ''
-		body.appendChild(app.screenTitle())
+		body.appendChild(app.shell.screenTitle())
 		body.appendChild(app.create.button())
 		body.appendChild(app.list.make())
 

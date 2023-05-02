@@ -38,6 +38,7 @@ if( $app->brand_styles ) {
 			echo '</script>';
 		?>
 		<?php $app->render_app_def_script(); ?>
+		<script src="<?php echo WPA_URL; ?>render/views/app-shells/DefaultAppShell.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Route.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Screen.js"></script>
 

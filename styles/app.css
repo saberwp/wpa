@@ -5,17 +5,35 @@ body {
 }
 
 #app-container {
-	min-height: 100vh;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
 
-/*
 #app-main {
-	min-height: 100vh;
+	flex: 1;
+  display: flex;
 }
-*/
+
+#app-sidebar {
+	flex-basis: 25%;
+	display: flex;
+	flex-grow: 0;
+	flex-shrink: 1;
+	flex-direction: column;
+	border-right: solid 1px #FFF;
+}
+
+#app-main-wrap {
+	flex-basis: 75%;
+	flex-shrink: 1;
+}
+
+#app-body {
+	height: calc(100vh - 10rem);
+	overflow: auto;
+}
 
 .font-xl {
 	font-size: 1.5rem;
@@ -39,14 +57,26 @@ body {
 
 .modal {
   position: fixed;
-  top: 4rem;
-  bottom: 4rem;
-  left: 4rem;
-  right: 4rem;
-  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.9);
   z-index: 9999;
 	color: #FFF;
-	padding: 2rem;
+	padding: 3rem;
+
+}
+
+.modal-container {
+	background-color: rgba(112, 116, 125, 1);
+	padding: 1.5rem;
+	border-radius: 1rem;
+}
+
+.modal header {
+	font-size: 1.1rem;
+	font-weight: 600;
 }
 
 .min-w-20 {
@@ -95,6 +125,11 @@ body {
 	margin: 0 0 0 0;
 }
 
+#app-header {
+	padding: 0.5rem 1rem;
+	box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.2);
+}
+
 #app-menu-main {
 	margin-top: 0.5rem;
 	font-family: "Inter", sans-serif;
@@ -120,12 +155,13 @@ body {
 }
 
 #app-footer {
+	height: 3rem;
 	margin: auto 0 0 0;
 	padding: 0.5rem;
 	gap: 1rem;
 	align-items: center;
 	justify-content: center;
-	border-top: 2px solid #FFF;
+	border-top: 1px solid #FFF;
 }
 
 #app-footer .app-logo svg {
@@ -162,12 +198,11 @@ form {
 	padding: 1.25rem 1.75rem;
 	border-radius: 0.25rem;
 	min-width: 10rem;
-	max-width: 20rem;
 }
 
 select {
 	min-width: 10rem;
-	max-width: 20rem;
+	max-width: 21.2rem;
 	width: 100%;
 	padding: 0.4rem 0.6rem;
 	border: solid 1px #FFF;
@@ -189,10 +224,13 @@ input {
 }
 
 textarea {
+	min-width: 10rem;
+	max-width: 20rem;
 	padding: 0.4rem 0.6rem;
 	font-size: 0.9rem;
 	border-radius: 0.25rem;
 	margin: 0.5rem 0;
+	font-family: "Inter", sans-serif;
 }
 
 .mr-0\.125 {
@@ -259,11 +297,14 @@ input[type=submit]:hover {
 	background-color: var(--primary-color);
 }
 
-#app-sidebar {
-	border-right: solid 1px #FFF;
-	min-height: 100vh;
-}
-
 .menu-item-active {
 	background: #FFF;
+}
+
+#create-button {
+	border: solid 1px #fff;
+}
+
+#model-list-container {
+	margin: 1.5rem 0 0 0;
 }

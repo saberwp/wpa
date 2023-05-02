@@ -4,9 +4,7 @@ class Modal {
 
 		const el = document.createElement('div')
 		el.classList = 'modal'
-		el.appendChild(this.header())
-		el.appendChild(this.content())
-		el.appendChild(this.closeButton())
+		el.appendChild(this.container())
 		document.body.appendChild(el)
 
 		// Init close handling.
@@ -16,7 +14,15 @@ class Modal {
 
 	}
 
-	closeButton() {
+	container() {
+		const el = document.createElement('div')
+		el.classList = 'modal-container'
+		el.appendChild(this.header())
+		el.appendChild(this.content())
+		return el
+	}
+
+	makeCloseButton() {
 		const el = document.createElement('button')
 		el.id = 'modal-close-button'
 		el.classList.add('clickable')
@@ -32,6 +38,15 @@ class Modal {
 
 	header() {
 		const el = document.createElement('header')
+		el.classList.add('modal-header')
+		el.classList.add('flex')
+		el.appendChild(this.makeHeaderLabel())
+		el.appendChild(this.makeCloseButton())
+		return el
+	}
+
+	makeHeaderLabel() {
+		const el = document.createElement('h2')
 		el.innerHTML = this.headerLabel
 		return el
 	}
