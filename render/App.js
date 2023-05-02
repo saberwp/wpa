@@ -10,7 +10,8 @@ class App {
 		this.delete = new Delete()
 		this.modal  = new Modal()
 		this.dm     = new DataManager()
-		this.menus  = new Menu()
+		this.menu   = new Menu()
+		this.screen  = new Screen()
 
 		// Set API URL.
 		this.apiUrl = WPA_ApiUrl;
@@ -19,14 +20,23 @@ class App {
 		this.appContainer()
 
 		// Bind the class instance to the menuClickHandler function
-		this.menuClickHandler = this.menuClickHandler.bind(this);
+		this.menuClickHandler = this.menuClickHandler.bind(this)
 
 		// Call menuClickInit function to initialize the menu clicks
-		this.menuClickInit();
+		this.menuClickInit()
 
 		// Init data store.
 		this.dataInit()
 
+
+
+	}
+
+	load() {
+		// Init routing.
+		this.route = new Route
+		const screenKey = this.route.getScreenKeyFromHash()
+		this.route.render(screenKey)
 	}
 
 	appContainer() {
@@ -95,7 +105,7 @@ class App {
 		el.classList.add('mr-0.125')
 		el.classList.add('bg-gray-800')
 		el.appendChild(this.brand())
-		el.appendChild(this.menus.make())
+		el.appendChild(this.menu.make())
 		return el
 	}
 
@@ -125,38 +135,6 @@ class App {
 		return el
 	}
 
-	// Screens have same key as model for the model screens, and then there are other screens defined.
-	display(screen) {
-
-		// Set current model data.
-		app.data.currentModel = screen
-
-		// Data load.
-		this.dataLoad()
-
-		const body = document.getElementById('app-body')
-		body.innerHTML = ''
-		body.appendChild(this.screenTitle())
-		body.appendChild(this.create.button())
-		body.appendChild(this.form.make())
-
-		// List make.
-		body.appendChild(this.list.make())
-
-		// Save form submit init.
-		this.form.submit()
-
-		// Delay making list until after custom event "app_data_loaded".
-		document.addEventListener('app_data_loaded', () => {
-			// List init.
-			this.list.refresh();
-
-			// Create init.
-			this.create.init();
-		});
-
-	}
-
 	screenTitle() {
 		const el = document.createElement('h2')
 		el.innerHTML = '' // @TODO make dynamic if needed?
@@ -174,8 +152,11 @@ class App {
 	}
 
 	menuClickHandler(e) {
-		const screen = e.target.getAttribute('screen')
-		this.display(screen)
+		const screenKey = e.target.getAttribute('screen')
+		const menu = new Menu()
+		menu.setActive(e.target)
+		const screen = new Screen()
+		screen.render(screenKey)
 	}
 
 	dataInit() {

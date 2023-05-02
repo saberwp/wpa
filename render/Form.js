@@ -60,6 +60,7 @@ class Form {
 		el.appendChild( this.fieldTitle() )
 
 		// Add fields to form.
+		console.log(app.data.currentModel)
 		appDef[app.data.currentModel].fields.forEach((field) => {
 
 			if( field.type === 'text' ) {

@@ -38,10 +38,16 @@ if( $app->brand_styles ) {
 			echo '</script>';
 		?>
 		<?php $app->render_app_def_script(); ?>
+		<script src="<?php echo WPA_URL; ?>render/Route.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/Screen.js"></script>
+
 		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/Select.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/RelationSelectMultiple.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/screens/ScreenDashboard.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/screens/ScreenModel.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/screens/ScreenDocs.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Form.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Edit.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Create.js"></script>
@@ -54,10 +60,10 @@ if( $app->brand_styles ) {
   <body>
 		<script>
 			const app = new App()
-
 			// Add appDef to app object.
 			// @TODO improve this by fetching the appDef by request?
 			app.def = appDef
+			app.load()
 		</script>
   </body>
 </html>

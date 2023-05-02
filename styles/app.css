@@ -261,3 +261,7 @@ input[type=submit]:hover {
 	border-right: solid 1px #FFF;
 	min-height: 100vh;
 }
+
+.menu-item-active {
+	background: red;
+}
