@@ -14,33 +14,16 @@ class DataManager {
 				app.setModelRecordStore(data.model_key, data.records)
 
 				// Dispatch custom event "app_data_loaded".
-			  const event = new Event('app_data_loaded')
+			  const event = new CustomEvent('app_data_loaded', {
+					detail: {
+						modelKey: data.model_key,
+						records: data.records
+					}
+				})
 			  document.dispatchEvent(event)
 
 			})
 			.catch(error => console.error(error));
-	}
-
-	dataTemp() {
-
-		return [
-			{
-				id: 1,
-				title: "Firstly",
-				size: "Big"
-			},
-			{
-				id: 2,
-				title: "Second",
-				size: "Medium"
-			},
-			{
-				id: 3,
-				title: "Third",
-				size: "Medium"
-			}
-		]
-
 	}
 
 }

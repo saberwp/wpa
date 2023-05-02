@@ -30,6 +30,9 @@ class Edit {
 			const el = document.getElementById('field-'+field.key)
 			el.value = record[field.key]
 		})
+
+		// Set current record data.
+		app.data.currentRecordId = id
 	}
 
 

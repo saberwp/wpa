@@ -98,6 +98,7 @@ class Create {
 		})
 		.then((responseJson) => {
 			console.log(responseJson);
+			console.log('777 create handler after create...')
 		})
 		.catch((error) => {
 			console.error(error);

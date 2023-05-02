@@ -12,6 +12,7 @@
 
 	 // Relation model key is defined in field.relation.model.
 	 make(field) {
+
 		 this.relationModel = appDef[field.relation.model]
 		 const choicesRelationDef = this.relationModel.relations[field.relation.side]
 		 if(choicesRelationDef.type !== 'many') {
@@ -26,21 +27,17 @@
 		 const choicesModelDef = appDef[choicesRelationModelKey]
 		 this.relationModelDef = choicesModelDef // Stash into class.
 
-		 // Load records for the relation model.
-		 // @TODO this only works if the user visits "budget_item" first to load those records.
-		 this.relationModelRecords = app.data[choicesRelationModelKey].record
+		 // Create and append field elements.
 		 const el = document.createElement('div')
 		 el.id = 'relation-select-field-' + field.key
 		 el.appendChild(this.valueInput(field))
 		 el.appendChild(this.inlineCreateButton(field))
 		 el.appendChild(this.choicesList(field))
 		 el.appendChild(this.selectionList(field))
-		 el.appendChild(this.description(field))
-		 return el
-	 }
 
-	 choiceList() {
-		 const el = document.createElement('ul')
+		 // Load records for the relation model.
+		 this.choicesRefresh()
+
 		 return el
 	 }
 
@@ -49,12 +46,6 @@
 		 el.id = 'field-' + field.key
 		 el.name = 'field-' + field.key
 		 el.value = '[]'
-		 return el
-	 }
-
-	 description(field) {
-		 const el = document.createElement('div')
-		 el.innerHTML = 'Field for model: ' + field.relation.model
 		 return el
 	 }
 
@@ -96,24 +87,34 @@
 	 // Catch wpa_record_created event and do the relationship create between the new record and the edited base record.
 	 relateInlineCreatedRecordEvent() {
 		 document.addEventListener('wpa_record_created', (event) => {
- 			console.log('caught record created event')
-			console.log(event)
 
 			if(event.detail.model_key !== 'budget_item') {
-				console.log('caught processing of item that is not budget...')
 				return;
 			}
 
 			const record = {
 				id: 0,
-				budget_id: 4,
+				budget_id: app.data.currentRecordId,
 				budget_item_id: event.detail.record_id
 			}
 
 			// model should be budget_budget_item.
 			app.create.recordModel(this.relationModel, record)
 
+			// Load records for the relation model.
+ 		 this.choicesRefresh()
+
  		});
+	 }
+
+	 choicesRefresh() {
+		 this.relationModelRecords = app.dm.fetch(this.relationModelDef.key)
+		 document.addEventListener('app_data_loaded', (event) => {
+		   if(event.detail.modelKey === this.relationModelDef.key) {
+				 this.relationModelRecords = event.detail.records
+				 this.choicesPopulate()
+			 }
+		 })
 	 }
 
 	 // Return the relation model records so they can be used as choices for user selection.
@@ -123,6 +124,12 @@
 
 	 choicesList(field) {
 		 const el = document.createElement('ul')
+		 this.choicesList = el
+		 return el
+	 }
+
+	 choicesPopulate() {
+		 this.choicesList.innerHTML = ''
 		 const choices = this.choices()
 		 choices.forEach((choice) => {
 			 const elChoice = document.createElement('li')
@@ -154,12 +161,9 @@
 					 elChoice.setAttribute('record-id', choice.id)
 					 selectionList.appendChild(elChoice)
 				 })
-
 			 })
-
-			 el.appendChild(elChoice)
+			 this.choicesList.appendChild(elChoice)
 		 })
-		 return el
 	 }
 
 	 recordsFromIds(ids) {

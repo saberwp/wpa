@@ -254,6 +254,11 @@ class Api {
 
 		  foreach ($model->fields as $field) {
 		    // Add to $data query using $field->key and matching key from $json_data.
+
+				if($field->type === 'relation_select_multiple') {
+					continue;
+				}
+
 		    if (isset($json_data[$field->key])) {
 		      $data[$field->key] = $json_data[$field->key];
 		    }
