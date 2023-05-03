@@ -109,6 +109,9 @@ class DefaultAppShell {
 
 	screenTitle() {
 		const el = document.createElement('h2')
+		el.classList.add('text-lg')
+		el.classList.add('font-semibold')
+		el.classList.add('mb-4')
 		el.innerHTML = 'Tasks' // @TODO make dynamic if needed?
 		return el
 	}
