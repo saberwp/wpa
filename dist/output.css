@@ -521,3 +521,11 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+
+.table {
+  display: table;
+}
+
+.w-full {
+  width: 100%;
+}

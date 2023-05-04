@@ -233,6 +233,11 @@ textarea {
 	font-family: "Inter", sans-serif;
 }
 
+input,
+textarea {
+	color: #000;
+}
+
 .mr-0\.125 {
 	margin-right: 0.125rem;
 }

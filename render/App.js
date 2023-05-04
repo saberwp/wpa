@@ -11,15 +11,13 @@ class App {
 		this.modal  = new Modal()
 		this.dm     = new DataManager()
 		this.menu   = new Menu()
-		this.screen  = new Screen()
+		this.screen = new Screen()
 
 		// Set API URL.
 		this.apiUrl = WPA_ApiUrl;
 
 		// Init data store.
 		this.dataInit()
-
-
 
 	}
 

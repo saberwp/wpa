@@ -32,6 +32,12 @@ class ScreenModel {
 			app.create.init();
 		});
 
+		// Table make.
+		const collectionTable = new CollectionTable('list-table')
+		const table = collectionTable.init()
+		body.appendChild(table)
+
+
 	}
 
 	renderSingle(screenKey, recordId) {
