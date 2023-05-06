@@ -17,7 +17,12 @@ class DefaultAppShell {
 
 	header() {
 		const el = document.createElement('header')
-		el.appendChild(this.headerSearch())
+
+		// Add search only if defined in app def.
+		if(app.def.search) {
+			el.appendChild(this.headerSearch())
+		}
+
 		el.id = 'app-header'
 		el.classList.add('text-white')
 		return el
@@ -53,13 +58,13 @@ class DefaultAppShell {
 		return el
 	}
 
+	// @TODO move to Sidebar() class.
 	sidebar() {
 		const el = document.createElement('section')
 		el.id = 'app-sidebar'
 		el.classList.add('min-w-20')
 		el.classList.add('p-1')
 		el.classList.add('mr-0.125')
-		el.classList.add('bg-gray-800')
 		el.appendChild(this.brand())
 		el.appendChild(app.menu.make())
 		return el

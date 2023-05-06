@@ -12,7 +12,6 @@ class ScreenModel {
 
 		const body = document.getElementById('app-body')
 		body.innerHTML = ''
-		body.appendChild(app.shell.screenTitle())
 		body.appendChild(app.create.button())
 
 
@@ -43,7 +42,6 @@ class ScreenModel {
 
 		const body = document.getElementById('app-body')
 		body.innerHTML = ''
-		body.appendChild(app.shell.screenTitle())
 		body.appendChild(app.create.button())
 		body.appendChild(app.list.make())
 
