@@ -1,0 +1,14 @@
+{
+	"key": "sleep_log",
+	"type": "standard",
+	"title": "Sleep Log",
+	"title_plural": "Sleep Logs",
+	"fields": [
+		{
+			"key": "notes",
+			"type": "textarea",
+			"label": "Notes",
+			"placeholder": "Sleep Log notes..."
+		}
+	]
+}

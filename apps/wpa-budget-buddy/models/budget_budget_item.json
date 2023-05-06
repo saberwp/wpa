@@ -1,0 +1,15 @@
+{
+	"key": "budget_budget_item",
+	"type": "relation",
+	"description": "Relate a budget to multiple budget items.",
+	"relations": {
+		"left": {
+		  "type": "one",
+		  "model": "budget"
+		},
+		"right": {
+		  "type": "many",
+		  "model": "budget_item"
+		}
+	}
+}

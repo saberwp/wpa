@@ -1,0 +1,14 @@
+{
+	"key": "status",
+	"type": "standard",
+	"title": "Status",
+	"title_plural": "Statuses",
+	"fields": [
+		{
+			"key": "ordering",
+			"type": "text",
+			"label": "Ordering",
+			"placeholder": "Status order for display and processing..."
+		}
+	]
+}

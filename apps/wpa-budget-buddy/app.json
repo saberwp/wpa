@@ -1,0 +1,13 @@
+{
+	"key": "budgets",
+	"title": "Saber Budgets",
+	"models": [
+		"budget",
+		"budget_item",
+		"budget_budget_item"
+	],
+	"location": {
+		"where": "front",
+		"path": "fin"
+	}
+}

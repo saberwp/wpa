@@ -1,0 +1,15 @@
+{
+	"key": "task_status",
+	"type": "relation",
+	"description": "Relation between tasks and status.",
+	"relations": {
+		"left": {
+		  "type": "many",
+		  "model": "task"
+		},
+		"right": {
+		  "type": "one",
+		  "model": "status"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"key": "task",
+	"type": "standard",
+	"title": "Task",
+	"title_plural": "Tasks",
+	"fields": [
+		{
+			"key": "difficulty",
+			"type": "text",
+			"label": "Difficulty",
+			"placeholder": "Difficulty level in completing task..."
+		},
+		{
+			"key": "notes",
+			"type": "textarea",
+			"label": "Notes",
+			"placeholder": "Task notes..."
+		},
+		{
+			"key": "status",
+			"type": "relation_select",
+			"label": "Status",
+			"relation": {
+				"model": "task_status",
+				"side": "right"
+			}
+		}
+	]
+}

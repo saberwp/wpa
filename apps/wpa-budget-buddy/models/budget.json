@@ -1,0 +1,23 @@
+{
+	"key": "budget",
+	"type": "standard",
+	"title": "Budget",
+	"title_plural": "Budgets",
+	"fields": [
+		{
+			"key": "description",
+			"type": "textarea",
+			"label": "Description",
+			"placeholder": "Budget description..."
+		},
+		{
+			"key": "items",
+			"type": "relation_select_multiple",
+			"label": "Items",
+			"relation": {
+				"model": "budget_budget_item",
+				"side": "right"
+			}
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"key": "budget_item",
+	"type": "standard",
+	"title": "Budget Item",
+	"title_plural": "Budget Items",
+	"fields": [
+		{
+			"key": "cost",
+			"type": "text",
+			"label": "Cost",
+			"placeholder": "Cost of item in USD..."
+		}
+	]
+}

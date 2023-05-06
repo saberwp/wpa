@@ -1,0 +1,13 @@
+{
+	"key": "tasks",
+	"title": "Saber Tasks",
+	"models": [
+		"task",
+		"status",
+		"task_status"
+	],
+	"location": {
+		"where": "front",
+		"path": "tasker"
+	}
+}
