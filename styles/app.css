@@ -125,6 +125,14 @@ body {
 	margin: 0 0 0 0;
 }
 
+.wpa-logo svg {
+	max-width: 100%;
+}
+
+footer .wpa-logo svg {
+	max-width: 8rem;
+}
+
 #app-header {
 	padding: 0.5rem 1rem;
 	box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.2);
