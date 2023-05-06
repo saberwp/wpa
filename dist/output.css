@@ -522,10 +522,26 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.flex {
+  display: flex;
+}
+
 .table {
   display: table;
 }
 
+.hidden {
+  display: none;
+}
+
 .w-full {
   width: 100%;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-1 {
+  gap: 0.25rem;
 }

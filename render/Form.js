@@ -1,8 +1,16 @@
+/*
+ * Form
+ *
+ * Base class for the management of forms in WPA.
+ * Loaded into global app as app.form.
+ */
 class Form {
 
 	/* @param modelDef the definition of the model to build the form for. */
-	makeForModel(modelDef) {
+	make(modelDef) {
+
 		const el = document.createElement('form')
+		el.setAttribute('model-key', modelDef.key)
 		el.id = 'save-form'
 		el.name = 'save-form'
 
@@ -11,57 +19,6 @@ class Form {
 
 		// Add fields to form.
 		modelDef.fields.forEach((field) => {
-
-			if( field.type === 'text' ) {
-				el.appendChild( this.field(field) )
-			}
-
-			if( field.type === 'textarea' ) {
-				const fieldMaker = new TextArea()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-			if( field.type === 'select' ) {
-				const fieldMaker = new Select()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-			if( field.type === 'relation_select' ) {
-				const fieldMaker = new Select()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-			// Relation Select Multiple /render/fields/SelectMultiple.js
-			if( field.type === 'relation_select_multiple' ) {
-				const fieldMaker = new RelationSelectMultiple()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-		})
-
-		el.appendChild( this.saveButton() )
-		return el
-	}
-
-	/*
-	 * Make Form
-	 * Automatically uses app.data.currentModel to build the form.
-	 */
-	make() {
-		const el = document.createElement('form')
-		el.id = 'save-form'
-		el.name = 'save-form'
-
-		el.appendChild( this.fieldId() )
-		el.appendChild( this.fieldTitle() )
-
-		// Add fields to form.
-		console.log(app.data.currentModel)
-		appDef[app.data.currentModel].fields.forEach((field) => {
 
 			if( field.type === 'text' ) {
 				el.appendChild( this.field(field) )
@@ -133,23 +90,6 @@ class Form {
 		return el
 	}
 
-	addSubmitEventHandler(formEl) {
-		formEl.addEventListener('submit', (event) => {
-			event.preventDefault();
-			const formValues = this.formDataParse(formEl)
-			if( 0 === parseInt(formValues['field-id']) ) {
-				let record = {
-					id: 0,
-					title: formValues['field-title']
-				}
-				record = this.definedFieldValues(record, app.data.currentModelInline, formValues)
-				app.create.recordModel(app.data.currentModelInline, record)
-
-			}
-
-		})
-	}
-
 	// For a drafted record, add the defined field values from the model.
 	// Form values passed in values param.
 	definedFieldValues(record, model, values) {
@@ -166,40 +106,32 @@ class Form {
 		return data
 	}
 
-
-	submit() {
-
-		const formElement = document.getElementById('save-form');
-
-		formElement.addEventListener('submit', (event) => {
+	submit(formEl) {
+		formEl.addEventListener('submit', (event) => {
 			event.preventDefault();
-			const formData = new FormData(formElement);
-			const data = Object.fromEntries(formData.entries());
-			const id = data['field-id']
-			const title = data['field-title']
-			if( 0 === parseInt(id) ) {
-				const obj = {
-					id: 0,
-					title: title
-				}
-				appDef[app.data.currentModel].fields.forEach((field) => {
-					obj[field.key] = data['field-'+field.key]
-				})
-				app.create.create(obj)
+			const formModelKey = event.target.getAttribute('model-key')
+			const formModelDef = app.def[formModelKey]
+			const formValues = this.formDataParse(formEl)
+			if( 0 === parseInt(formValues['field-id']) ) {
+				const record = this.prepareRecord(formModelDef, formValues)
+				app.create.recordModel(formModelDef, record)
 			} else {
-				const record = {
-					id: id,
-					title: title
-				}
-				appDef[app.data.currentModel].fields.forEach((field) => {
-					record[field.key] = data['field-'+field.key]
-				})
+				const record = this.prepareRecord(formModelDef, formValues)
 				app.edit.update(record)
-
 			}
-			app.list.refresh()
-		});
+		})
+	}
 
+	prepareRecord(formModelDef, formValues) {
+		let record = {
+			id: formValues['field-id'],
+		}
+		// @TODO in the future check the model def here instead of the form values to see if option "useTitle" is set to true.
+		if(formValues['field-title']) {
+			record.title = formValues['field-title']
+		}
+		record = this.definedFieldValues(record, formModelDef, formValues)
+		return record
 	}
 
 }

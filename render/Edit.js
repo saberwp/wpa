@@ -16,6 +16,13 @@ class Edit {
 	}
 
 	handleEditClick(e) {
+
+		const modal = new Modal()
+		const formContent = app.form.make(appDef[app.data.currentModel])
+		modal.setHeaderLabel('Edit '+appDef[app.data.currentModel].title)
+		modal.setContent(formContent)
+		modal.open()
+
 		const id = e.target.getAttribute('object-id')
 		const record = app.record(id)
 		const idField = document.getElementById('field-id')
@@ -33,6 +40,10 @@ class Edit {
 
 		// Set current record data.
 		app.data.currentRecordId = id
+
+		// Attach form submit handler.
+		app.form.submit(formContent)
+
 	}
 
 
@@ -60,6 +71,9 @@ class Edit {
 		.then((responseJson) => {
 			console.log("EDIT COMPLETE")
 			console.log(responseJson);
+
+			// Do list refresh.
+			app.list.refresh()
 		})
 		.catch((error) => {
 			console.error(error);

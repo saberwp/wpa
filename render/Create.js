@@ -12,9 +12,13 @@ class Create {
 
 	handleCreateClick(e) {
 		const modal = new Modal()
-		const formContent = app.form.make()
+		const formContent = app.form.make(appDef[app.data.currentModel])
 		modal.setHeaderLabel('Create '+appDef[app.data.currentModel].title)
 		modal.setContent(formContent)
+
+		// Attach form submit handler.
+		app.form.submit(formContent)
+
 		modal.open()
 	}
 

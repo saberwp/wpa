@@ -19,10 +19,6 @@ class ScreenModel {
 		// List make.
 		body.appendChild(app.list.make())
 
-		// Save form submit init.
-		// body.appendChild(app.form.make())
-		// app.form.submit()
-
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', () => {
 			// List init.
