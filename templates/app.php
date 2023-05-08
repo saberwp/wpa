@@ -26,6 +26,7 @@ if( $app->brand_styles ) {
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="<?php echo WPA_URL; ?>dist/output.css">
     <link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/app.css">
+		<link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/date-time-picker-component.min.css">
 
 		<?php
 			// Render base URL for the API.
@@ -38,6 +39,7 @@ if( $app->brand_styles ) {
 			echo '</script>';
 		?>
 		<?php $app->render_app_def_script(); ?>
+		<script src="<?php echo WPA_URL; ?>js/date-time-picker-component.min.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Logo.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Footer.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/views/app-shells/DefaultAppShell.js"></script>
@@ -70,3 +72,9 @@ if( $app->brand_styles ) {
 		</script>
   </body>
 </html>
+
+<!-- // @TODO move into the datetime selector field. -->
+<div id="datetimepicker"></div>
+<script>
+new DateTimePickerComponent.DateTimePicker('datetimepicker');
+</script>

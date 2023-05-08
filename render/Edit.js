@@ -28,9 +28,11 @@ class Edit {
 		const idField = document.getElementById('field-id')
 		idField.value = id
 
-		// Update form field title.
-		const titleField = document.getElementById('field-title')
-		titleField.value = record.title
+		// Update form field title if current model supports title field.
+		if(appDef[app.data.currentModel].title_field) {
+			const titleField = document.getElementById('field-title')
+			titleField.value = record.title
+		}
 
 		// Update form fields.
 		appDef[app.data.currentModel].fields.forEach(( field ) => {

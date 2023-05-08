@@ -15,7 +15,11 @@ class Form {
 		el.name = 'save-form'
 
 		el.appendChild( this.fieldId() )
-		el.appendChild( this.fieldTitle() )
+
+		// Conditional display title field.
+		if(modelDef.title_field) {
+			el.appendChild( this.fieldTitle() )
+		}
 
 		// Add fields to form.
 		modelDef.fields.forEach((field) => {

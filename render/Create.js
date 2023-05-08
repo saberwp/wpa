@@ -1,3 +1,4 @@
+/* Create record process handler. */
 class Create {
 
 	init() {
@@ -20,26 +21,6 @@ class Create {
 		app.form.submit(formContent)
 
 		modal.open()
-	}
-
-	/*
-	 * Prepare the form for create by clearing data.
-	 */
-	formPrepare() {
-
-		const idField = document.getElementById('field-id')
-		idField.value = 0
-
-		// Update form field title.
-		const titleField = document.getElementById('field-title')
-		titleField.value = ''
-
-		// Update form fields.
-		appDef[app.data.currentModel].fields.forEach(( field ) => {
-			const el = document.getElementById('field-'+field.key)
-			el.value = ''
-		})
-
 	}
 
 	recordModel(model, record) {

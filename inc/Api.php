@@ -104,13 +104,16 @@ class Api {
 		global $wpdb;
 		$table_name = $api->make_table_name( $model_key );
 
-		$edit_data = array(
-			'title' => $form_data['title'],
-		);
-
 		// Load model definition from JSON file
     $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
     $model = json_decode( $model_json );
+
+		$edit_data = array();
+
+		if($model->title_field) {
+			$edit_data['title'] = $form_data['title'];
+		}
+
 
 		$relations_exist = 0;
 		foreach ($model->fields as $field) {
@@ -234,8 +237,6 @@ class Api {
 	  global $wpdb;
 	  $table_name = self::make_table_name($model_key);
 
-
-
 	  // Load model definition from JSON file.
 		$api = new Api;
 		$api->set_app_key($app_key);
@@ -248,9 +249,11 @@ class Api {
 			$data = $api->createRelationInsertData($model, $json_data);
 		} else {
 			// Init data for insert.
-			$data = array(
-		    'title' => $json_data['title'],
-		  );
+			$data = array();
+
+			if($model->title_field) {
+				$data['title'] = $json_data['title'];
+			}
 
 		  foreach ($model->fields as $field) {
 		    // Add to $data query using $field->key and matching key from $json_data.
