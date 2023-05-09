@@ -21,23 +21,18 @@ class AppManager {
 
       // Check if app_key parameter is set
       if ( isset( $params['app_key'] ) ) {
-        // Do something with the app_key parameter
+
         $app_key = $params['app_key'];
 
 				// Load available app definition from /available.json.
 				$available_app = $this->available_app_by_key($app_key);
-				$resp->available_app = $available_app;
 
-				// Download app from repo.
-				$ar = new AppRepo;
-				$resp->download_result = $ar->download($available_app);
+				// Activate app by it's available_app data.
+				$this->activate($available_app);
 
-				// @TODO convert repo url (https://github.com/saberwp/wpa-tasker) to path /saberwp/wpa-tasker for GitHub API calls.
-
-        // Return a success message
-        $resp->message = 'App install successful for app_key: '. $app_key.'.';
+        $this->message = 'App install successful for app_key: '. $app_key.'.';
       } else {
-        $resp->message = 'App_key parameter missing';
+        $this->message = 'App_key parameter missing';
       }
 
 			return rest_ensure_response($resp);
@@ -57,6 +52,13 @@ class AppManager {
         }
 	    }
 	    return false;
+	}
+
+	function activate($app_data) {
+
+		var_dump( $app_data );
+		// @TODO copy files from /apps into wp-content/wpa/ 
+
 	}
 
 }

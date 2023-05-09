@@ -10,7 +10,11 @@ app.form.submit() handles save form processing. If form ID is set to 0, create i
 
 Call Create.create() to create a new record.
 
-Record is parsed in Form() class and then sent to server in Create().
+Record is parsed in Form() class and then sent to server in Create
+
+## App Prebuilt Activation
+
+Apps are stored under /apps. Root /available.json describes each app available. 
 
 ## Edit
 
