@@ -17,7 +17,6 @@ class Plugin {
 		// Admin enqueue scripts.
 		add_action( 'admin_enqueue_scripts', [$this, 'admin_scripts'] );
 
-
 		// Require functional API.
 		require_once(WPA_PATH.'inc/functions.php');
 
@@ -53,7 +52,7 @@ class Plugin {
 
 		*********/
 		require_once(WPA_PATH.'inc/Api.php');
-		$api = new \WPA\Api();
+		$api = new Api();
 		$api->init();
 
 		// Routes init.

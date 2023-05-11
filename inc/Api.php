@@ -1,13 +1,5 @@
 <?php
 
-/* @TODO
-
--- Load key from DB or env file.
--- Refactor register_api_endpoints() to avoid double foreach loop, separate single setup.
-
-
-*/
-
 /*
  * API Class
  *
@@ -336,8 +328,6 @@ class Api {
 
 	public function register_api_endpoints() {
 
-		// @TODO move this, it is duplicate of Plugin code because we can't call Plugin() again it has a constructor.
-
 		// Find apps loaded.
 		$wp_content_dir = WP_CONTENT_DIR;
 		$wpa_dir = $wp_content_dir . '/wpa';
@@ -349,6 +339,9 @@ class Api {
 		// Loop over apps and init API routes.
 		foreach( $app_keys as $app_key ) {
 
+			// Skip the cache.
+			if($app_key === 'cache') { continue; }
+
 			// Set app key and path root.
 			$this->set_app_key($app_key);
 			$this->set_path_root($app_key);
@@ -357,8 +350,10 @@ class Api {
 
 		    foreach ($app_def->models as $model_key) {
 
+						error_log($route_base);
+
 		        // Define the route for this model based on the model key.
-		        $route_base = $app_key.'/'.$model_key;
+		        $route_base = $app_def->key.'/'.$model_key;
 
 						// Register read list route.
 		        register_rest_route('wp/v2', $route_base, array(
