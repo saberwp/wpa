@@ -142,4 +142,8 @@ class App {
 		}
 	}
 
+	getModel(modelKey) {
+		return this.def[modelKey]
+	}
+
 }

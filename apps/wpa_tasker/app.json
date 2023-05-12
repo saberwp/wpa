@@ -1,5 +1,5 @@
 {
-	"key": "tasks",
+	"key": "wpa_tasker",
 	"title": "Saber Tasks",
 	"models": [
 		"task",

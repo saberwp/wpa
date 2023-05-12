@@ -254,6 +254,10 @@ class Api {
 					continue;
 				}
 
+				if($field->type === 'relation_select') {
+					continue;
+				}
+
 		    if (isset($json_data[$field->key])) {
 		      $data[$field->key] = $json_data[$field->key];
 		    }

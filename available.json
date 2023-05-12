@@ -12,6 +12,6 @@
 	{
 		"key": "tasks",
 		"title": "Tasker",
-		"local_dir": "wpa-tasker"
+		"local_dir": "wpa_tasker"
 	}
 ]
