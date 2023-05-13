@@ -14,7 +14,10 @@
 			"key": "notes",
 			"type": "textarea",
 			"label": "Notes",
-			"placeholder": "Task notes..."
+			"placeholder": "Task notes...",
+			"validation": {
+				"required": "true"
+			}
 		},
 		{
 			"key": "status",

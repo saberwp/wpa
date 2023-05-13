@@ -98,6 +98,7 @@ class App {
 
 			$model_json = file_get_contents( $this->path_root() . 'models/'.$model_key.'.json');
 			$model = json_decode( $model_json );
+
 			if( $model->type === 'relation' ) {
 
 				// Get def for each side of the relation.

@@ -75,7 +75,7 @@ class Router {
 			'app_paths' => $app_paths,
 			'app_map'   => $app_map
 		];
-		
+
 		return $app_data;
 	}
 }
