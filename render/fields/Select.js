@@ -33,8 +33,6 @@ class Select {
 		const fieldRelationModelKey = field.relation.model
 		const relationModel = appDef[fieldRelationModelKey]
 		const relationSide  = relationModel.relations[field.relation.side]
-		console.log('relationSide')
-		console.log(relationSide)
 		const relationRecords = app.data[relationSide.model].record
 
 		// If records are not loaded, we need to start the load and then use an event to update choices.
@@ -51,8 +49,6 @@ class Select {
 			return false
 
 		}
-		console.log('relationRecords')
-		console.log(relationRecords)
 
 		this.choicesRender(el, relationRecords)
 	}

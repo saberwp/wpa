@@ -39,6 +39,14 @@ if( $app->brand_styles ) {
 			echo '</script>';
 		?>
 		<?php $app->render_app_def_script(); ?>
+
+
+		<!-- WPA Validators -->
+		<script src="<?php echo WPA_URL; ?>render/modules/form/FormValidator.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/modules/form/validators/required/RequiredField.js"></script>
+
+
 		<script src="<?php echo WPA_URL; ?>js/date-time-picker-component.min.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Logo.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Footer.js"></script>

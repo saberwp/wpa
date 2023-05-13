@@ -116,14 +116,70 @@ class Form {
 			const formModelKey = event.target.getAttribute('model-key')
 			const formModelDef = app.def[formModelKey]
 			const formValues = this.formDataParse(formEl)
+
+			// Draft record.
+			const record = this.prepareRecord(formModelDef, formValues)
+
+			// Do validation.
+			const validationResult = this.validate(record, formModelDef)
+			console.log('validationResult:')
+			console.log(validationResult)
+
+			if(!validationResult.pass) {
+				// No pass validation.
+				this.validateFailHandler()
+				return
+			}
+
 			if( 0 === parseInt(formValues['field-id']) ) {
-				const record = this.prepareRecord(formModelDef, formValues)
 				app.create.recordModel(formModelDef, record)
 			} else {
-				const record = this.prepareRecord(formModelDef, formValues)
 				app.edit.update(record)
 			}
 		})
+	}
+
+	validateFailHandler() {
+		const container = document.querySelector('.modal-container > main')
+		console.log('fail handler...')
+		console.log(container)
+		const el = document.createElement('div')
+		el.classList.add('validation-error')
+		el.innerHTML = 'Validation failed.'
+		container.appendChild(el)
+	}
+
+	// Validate the entire record drafted based on the form data.
+	validate(record, modelDef) {
+
+		const result = {
+			pass: false,
+			failCount: 0,
+			passCount: 0
+		}
+
+		// Loop over defined fields to validate individually.
+		modelDef.fields.forEach((field) => {
+			if(field.hasOwnProperty('validation') && field.validation.length > 0) {
+
+				// @TODO add check to make sure record contains field value.
+				const validator = new FieldValidator()
+				const fieldResult = validator.test(field, record[field.key])
+				if(fieldResult.pass) {
+					result.passCount++
+				}
+				if(!fieldResult.pass) {
+					result.failCount++
+				}
+
+			}
+		})
+
+		if(result.failCount === 0) {
+			result.pass = true
+		}
+
+		return result
 	}
 
 	prepareRecord(formModelDef, formValues) {
