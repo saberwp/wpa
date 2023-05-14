@@ -1,5 +1,5 @@
 {
-	"key": "sleep_manager",
+	"key": "wpa_sleep",
 	"title": "Sleep Manager",
 	"models": [
 		"sleep_log"

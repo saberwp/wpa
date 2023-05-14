@@ -2,16 +2,21 @@
 	{
 		"key": "sleep_manager",
 		"title": "Sleep Manager",
-		"local_dir": "wpa-sleep"
+		"local_dir": "wpa_sleep"
 	},
 	{
 		"key": "budgets",
 		"title": "Budget Buddy",
-		"local_dir": "wpa-budget-buddy"
+		"local_dir": "wpa_budgets"
 	},
 	{
 		"key": "tasks",
 		"title": "Tasker",
 		"local_dir": "wpa_tasker"
+	},
+	{
+		"key": "spanish",
+		"title": "Spanish Learning Suite",
+		"local_dir": "wpa_spanish"
 	}
 ]

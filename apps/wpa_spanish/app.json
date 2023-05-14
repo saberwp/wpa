@@ -1,0 +1,11 @@
+{
+	"key": "wpa_spanish",
+	"title": "Spanish Learning App",
+	"models": [
+		"lesson"
+	],
+	"location": {
+		"where": "front",
+		"path": "spanish"
+	}
+}

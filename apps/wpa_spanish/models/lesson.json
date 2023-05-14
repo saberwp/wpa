@@ -1,0 +1,14 @@
+{
+	"key": "lesson",
+	"type": "standard",
+	"title": "Lesson",
+	"title_plural": "Lessons",
+	"fields": [
+		{
+			"key": "text",
+			"type": "textarea",
+			"label": "Text",
+			"placeholder": "Spanish lesson text..."
+		}
+	]
+}

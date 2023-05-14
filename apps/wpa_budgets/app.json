@@ -1,5 +1,5 @@
 {
-	"key": "budgets",
+	"key": "wpa_budgets",
 	"title": "Saber Budgets",
 	"models": [
 		"budget",
