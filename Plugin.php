@@ -74,7 +74,19 @@ class Plugin {
 
 		require_once(WPA_PATH.'inc/Activate.php');
 
+		// Check if directory exists.
+		$local_storage_path = WP_CONTENT_DIR . 'wpa';
+
+		if( ! is_dir($local_storage_path) ) {
+			$make_dir_result = mkdir($local_storage_path, 0755);
+			if( ! $make_dir_result ) {
+				error_log('WPA could not create the main local storage folder at /wp-content/wpa/.');
+			}
+		}
+
 		// Loop over apps and call activate run for each one.
+		// @TODO remove this process once the new DatabaseManager.php is working because we only want to install 1 of the apps automatically and leave the rest.
+		//   Install Tasker as a sample app.
 		$app_keys = $plugin->installed_apps();
 		foreach( $app_keys as $app_key ) {
 			$activate = new \WPA\Activate;
