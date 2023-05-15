@@ -58,7 +58,18 @@ class AppManager {
 			$app->init($app_key);
 			// $app->def
 
-			var_dump($app);
+			//var_dump($app);
+
+			// Foreach model check if tables exist.
+			foreach( $app->def->models as $model_key ) {
+				$model_def = $app->def->{$model_key};
+				$table_name = 'app' . '_' . $model_def->key;
+				$db_manager = new DatabaseManager;
+				$table_exists = $db_manager->table_exists($table_name);
+				if($table_exists) {
+					$db_manager->update_table($table_name, $model_def);
+				}
+			}
 
 		} else {
 			$this->message = 'App_key parameter missing';

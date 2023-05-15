@@ -21,6 +21,7 @@ class Plugin {
 		require_once(WPA_PATH.'inc/functions.php');
 
 		// Init app manager.
+		require_once(WPA_PATH.'inc/DatabaseManager.php');
 		require_once(WPA_PATH.'inc/App.php');
 		require_once(WPA_PATH.'inc/AppManager.php');
 		$am = new AppManager();
