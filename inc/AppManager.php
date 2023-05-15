@@ -13,6 +13,12 @@ class AppManager {
         'methods' => 'POST',
         'callback' => array( $this, 'app_install_callback' ),
       ));
+
+			// Route for app refresh.
+			register_rest_route( 'wpa/app', '/refresh', array(
+        'methods' => 'POST',
+        'callback' => array( $this, 'app_refresh_callback' ),
+      ));
     }
 
     public function app_install_callback( $request ) {
@@ -36,7 +42,30 @@ class AppManager {
       }
 
 			return rest_ensure_response($resp);
-    }
+  }
+
+	public function app_refresh_callback( $request ) {
+		$resp = new \stdClass;
+		$params = $request->get_json_params();
+
+		// Check if app_key parameter is set
+		if ( isset( $params['app_key'] ) ) {
+
+			$app_key = $params['app_key'];
+
+			// Load app definition.
+			$app = new App();
+			$app->init($app_key);
+			// $app->def
+
+			var_dump($app);
+
+		} else {
+			$this->message = 'App_key parameter missing';
+		}
+
+		return rest_ensure_response($resp);
+	}
 
 	public function available() {
 		$available_json = file_get_contents(WPA_PATH.'available.json');
@@ -55,9 +84,6 @@ class AppManager {
 	}
 
 	function activate($app_data) {
-
-		var_dump( $app_data );
-		// @TODO copy files from /apps into wp-content/wpa/
 
 		$app_source_path = WPA_PATH.'apps/'.$app_data->local_dir;
 

@@ -53,6 +53,12 @@ class Admin {
 				echo '<a href="'.site_url($app_def->location->path).'">Launch App</a>';
 			}
 
+			if($installed) {
+				echo '<div class="my-4">';
+				echo '<a class="wpa-app-refresh-button bg-gray-800 text-white font-semibold p-4" app-key="'.$app_def->key.'" href="#">Refresh App</a>';
+				echo '</div>';
+			}
+
 			if(!$installed) {
 				echo '<button class="wpa-app-install-button" app-key="'.$available_app->key.'">Install App</button>';
 			}
