@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name: WPA (WordPress Application Framework)
- * Version: 1.0.6
+ * Version: 1.0.7
  */
 
 namespace WPA;
@@ -64,17 +64,14 @@ class Plugin {
 
 	}
 
-
-
-	// Activation hook.
-	// Do install of apps folder under wp-content/uploads.
+	// Plugin activation callback.
 	public static function activate() {
 
 		$plugin = new Plugin;
 
 		require_once(WPA_PATH.'inc/Activate.php');
 
-		// Check if directory exists.
+		// Check if WPA content directory exists, create if not already existing.
 		$local_storage_path = WP_CONTENT_DIR . '/wpa';
 		if( ! is_dir($local_storage_path) ) {
 			$make_dir_result = mkdir($local_storage_path, 0755);
@@ -84,10 +81,8 @@ class Plugin {
 		}
 
 		// Install Tasker as a sample app.
-		$app_keys = $plugin->installed_apps();
-		$activate = new \WPA\Activate;
-		$activate->init('wpa_tasker');
-		$activate->run();
+		$app_manager = new \WPA\AppManager;
+		$app_manager->activate('wpa_tasker');
 
 	}
 

@@ -10,8 +10,6 @@ class DatabaseManager {
 
     $full_table_name = $wpdb->prefix . $table;
 
-		var_dump($full_table_name);
-
     $query = $wpdb->prepare("SHOW TABLES LIKE %s", $full_table_name);
     $result = $wpdb->get_var($query);
 
@@ -64,10 +62,6 @@ class DatabaseManager {
 		if (!in_array($field_key, $existing_columns)) {
 			// Add the column if it doesn't exist
 			$alter_query = "ALTER TABLE $full_table_name ADD COLUMN $field_key $column_type";
-
-			echo 'Doing alter query for NEW field' . "\n\n";
-			var_dump($alter_query);
-
 			$wpdb->query($alter_query);
 		} else {
 			// Check if data type needs to be changed
@@ -78,12 +72,6 @@ class DatabaseManager {
 				$new_column_name = $field_key . '_new';
 				$alter_query = "ALTER TABLE $full_table_name ADD COLUMN $new_column_name $column_type";
 				$wpdb->query($alter_query);
-
-
-				echo 'Doing alter query for EXISTING field' . "\n\n";
-				var_dump($existing_column_type);
-				var_dump($column_type);
-				var_dump($alter_query);
 
 				// Copy data from the old column to the new column
 				$wpdb->query("UPDATE $full_table_name SET $new_column_name = $field_key");
@@ -107,12 +95,13 @@ class DatabaseManager {
 	  $fields = $model_def->fields;
 	  foreach ($fields as $field) {
       $this->update_table_column($field, $full_table_name, $existing_columns);
-
-			var_dump($existing_columns);
-			die();
 	  }
 	}
 
+	function create_table($table_name, $model_def) {
 
+		
+
+	}
 
 }
