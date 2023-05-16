@@ -83,15 +83,11 @@ class Plugin {
 			}
 		}
 
-		// Loop over apps and call activate run for each one.
-		// @TODO remove this process once the new DatabaseManager.php is working because we only want to install 1 of the apps automatically and leave the rest.
-		//   Install Tasker as a sample app.
+		// Install Tasker as a sample app.
 		$app_keys = $plugin->installed_apps();
-		foreach( $app_keys as $app_key ) {
-			$activate = new \WPA\Activate;
-			$activate->init( $app_key );
-			$activate->run();
-		}
+		$activate = new \WPA\Activate;
+		$activate->init('wpa_tasker');
+		$activate->run();
 
 	}
 
