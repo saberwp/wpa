@@ -53,6 +53,7 @@ if( $app->brand_styles ) {
 		<script src="<?php echo WPA_URL; ?>render/views/app-shells/DefaultAppShell.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Route.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Screen.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/views/collection/CollectionSorting.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/views/collection/CollectionTable.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>

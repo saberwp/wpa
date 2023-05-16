@@ -43,9 +43,12 @@ class DatabaseManager {
 				return 'TEXT';
 	    case 'int':
         return 'INT';
+			case 'number':
+				return 'DOUBLE';
+			case 'decimal':
+				return 'DECIMAL';
 	    case 'date':
-        return 'DATE';
-	    // Add more cases for other field types as needed
+        return 'DATETIME';
 	    default:
         return '';
 	  }

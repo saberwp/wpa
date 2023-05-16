@@ -14,9 +14,11 @@ class ScreenModel {
 		body.innerHTML = ''
 		body.appendChild(app.create.button())
 
-
-		// List make.
-		body.appendChild(app.list.make())
+		// Table make.
+		app.table = new CollectionTable('list-table', app.data.currentModel)
+		const tableElement = app.table.make()
+		body.appendChild(tableElement)
+		app.table.init()
 
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', () => {
@@ -25,13 +27,10 @@ class ScreenModel {
 
 			// Create init.
 			app.create.init();
+
+			// Refresh table.
+			app.table.refresh()
 		});
-
-		// Table make.
-		const collectionTable = new CollectionTable('list-table')
-		const table = collectionTable.init()
-		body.appendChild(table)
-
 
 	}
 
