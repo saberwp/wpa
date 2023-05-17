@@ -28,7 +28,7 @@ class Admin {
 		$am = new AppManager;
 		$available_app_keys = wpa_get_available_app_keys();
 
-    echo '<div class="wpa-admin-wrap"><h1>WPA</h1></div>';
+		echo '<div id="wpa-admin-container" class="bg-gray-400 text-white wpa-admin-wrap">';
 
 		// Find apps loaded.
 		$wp_content_dir = WP_CONTENT_DIR;
@@ -38,6 +38,7 @@ class Admin {
 		   return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
 		});
 
+		$app_defs_with_install_flag = [];
 		foreach( $available_app_keys as $available_app_key ) {
 
 			// Check if installed, then load app def from install if it is.
@@ -49,24 +50,21 @@ class Admin {
 				$app_def = wpa_load_app_def_available($available_app_key);
 			}
 
-			echo '<h2>'.$app_def->title.'</h2>';
-
-			if($installed) {
-				echo '<a href="'.site_url($app_def->location->path).'">Launch App</a>';
-			}
-
-			if($installed) {
-				echo '<div class="my-4">';
-				echo '<a class="wpa-app-refresh-button bg-gray-800 text-white font-semibold p-4" app-key="'.$app_def->key.'" href="#">Refresh App</a>';
-				echo '</div>';
-			}
-
-			if(!$installed) {
-				echo '<button class="wpa-app-install-button" app-key="'.$available_app_key.'">Install App</button>';
-			}
+			$app_def->installed = $installed;
+			$app_def->site_url  = site_url($app_def->location->path);
+			$app_defs_with_install_flag[] = $app_def;
 
 		}
 
+		echo '</div>';
+
+		echo '<script>';
+		echo 'var wpaAppDefsWithInstallFlag = ';
+		echo json_encode($app_defs_with_install_flag);
+		echo '</script>';
+
 	}
+
+
 
 }
