@@ -26,7 +26,7 @@ class Admin {
 	public function main_content() {
 
 		$am = new AppManager;
-		$available_apps = $am->available();
+		$available_app_keys = wpa_get_available_app_keys();
 
     echo '<div class="wpa-admin-wrap"><h1>WPA</h1></div>';
 
@@ -38,16 +38,18 @@ class Admin {
 		   return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
 		});
 
-		foreach( $available_apps as $available_app ) {
+		foreach( $available_app_keys as $available_app_key ) {
 
 			// Check if installed, then load app def from install if it is.
-			$installed = wpa_app_installed($available_app);
+			$installed = wpa_app_installed($available_app_key);
 
 			if($installed) {
-				$app_def = wpa_load_app_def($available_app);
+				$app_def = wpa_load_app_def($available_app_key);
+			} else {
+				$app_def = wpa_load_app_def_available($available_app_key);
 			}
 
-			echo '<h2>'.$available_app->title.'</h2>';
+			echo '<h2>'.$app_def->title.'</h2>';
 
 			if($installed) {
 				echo '<a href="'.site_url($app_def->location->path).'">Launch App</a>';
@@ -60,7 +62,7 @@ class Admin {
 			}
 
 			if(!$installed) {
-				echo '<button class="wpa-app-install-button" app-key="'.$available_app->key.'">Install App</button>';
+				echo '<button class="wpa-app-install-button" app-key="'.$available_app_key.'">Install App</button>';
 			}
 
 		}

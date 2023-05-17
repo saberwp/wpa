@@ -352,12 +352,10 @@ class Api {
 
 		  $app_def = $this->load_app_def();
 
-		    foreach ($app_def->models as $model_key) {
+	    foreach ($app_def->models as $model_key) {
 
-						error_log($route_base);
-
-		        // Define the route for this model based on the model key.
-		        $route_base = $app_def->key.'/'.$model_key;
+        // Define the route for this model based on the model key.
+        $route_base = $app_def->key.'/'.$model_key;
 
 						// Register read list route.
 		        register_rest_route('wp/v2', $route_base, array(

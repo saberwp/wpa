@@ -4,9 +4,11 @@ namespace WPA;
 
 class AppManager {
 
-    public function init() {
-        add_action( 'rest_api_init', array( $this, 'register_routes' ) );
-    }
+	public $log = array();
+
+  public function init() {
+      add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+  }
 
     public function register_routes() {
       register_rest_route( 'wpa/app', '/install', array(
@@ -25,10 +27,14 @@ class AppManager {
 			$resp = new \stdClass;
       $params = $request->get_json_params();
 
+			$this->log[] = 'App installer called.';
+
       // Check if app_key parameter is set
       if ( isset( $params['app_key'] ) ) {
 
         $app_key = $params['app_key'];
+
+				$this->log[] = 'App installer called for app key ' . $app_key . '.';
 
 				// Load available app definition from /available.json.
 				$available_app = $this->available_app_by_key($app_key);
@@ -41,7 +47,8 @@ class AppManager {
         $this->message = 'App_key parameter missing';
       }
 
-			return rest_ensure_response($resp);
+		$resp->log = $this->log;
+		return rest_ensure_response($resp);
   }
 
 	public function app_refresh_callback( $request ) {
