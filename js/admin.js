@@ -44,15 +44,22 @@ class WpaAdmin {
 
 	makeAppCardBody(app) {
 		const el = document.createElement('section')
-		el.innerHTML = 'Card body...'
+		el.classList.add('flex', 'gap-4', 'items-center')
+		if(app.installed) {
+			el.appendChild(this.makeAppCardRefreshButton(app))
+		}
+		if(!app.installed) {
+			el.appendChild(this.makeAppCardInstallButton(app))
+		}
+		el.appendChild(this.makeAppCardVisitButton(app))
 		return el
 	}
 
 	makeAppCardFooter(app) {
 		const el = document.createElement('footer')
 		el.classList.add('flex', 'gap-4', 'items-center')
-		el.appendChild(this.makeAppCardInstallButton(app))
-		el.appendChild(this.makeAppCardVisitButton(app))
+
+
 		el.appendChild(this.makeAppCardStatus(app))
 		return el
 	}
@@ -62,6 +69,18 @@ class WpaAdmin {
 		el.classList.add('cursor-pointer','wpa-app-install-button')
 		let content = ''
 		content += '<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.3125 1.3125V0H12.6875V1.3125V16.0836L7.49219 10.8883L6.5625 9.95859L4.70859 11.8125L5.63828 12.7422L13.0703 20.1797L14 21.1094L14.9297 20.1797L22.3672 12.7422L23.2969 11.8125L21.4375 9.95859L20.5078 10.8883L15.3125 16.0836V1.3125ZM7.04375 16.625H2.625H0V19.25V25.375V28H2.625H25.375H28V25.375V19.25V16.625H25.375H20.9563L18.3313 19.25H25.375V25.375H2.625V19.25H9.66875L7.04375 16.625ZM23.625 22.3125C23.625 21.9644 23.4867 21.6306 23.2406 21.3844C22.9944 21.1383 22.6606 21 22.3125 21C21.9644 21 21.6306 21.1383 21.3844 21.3844C21.1383 21.6306 21 21.9644 21 22.3125C21 22.6606 21.1383 22.9944 21.3844 23.2406C21.6306 23.4867 21.9644 23.625 22.3125 23.625C22.6606 23.625 22.9944 23.4867 23.2406 23.2406C23.4867 22.9944 23.625 22.6606 23.625 22.3125Z" fill="white"/></svg>'
+
+		el.innerHTML = content
+		el.setAttribute('app-key',app.key)
+		return el
+	}
+
+	makeAppCardRefreshButton(app) {
+		const el = document.createElement('div')
+		el.classList.add('cursor-pointer','wpa-app-refresh-button')
+		let content = ''
+		content += '<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28 11.2H26.6H18.2H16.8V8.4H18.2H23.2225L20.1833 5.36083C18.5383 3.72167 16.3158 2.8 14 2.8C9.75917 2.8 6.11333 5.3725 4.55 9.0475L1.97167 7.95083C3.96083 3.27833 8.59833 0 14 0C17.0625 0 19.9967 1.21333 22.1608 3.3775L25.2 6.4225V1.4V0H28V1.4V9.8V11.2ZM0 14.9333H1.4H9.8H11.2V17.7333H9.8H4.7775L7.81667 20.7725C9.46167 22.4117 11.6842 23.3333 14 23.3333C18.235 23.3333 21.875 20.7725 23.4442 17.1033L26.0167 18.2058C24.0217 22.8667 19.3958 26.1333 14 26.1333C10.9375 26.1333 8.00333 24.92 5.83917 22.7558L2.8 19.7108V24.7333V26.1333H0V24.7333V16.3333V14.9333Z" fill="white"/></svg>'
+
 		el.innerHTML = content
 		el.setAttribute('app-key',app.key)
 		return el
@@ -83,6 +102,7 @@ class WpaAdmin {
 	makeAppCardStatus(app) {
 		const label = app.installed ? 'INSTALLED' : 'UNINSTALLED';
 		const el = document.createElement('div')
+		el.classList.add('wpa-app-card-status')
 		let content = ''
 		content += '<h2 class="text-gray-200 text-lg font-semibold">'+label+'</h2>'
 		el.innerHTML = content
@@ -134,7 +154,8 @@ class WpaAdmin {
 
 	appCardRefresh(status, appKey) {
 		const cardEl = document.getElementById('wpa-app-'+appKey)
-		cardEl.innerHTML = 'INSTALLED BBAAABY!!'
+		const statusElement = cardEl.querySelector('.wpa-app-card-status h2');
+		statusElement.innerHTML = 'INSTALLED'
 	}
 
 	attachAppRefreshButtonClickEvent() {

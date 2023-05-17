@@ -85,23 +85,43 @@ class DatabaseManager {
 		}
 	}
 
+	public function refresh($table_name, $model_def) {
+
+		$table_exists = $this->table_exists($table_name);
+		if($table_exists) {
+			$this->update_table($table_name, $model_def);
+		} else {
+			$this->create_table($table_name, $model_def);
+		}
+
+	}
+
 	function update_table($table_name, $model_def) {
 	  global $wpdb;
-
 	  $full_table_name = $wpdb->prefix . $table_name;
 
 	  $existing_columns = $this->get_table_columns($table_name);
-
-	  $fields = $model_def->fields;
-	  foreach ($fields as $field) {
-      $this->update_table_column($field, $full_table_name, $existing_columns);
-	  }
+		$this->update_table_fields($model_def, $full_table_name, $existing_columns);
 	}
 
 	function create_table($table_name, $model_def) {
+		global $wpdb;
+	  $full_table_name = $wpdb->prefix . $table_name;
+		$charset_collate = $wpdb->get_charset_collate();
+		$sql  = 'CREATE TABLE ' . $full_table_name . '(';
+		$sql .= 'id mediumint(9) NOT NULL AUTO_INCREMENT,';
+		$sql .= "\nPRIMARY KEY (id)\n) $charset_collate;"; // Add the primary key and finish the SQL statement
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql ); // Create the table using dbDelta function
+		$existing_columns = $this->get_table_columns($table_name);
+		$this->update_table_fields($model_def, $full_table_name, $existing_columns);
+	}
 
-		
-
+	function update_table_fields($model_def, $full_table_name, $existing_columns) {
+		$fields = $model_def->fields;
+	  foreach ($fields as $field) {
+      $this->update_table_column($field, $full_table_name, $existing_columns);
+	  }
 	}
 
 }

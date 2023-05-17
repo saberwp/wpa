@@ -36,9 +36,6 @@ class AppManager {
 
 				$this->log[] = 'App installer called for app key ' . $app_key . '.';
 
-				// Load available app definition from /available.json.
-				$available_app = $this->available_app_by_key($app_key);
-
 				// Activate app by it's available_app data.
 				$this->activate($app_key);
 
@@ -75,16 +72,11 @@ class AppManager {
 		$app->init($app_key);
 
 		foreach( $app->def->models as $model_key ) {
+			$this->log[] = 'AppManager::app_refresh_routine() run for model_key: '.$model_key.'.';
 			$model_def = $app->def->{$model_key};
-			$table_name = 'app' . '_' . $model_def->key;
+			$table_name = $app_key . '_' . $model_def->key;
 			$db_manager = new DatabaseManager;
-			$table_exists = $db_manager->table_exists($table_name);
-			if($table_exists) {
-				$db_manager->update_table($table_name, $model_def);
-			} else {
-				// @TODO Replace with create_table().
-				$db_manager->update_table($table_name, $model_def);
-			}
+			$db_manager->refresh($table_name, $model_def);
 		}
 	}
 
@@ -105,6 +97,8 @@ class AppManager {
 	}
 
 	function activate($app_key) {
+
+		$this->log[] = 'AppManager::activate() run.';
 
 		// File copy.
 		$app_source_path = WPA_PATH.'apps/'.$app_key;
