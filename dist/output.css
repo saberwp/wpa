@@ -593,8 +593,16 @@ video {
   margin-bottom: 2rem;
 }
 
+.-ml-10 {
+  margin-left: -2.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .mr-0 {
@@ -605,8 +613,16 @@ video {
   margin-top: 2rem;
 }
 
-.mb-6 {
-  margin-bottom: 1.5rem;
+.-ml-8 {
+  margin-left: -2rem;
+}
+
+.-ml-\[20px\] {
+  margin-left: -20px;
+}
+
+.mt-auto {
+  margin-top: auto;
 }
 
 .block {
@@ -637,12 +653,28 @@ video {
   display: none;
 }
 
+.h-60 {
+  height: 15rem;
+}
+
+.h-40 {
+  height: 10rem;
+}
+
 .w-full {
   width: 100%;
 }
 
-.w-12 {
-  width: 3rem;
+.w-20 {
+  width: 5rem;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-60 {
+  width: 15rem;
 }
 
 .min-w-full {
@@ -663,6 +695,10 @@ video {
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .flex-wrap {
@@ -753,18 +789,38 @@ video {
   background-color: rgb(17 24 39 / 0.05);
 }
 
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
 .fill-white {
   fill: #fff;
+}
+
+.fill-gray-500 {
+  fill: #6b7280;
+}
+
+.fill-gray-400 {
+  fill: #9ca3af;
+}
+
+.fill-gray-800 {
+  fill: #1f2937;
+}
+
+.fill-gray-600 {
+  fill: #4b5563;
+}
+
+.fill-gray-300 {
+  fill: #d1d5db;
 }
 
 .p-0 {
@@ -905,6 +961,11 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -930,9 +991,25 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-gray-200 {
+.text-gray-400 {
   --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.hover\:fill-black:hover {
+  fill: #000;
+}
+
+.hover\:fill-gray-700:hover {
+  fill: #374151;
+}
+
+.hover\:fill-gray-200:hover {
+  fill: #e5e7eb;
+}
+
+.hover\:fill-gray-100:hover {
+  fill: #f3f4f6;
 }
 
 @media (min-width: 640px) {
