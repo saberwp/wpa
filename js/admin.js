@@ -19,7 +19,7 @@ class WpaAdmin {
 
 	makeAppGrid() {
 		const el = document.createElement('section')
-		el.classList.add('flex', 'flex-wrap', 'gap-4', 'bg-gray-100', 'p-4')
+		el.classList.add('flex', 'flex-wrap', 'gap-x-4', 'gap-y-6', 'bg-gray-500', 'p-4')
 		this.data.forEach((app) => {
 			el.appendChild(this.makeAppCard(app))
 		})
@@ -29,7 +29,7 @@ class WpaAdmin {
 	makeAppCard(app) {
 		const el = document.createElement('div')
 		el.id = 'wpa-app-'+app.key
-		el.classList.add('rounded-md', 'p-4', 'bg-gray-600', 'w-60', 'h-40', 'flex', 'flex-col')
+		el.classList.add('rounded-md', 'px-4', 'pt-4', 'pb-2', 'bg-gray-600', 'w-60', 'h-40', 'flex', 'flex-col', 'drop-shadow-lg')
 		el.appendChild(this.makeAppCardHeader(app))
 		el.appendChild(this.makeAppCardBody(app))
 		el.appendChild(this.makeAppCardFooter(app))
@@ -57,7 +57,7 @@ class WpaAdmin {
 
 	makeAppCardFooter(app) {
 		const el = document.createElement('footer')
-		el.classList.add('flex', 'gap-4', 'items-center', 'justify-between', 'mt-auto')
+		el.classList.add('flex', 'gap-4', 'items-center', 'justify-between', 'mt-auto', 'bg-gray-700', '-mx-4', '-mb-4', 'py-2', 'px-4', 'rounded-b-md')
 
 		el.appendChild(this.makeAppCardRemoveButton(app))
 		el.appendChild(this.makeAppCardStatus(app))
