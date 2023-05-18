@@ -56,3 +56,8 @@ function wpa_load_app_def_by_key($app_key) {
 	$app_def = json_decode($app_def_json);
 	return $app_def;
 }
+
+function wpa_model_make_table_name( $app_key, $model_key ) {
+	global $wpdb;
+	return $wpdb->prefix . $app_key . '_' . $model_key;
+}

@@ -11,6 +11,7 @@ class AppManager {
   }
 
     public function register_routes() {
+			// Route for app install.
       register_rest_route( 'wpa/app', '/install', array(
         'methods' => 'POST',
         'callback' => array( $this, 'app_install_callback' ),
@@ -20,6 +21,12 @@ class AppManager {
 			register_rest_route( 'wpa/app', '/refresh', array(
         'methods' => 'POST',
         'callback' => array( $this, 'app_refresh_callback' ),
+      ));
+
+			// Route for app uninstall.
+			register_rest_route( 'wpa/app', '/uninstall', array(
+        'methods' => 'POST',
+        'callback' => array( $this, 'app_uninstall_callback' ),
       ));
     }
 
@@ -47,6 +54,31 @@ class AppManager {
 		$resp->log = $this->log;
 		return rest_ensure_response($resp);
   }
+
+	public function app_uninstall_callback( $request ) {
+		$resp = new \stdClass;
+		$params = $request->get_json_params();
+
+		$this->log[] = 'App uninstaller called.';
+
+		// Check if app_key parameter is set
+		if ( isset( $params['app_key'] ) ) {
+
+			$app_key = $params['app_key'];
+
+			$this->log[] = 'App installer called for app key ' . $app_key . '.';
+
+			// Delete app.
+			$this->uninstall($app_key);
+
+			$this->message = 'App uninstall successful for app_key: '. $app_key.'.';
+		} else {
+			$this->message = 'App key parameter missing';
+		}
+
+	$resp->log = $this->log;
+	return rest_ensure_response($resp);
+}
 
 	public function app_refresh_callback( $request ) {
 		$resp = new \stdClass;
@@ -109,6 +141,31 @@ class AppManager {
 
 		// Do database updates with refresh routine.
 		$this->app_refresh_routine($app_key);
+
+	}
+
+	function uninstall($app_key) {
+
+		global $wpdb;
+		$this->log[] = 'AppManager::uninstall() run.';
+
+		// Remove database tables.
+		$app_main_def = wpa_load_app_def($app_key);
+		if(!empty($app_main_def->models)) {
+			foreach($app_main_def->models as $model_key) {
+				$table_name = wpa_model_make_table_name($app_key, $model_key);
+        $wpdb->query("DROP TABLE IF EXISTS $table_name");
+			}
+		}
+
+		// Remove all app files from /wp-content/wpa/{app_key}.
+		$wp_content_dir = WP_CONTENT_DIR;
+		$wpa_dir = $wp_content_dir . '/wpa';
+		$app_path = $wpa_dir . '/' . $app_key;
+		$this->rrmdir($app_path);
+
+
+
 
 	}
 

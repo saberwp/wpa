@@ -84,7 +84,7 @@ class WpaAdmin {
 
 		let content = ''
 		if(app.installed) {
-			el.classList.add('cursor-pointer','wpa-app-remove-button')
+			el.classList.add('cursor-pointer','wpa-app-uninstall-button')
 			content += '<svg class="fill-gray-400 hover:fill-gray-200" width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.35714 0H4.92857L4.6875 0.355273L3.14062 2.65625H2.67857H1.07143H0V4.25H1.07143V15.4062V17H2.67857H12.3214H13.9286V15.4062V4.25H15V2.65625H13.9286H12.3214H11.8594L10.3125 0.355273L10.0714 0H9.64286H5.35714ZM9.92745 2.65625H5.07254L5.78571 1.59375H9.21429L9.92745 2.65625ZM2.67857 15.4062V4.25H12.3214V15.4062H2.67857ZM10.7779 7.4375L9.64286 6.31191L9.07366 6.87637L7.5 8.43691L5.92634 6.87637L5.35714 6.31191L4.2221 7.4375L4.79129 8.00195L6.36496 9.5625L4.79129 11.123L4.2221 11.6875L5.35714 12.8131L5.92634 12.2486L7.5 10.6881L9.07366 12.2486L9.64286 12.8131L10.7779 11.6875L10.2087 11.123L8.63504 9.5625L10.2087 8.00195L10.7779 7.4375Z"/></svg>'
 		}
 		if(!app.installed) {
@@ -137,6 +137,7 @@ class WpaAdmin {
 	eventsInit() {
 		this.attachInstallButtonClickEvent()
 		this.attachAppRefreshButtonClickEvent()
+		this.attachUninstallButtonClickEvent()
 	}
 
 	attachInstallButtonClickEvent() {
@@ -174,6 +175,49 @@ class WpaAdmin {
 
 	  installButtons.forEach(button => {
 	    button.addEventListener('click', handleClick);
+	  });
+	}
+
+	attachUninstallButtonClickEvent() {
+
+
+
+		const installButtons = document.querySelectorAll('.wpa-app-uninstall-button');
+		const self = this;
+
+		const handleUninstallClick = function(event) {
+		  event.preventDefault();
+
+			console.log('uninstall click...')
+
+			const appKey = event.currentTarget.getAttribute('app-key')
+
+		  const data = {
+		    'app_key': appKey,
+		  };
+
+		  fetch('/wp-json/wpa/app/uninstall/', {
+		    method: 'POST',
+		    headers: {
+		      'Content-Type': 'application/json'
+		    },
+		    body: JSON.stringify(data)
+		  })
+		    .then(function(response) {
+		      if (response.ok) {
+		        console.log(response);
+						self.appCardRefresh('uninstalled', appKey)
+		      } else {
+		        console.error('App uninstall failed!');
+		      }
+		    })
+		    .catch(function(error) {
+		      console.error('App uninstall failed!', error);
+		    });
+		  };
+
+	  installButtons.forEach(button => {
+	    button.addEventListener('click', handleUninstallClick);
 	  });
 	}
 
