@@ -57,7 +57,7 @@ class Api {
 
 		// Load data.
 		global $wpdb;
-		$table_name = $this->make_table_name( $model_key );
+		$table_name = $this->make_table_name( $app_key, $model_key );
     $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC LIMIT 10");
     $records = array();
     foreach ($results as $result) {
@@ -94,7 +94,7 @@ class Api {
 
 		// Do DB update.
 		global $wpdb;
-		$table_name = $api->make_table_name( $model_key );
+		$table_name = $api->make_table_name( $app_key, $model_key );
 
 		// Load model definition from JSON file
     $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
@@ -172,7 +172,7 @@ class Api {
 				// Get the relation ID from the form data.
 				$relation_id = $form_data[$field->key];
 
-				$table_name = $this->make_table_name($field->relation->model);
+				$table_name = $this->make_table_name($this->get_app_key(), $field->relation->model);
 				$query = "SELECT * FROM $table_name WHERE $first_col = $id";
 				$row = $wpdb->get_row($query);
 
@@ -227,7 +227,7 @@ class Api {
 
 	  // Do DB insert.
 	  global $wpdb;
-	  $table_name = self::make_table_name($model_key);
+	  $table_name = self::make_table_name($app_key, $model_key);
 
 	  // Load model definition from JSON file.
 		$api = new Api;
@@ -306,6 +306,7 @@ class Api {
 		// Get model key from API path.
 		$route = $request->get_route();
 		$route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
 		$model_key = $route_parts[4];
 
 		// Get ID.
@@ -313,7 +314,7 @@ class Api {
 
 		// Do DB update.
 		global $wpdb;
-		$table_name = $this->make_table_name( $model_key );
+		$table_name = $this->make_table_name($app_key, $model_key);
 
 		$where = array(
 			'id' => $id,
@@ -406,9 +407,9 @@ class Api {
 
 		}
 
-	private static function make_table_name( $model_key ) {
+	private static function make_table_name( $app_key, $model_key ) {
 		global $wpdb;
-		return $wpdb->prefix . 'app_' . $model_key;
+		return $wpdb->prefix . $app_key . '_' . $model_key;
 	}
 
 }
