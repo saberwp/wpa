@@ -110,6 +110,12 @@ class DatabaseManager {
 		$charset_collate = $wpdb->get_charset_collate();
 		$sql  = 'CREATE TABLE ' . $full_table_name . '(';
 		$sql .= 'id mediumint(9) NOT NULL AUTO_INCREMENT,';
+
+		if( $model_def->type === 'relation' ) {
+			$sql .= $model_def->relations->left->model . '_id mediumint(9) NOT NULL,';
+			$sql .= $model_def->relations->right->model . '_id mediumint(9) NOT NULL,';
+		}
+
 		$sql .= "\nPRIMARY KEY (id)\n) $charset_collate;"; // Add the primary key and finish the SQL statement
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql ); // Create the table using dbDelta function
