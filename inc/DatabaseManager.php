@@ -5,7 +5,7 @@ namespace WPA;
 class DatabaseManager {
 
 	// Pass table name without prefix.
-	function table_exists($table) {
+	private function table_exists($table) {
     global $wpdb;
 
     $full_table_name = $wpdb->prefix . $table;
@@ -125,6 +125,16 @@ class DatabaseManager {
 
 	function update_table_fields($model_def, $full_table_name, $existing_columns) {
 		$fields = $model_def->fields;
+
+		// Make title field if it is active (or unset, default active) in defined model.
+		$title_field = Model::title_field_active($model_def);
+		if($title_field) {
+			$field = new \stdClass;
+			$field->key  = 'title';
+			$field->type = 'text';
+			$this->update_table_column($field, $full_table_name, $existing_columns);
+		}
+
 	  foreach ($fields as $field) {
       $this->update_table_column($field, $full_table_name, $existing_columns);
 	  }
