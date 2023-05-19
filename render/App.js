@@ -1,3 +1,5 @@
+// @TODO load dependency scripts using the append to child method ChatGPT suggested.
+
 class App {
 
 	constructor() {

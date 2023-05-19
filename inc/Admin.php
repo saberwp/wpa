@@ -100,6 +100,38 @@ class Admin {
 
 		echo 'KEYS PAGE';
 
+		// Enq ApiKeys.js
+		// Fetch existing keys from DB.
+		$app_main_json = \file_get_contents(WPA_PATH . '/apps-internal/api_keys/app.json');
+		$app_main_def = json_decode( $app_main_json );
+		$app = new App();
+		$storage_path = wpa_app_storage_path_by_type('internal');
+		$app->set_storage_path($storage_path);
+		$app->set_app_key('api_keys');
+		$app->init();
+
+
+		// @TODO init by key but it needs to find the app under wpa/apps-internal, optionals $dir_path?
+		// $app->init($app_key);
+		echo '<div class="wpa-app-loader" app-key="api_keys"></div>';
+		$app->render_app_def_script();
+
+		// Render base URL for the API.
+		$rest_url = rest_url();
+		$api_url = $rest_url . 'wp/v2/';
+		echo '<script>';
+		echo 'var WPA_ApiUrl = "' . $api_url . '"';
+		echo '</script>';
+
+		echo '<script>
+			const app = new App()
+			// Add appDef to app object.
+			// @TODO improve this by fetching the appDef by request?
+			app.def = appDef
+			app.load()
+		</script>';
+
+
 	}
 
 	public function debug_page() {

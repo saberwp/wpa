@@ -61,3 +61,17 @@ function wpa_model_make_table_name( $app_key, $model_key ) {
 	global $wpdb;
 	return $wpdb->prefix . $app_key . '_' . $model_key;
 }
+
+function wpa_app_storage_path_by_type($type) {
+	switch($type) {
+		case 'wpa':
+			return WP_CONTENT_DIR . '/wpa/';
+			break;
+		case 'prebuilt':
+			return WPA_PATH . 'apps/';
+			break;
+		case 'internal':
+			return WPA_PATH . 'apps-internal/';
+			break;
+	}
+}

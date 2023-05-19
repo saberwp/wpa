@@ -8,6 +8,9 @@ $app_main_def = json_decode( $app_main_json );
 
 require_once(WPA_PATH.'inc/App.php');
 $app = new \WPA\App();
+$storage_path = wpa_app_storage_path_by_type('wpa');
+$app->set_storage_path($storage_path);
+$app->set_app_key($app_main_def->key);
 $app->init($GLOBALS['wpa_app_dir_name']);
 if( $app->brand_styles ) {
 	$app->brand_styles_render();
@@ -45,8 +48,6 @@ if( $app->brand_styles ) {
 		<script src="<?php echo WPA_URL; ?>render/modules/form/FormValidator.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/validators/required/RequiredField.js"></script>
-
-
 		<script src="<?php echo WPA_URL; ?>js/date-time-picker-component.min.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Logo.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Footer.js"></script>
@@ -81,9 +82,3 @@ if( $app->brand_styles ) {
 		</script>
   </body>
 </html>
-
-<!-- // @TODO move into the datetime selector field. -->
-<div id="datetimepicker"></div>
-<script>
-new DateTimePickerComponent.DateTimePicker('datetimepicker');
-</script>

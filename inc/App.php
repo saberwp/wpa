@@ -4,24 +4,37 @@ namespace WPA;
 
 class App {
 
+	public $storage_path = false;
+	public $app_key      = false;
 	public $def          = false;
 	public $dir_name     = false;
 	public $path_root    = false;
 	public $brand_styles = false;
 
-	public function dir_name() {
-		return $this->dir_name;
+	public function set_app_key($app_key) {
+		$this->app_key = $app_key;
+	}
+
+	public function get_app_key() {
+		return $this->app_key;
+	}
+
+	public function get_storage_path() {
+		return $this->storage_path;
+	}
+
+	public function set_storage_path($storage_path) {
+		$this->storage_path = $storage_path;
 	}
 
 	public function path_root() {
 		return $this->path_root;
 	}
 
-	public function init( $dir_name ) {
+	public function init() {
 
 		// Set class properties from $dir_name string passed (e.g. "budget").
-		$this->dir_name  = $dir_name;
-		$this->path_root = WP_CONTENT_DIR . '/wpa/'.$this->dir_name.'/';
+		$this->path_root = $this->storage_path.$this->app_key.'/';
 
 		// Load app def.
 		$app_def_json = file_get_contents( $this->path_root() . 'app.json');

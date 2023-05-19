@@ -1,0 +1,12 @@
+{
+  "key": "wpa_api_keys",
+  "type": "internal",
+  "title": "WPA API Keys",
+  "models": [
+	  "api_key"
+  ],
+  "location": {
+	  "where": "back",
+	  "path": "wpa-keys"
+  }
+}

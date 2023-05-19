@@ -101,7 +101,10 @@ class AppManager {
 	public function app_refresh_routine($app_key) {
 		// Load app definition.
 		$app = new App();
-		$app->init($app_key);
+		$storage_path = wpa_app_storage_path_by_type('wpa');
+		$app->set_app_key($app_key);
+		$app->set_storage_path($storage_path);
+		$app->init();
 
 		foreach( $app->def->models as $model_key ) {
 			$this->log[] = 'AppManager::app_refresh_routine() run for model_key: '.$model_key.'.';
