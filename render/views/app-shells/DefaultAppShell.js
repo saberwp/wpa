@@ -18,6 +18,8 @@ class DefaultAppShell {
 	header() {
 		const el = document.createElement('header')
 
+		console.log(app.def)
+
 		// Add search only if defined in app def.
 		if(app.def.search) {
 			el.appendChild(this.headerSearch())

@@ -5,7 +5,7 @@ class App {
 	constructor() {
 
 		// Add feature controllers to app.
-		this.form   = new Form()
+		this.form = new Form();
 		this.list   = new List()
 		this.edit   = new Edit()
 		this.create = new Create()
@@ -149,3 +149,10 @@ class App {
 	}
 
 }
+
+// Self initiate.
+window.app = '';
+document.addEventListener('DOMContentLoaded', function() {
+  window.app = new App();
+  window.app.load();
+});

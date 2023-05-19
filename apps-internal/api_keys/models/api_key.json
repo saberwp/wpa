@@ -1,0 +1,9 @@
+{
+	"key": "api_key",
+	"type": "standard",
+	"title": "API Key",
+	"title_plural": "API Keys",
+	"fields": [],
+	"title_field": false,
+	"search": false
+}

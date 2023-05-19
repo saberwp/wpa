@@ -123,15 +123,6 @@ class Admin {
 		echo 'var WPA_ApiUrl = "' . $api_url . '"';
 		echo '</script>';
 
-		echo '<script>
-			const app = new App()
-			// Add appDef to app object.
-			// @TODO improve this by fetching the appDef by request?
-			app.def = appDef
-			app.load()
-		</script>';
-
-
 	}
 
 	public function debug_page() {

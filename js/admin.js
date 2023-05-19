@@ -254,7 +254,6 @@ admin.makeAppHeading()
 admin.makeAppGrid()
 admin.eventsInit()
 
-
 class AppRefresh {
 
 	run(appKey) {
