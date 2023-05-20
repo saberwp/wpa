@@ -10,8 +10,8 @@ class Menu {
 		el.classList.add('font-lg')
 		el.classList.add('font-semibold')
 		el.appendChild(this.menuItem('Dashboard', 'dashboard'))
-		appDef.models.forEach(( modelKey ) => {
-			const model = appDef[modelKey]
+		app.def.models.forEach(( modelKey ) => {
+			const model = app.def[modelKey]
 			if( model.type === 'standard' ) {
 				el.appendChild( this.menuItemModel( model ))
 			}

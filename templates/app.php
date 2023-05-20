@@ -6,12 +6,14 @@ $app_dir_name = $wp_query->query_vars['name'];
 $app_main_json = \file_get_contents(WP_CONTENT_DIR . '/wpa/' . $GLOBALS['wpa_app_dir_name'] . '/app.json');
 $app_main_def = json_decode( $app_main_json );
 
+// App loading main.
 require_once(WPA_PATH.'inc/App.php');
 $app = new \WPA\App();
 $storage_path = wpa_app_storage_path_by_type('wpa');
 $app->set_storage_path($storage_path);
 $app->set_app_key($app_main_def->key);
-$app->init($GLOBALS['wpa_app_dir_name']);
+$app->init();
+
 if( $app->brand_styles ) {
 	$app->brand_styles_render();
 }

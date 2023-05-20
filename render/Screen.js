@@ -9,7 +9,7 @@ class Screen {
 
 	render(screenKey) {
 
-		console.log('rendering with screenkey')
+		console.log('Screen key is '+screenKey)
 
 		const route = new Route()
 		route.setScreenHash(screenKey)

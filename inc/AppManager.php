@@ -10,46 +10,46 @@ class AppManager {
       add_action( 'rest_api_init', array( $this, 'register_routes' ) );
   }
 
-    public function register_routes() {
-			// Route for app install.
-      register_rest_route( 'wpa/app', '/install', array(
-        'methods' => 'POST',
-        'callback' => array( $this, 'app_install_callback' ),
-      ));
+  public function register_routes() {
+		// Route for app install.
+    register_rest_route( 'wpa/app', '/install', array(
+      'methods' => 'POST',
+      'callback' => array( $this, 'app_install_callback' ),
+    ));
 
-			// Route for app refresh.
-			register_rest_route( 'wpa/app', '/refresh', array(
-        'methods' => 'POST',
-        'callback' => array( $this, 'app_refresh_callback' ),
-      ));
+		// Route for app refresh.
+		register_rest_route( 'wpa/app', '/refresh', array(
+      'methods' => 'POST',
+      'callback' => array( $this, 'app_refresh_callback' ),
+    ));
 
-			// Route for app uninstall.
-			register_rest_route( 'wpa/app', '/uninstall', array(
-        'methods' => 'POST',
-        'callback' => array( $this, 'app_uninstall_callback' ),
-      ));
+		// Route for app uninstall.
+		register_rest_route( 'wpa/app', '/uninstall', array(
+      'methods' => 'POST',
+      'callback' => array( $this, 'app_uninstall_callback' ),
+    ));
+  }
+
+  public function app_install_callback( $request ) {
+		$resp = new \stdClass;
+    $params = $request->get_json_params();
+
+		$this->log[] = 'App installer called.';
+
+    // Check if app_key parameter is set
+    if ( isset( $params['app_key'] ) ) {
+
+      $app_key = $params['app_key'];
+
+			$this->log[] = 'App installer called for app key ' . $app_key . '.';
+
+			// Activate app by it's available_app data.
+			$this->activate($app_key);
+
+      $this->message = 'App install successful for app_key: '. $app_key.'.';
+    } else {
+      $this->message = 'App_key parameter missing';
     }
-
-    public function app_install_callback( $request ) {
-			$resp = new \stdClass;
-      $params = $request->get_json_params();
-
-			$this->log[] = 'App installer called.';
-
-      // Check if app_key parameter is set
-      if ( isset( $params['app_key'] ) ) {
-
-        $app_key = $params['app_key'];
-
-				$this->log[] = 'App installer called for app key ' . $app_key . '.';
-
-				// Activate app by it's available_app data.
-				$this->activate($app_key);
-
-        $this->message = 'App install successful for app_key: '. $app_key.'.';
-      } else {
-        $this->message = 'App_key parameter missing';
-      }
 
 		$resp->log = $this->log;
 		return rest_ensure_response($resp);

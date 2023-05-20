@@ -35,14 +35,6 @@ class Api {
 		return $this->app_path_root;
 	}
 
-	public function load_app_def() {
-
-		$app_def_json = file_get_contents($this->get_path_root() . 'app.json');
-    $app_def = json_decode($app_def_json);
-		return $app_def;
-
-	}
-
 	// Define the API route handler function.
 	// @param $order_by
 	// @param $order_dir
@@ -333,27 +325,26 @@ class Api {
 
 	public function register_api_endpoints() {
 
-		// Find apps loaded.
-		$wp_content_dir = WP_CONTENT_DIR;
-		$wpa_dir = $wp_content_dir . '/wpa';
-
-		$app_keys = array_filter( scandir( $wpa_dir ), function( $item ) use ( $wpa_dir ) {
-			return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
-		});
+		// Get registered app list.
+		$app_registry = wpa_app_registry();
 
 		// Loop over apps and init API routes.
-		foreach( $app_keys as $app_key ) {
+		foreach( $app_registry as $app_def ) {
 
-			// Skip the cache.
-			if($app_key === 'cache') { continue; }
+			$app_key = $app_def->key;
 
 			// Set app key and path root.
 			$this->set_app_key($app_key);
 			$this->set_path_root($app_key);
 
-		  $app_def = $this->load_app_def();
+			$app = new App();
+			$app_type = isset($app_def->type) ? $app_def->type : 'wpa';
+			$storage_path = wpa_app_storage_path_by_type($app_type);
+			$app->set_storage_path($storage_path);
+			$app->set_app_key($app_key);
+			$app->init();
 
-	    foreach ($app_def->models as $model_key) {
+	    foreach ($app->def->models as $model_key) {
 
         // Define the route for this model based on the model key.
         $route_base = $app_def->key.'/'.$model_key;

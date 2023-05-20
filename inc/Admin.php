@@ -68,7 +68,6 @@ class Admin {
 		$app_list_merged = array_merge($available_app_keys, $apps_installed);
 		$app_list        = array_unique($app_list_merged);
 
-
 		$app_defs_with_install_flag = [];
 		foreach( $app_list as $app_key ) {
 
@@ -114,6 +113,7 @@ class Admin {
 		// @TODO init by key but it needs to find the app under wpa/apps-internal, optionals $dir_path?
 		// $app->init($app_key);
 		echo '<div class="wpa-app-loader" app-key="api_keys"></div>';
+		echo '<div id="app-body"></div>';
 		$app->render_app_def_script();
 
 		// Render base URL for the API.

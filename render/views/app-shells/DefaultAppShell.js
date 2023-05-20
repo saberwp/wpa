@@ -3,7 +3,7 @@ class DefaultAppShell {
 	appContainer() {
 		const el = document.createElement('main')
 		el.id = 'app-container'
-		if( appDef.brand && appDef.brand.app_container_background ) {
+		if( app.def.brand && app.def.brand.app_container_background ) {
 			el.classList.add('app-container-background')
 		} else {
 			el.classList.add('bg-gray-800')
@@ -90,7 +90,7 @@ class DefaultAppShell {
 
 	appName() {
 		const el = document.createElement('div')
-		el.innerHTML = appDef.title
+		el.innerHTML = app.def.title
 		el.classList.add('font-lg')
 		return el
 	}

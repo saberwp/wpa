@@ -28,6 +28,12 @@ class Plugin {
 		$am = new AppManager();
 		$am->init();
 
+		// Init app loader.
+		require_once(WPA_PATH.'inc/AppLoader.php');
+		$al = new AppLoader();
+		$al->init();
+
+
 		// App Repo include
 		require_once(WPA_PATH.'inc/AppRepo.php');
 

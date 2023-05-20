@@ -1,11 +1,11 @@
-// @TODO load dependency scripts using the append to child method ChatGPT suggested.
-
 class App {
 
 	constructor() {
 
+		console.log('Calling app.constructor()')
+
 		// Add feature controllers to app.
-		this.form = new Form();
+		this.form   = new Form();
 		this.list   = new List()
 		this.edit   = new Edit()
 		this.create = new Create()
@@ -16,10 +16,22 @@ class App {
 		this.screen = new Screen()
 
 		// Set API URL.
+		console.log('setting apiUrl to '+WPA_ApiUrl)
 		this.apiUrl = WPA_ApiUrl;
 
-		// Init data store.
-		this.dataInit()
+		// Fetch app def.
+		this.fetchAppDef()
+
+		document.addEventListener('wpa_app_def_loaded', (event) => {
+
+			// Init data store.
+			this.dataInit()
+
+			this.load()
+
+		})
+
+
 
 	}
 
@@ -47,6 +59,46 @@ class App {
 
 	}
 
+	fetchAppDef() {
+
+		const data = {
+			'app_key': 'wpa_api_keys',
+		};
+
+		// Send API request.
+		fetch('/wp-json/wpa/app/load/', {
+				method: "POST",
+				body: JSON.stringify(data),
+				headers: {
+				"Content-Type": "application/json",
+				"API-KEY": "KR928NV81G01"
+			},
+		})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			return response.json();
+		})
+		.then((responseJson) => {
+			console.log(responseJson);
+			app.def = responseJson.app_def
+
+			// Send event wpa_app_def_loaded.
+			const event = new CustomEvent('wpa_app_def_loaded', {
+				detail: {
+					app_key:app.def.key
+				}
+			})
+			document.dispatchEvent(event)
+
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+
+	}
+
 	menuClickInit() {
 		const ulElement  = document.getElementById('app-menu-main');
 		const liElements = ulElement.getElementsByTagName('li');
@@ -68,7 +120,7 @@ class App {
 	dataInit() {
 
 		this.data = {}
-		appDef.models.forEach(( modelKey ) => {
+		app.def.models.forEach(( modelKey ) => {
 			this.data[modelKey] = {
 				record: [],
 				index: {}
@@ -154,5 +206,4 @@ class App {
 window.app = '';
 document.addEventListener('DOMContentLoaded', function() {
   window.app = new App();
-  window.app.load();
 });
