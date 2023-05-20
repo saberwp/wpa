@@ -180,15 +180,10 @@ footer .wpa-logo svg {
 button {
 	background-color: var(--primary-color);
 	color: #FFF;
-	padding: 0.5rem 1rem;
+	padding: 0.25rem 0.5rem;
 	font-weight: 600;
 	font-family: "Inter", sans-serif;
 	border-radius: 0.5rem;
-	border: solid 1px var(--primary-color);
-}
-
-button:hover {
-	opacity: 0.7;
 }
 
 .gap-1 {
@@ -312,10 +307,6 @@ input[type=submit]:hover {
 
 .menu-item-active {
 	background: #FFF;
-}
-
-#create-button {
-	border: solid 1px #fff;
 }
 
 #model-list-container {
