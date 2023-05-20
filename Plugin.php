@@ -74,19 +74,8 @@ class Plugin {
 		$plugin = new Plugin;
 
 		require_once(WPA_PATH.'inc/Activate.php');
-
-		// Check if WPA content directory exists, create if not already existing.
-		$local_storage_path = WP_CONTENT_DIR . '/wpa';
-		if( ! is_dir($local_storage_path) ) {
-			$make_dir_result = mkdir($local_storage_path, 0755);
-			if( ! $make_dir_result ) {
-				error_log('WPA could not create the main local storage folder at /wp-content/wpa/.');
-			}
-		}
-
-		// Install Tasker as a sample app.
-		$app_manager = new \WPA\AppManager;
-		$app_manager->activate('wpa_tasker');
+		$activate = new Activate();
+		$activate->run();
 
 	}
 

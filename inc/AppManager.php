@@ -98,10 +98,10 @@ class AppManager {
 		return rest_ensure_response($resp);
 	}
 
-	public function app_refresh_routine($app_key) {
+	public function app_refresh_routine($app_key, $app_type = 'wpa') {
 		// Load app definition.
 		$app = new App();
-		$storage_path = wpa_app_storage_path_by_type('wpa');
+		$storage_path = wpa_app_storage_path_by_type($app_type);
 		$app->set_app_key($app_key);
 		$app->set_storage_path($storage_path);
 		$app->init();

@@ -9,6 +9,9 @@ class Form {
 	/* @param modelDef the definition of the model to build the form for. */
 	make(modelDef) {
 
+		console.log('Form.make() called with modelDef:')
+		console.log(modelDef)
+
 		const el = document.createElement('form')
 		el.setAttribute('model-key', modelDef.key)
 		el.id = 'save-form'

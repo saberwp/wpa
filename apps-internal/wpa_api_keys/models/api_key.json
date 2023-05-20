@@ -3,7 +3,14 @@
 	"type": "standard",
 	"title": "API Key",
 	"title_plural": "API Keys",
-	"fields": [],
+	"fields": [
+		{
+			"key": "key",
+			"type": "text",
+			"label": "API Key",
+			"placeholder": "Enter API key..."
+		}
+	],
 	"title_field": false,
 	"search": false
 }
