@@ -8,5 +8,6 @@
   "location": {
 	  "where": "back",
 	  "path": "wpa-keys"
-  }
+  },
+	"default_screen": "api_key"
 }

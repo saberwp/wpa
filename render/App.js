@@ -50,6 +50,9 @@ class App {
 		this.route = new Route
 		const route = this.route.get()
 		const screenKey = route[0]
+
+		console.log('init routing... screenKey: '+screenKey)
+
 		const recordId = route[1] ? route[1] : false;
 		if(recordId) {
 			this.route.renderSingle(screenKey, recordId)

@@ -6,13 +6,12 @@ class Route {
 	}
 
 	setScreenHash(screenKey) {
+		console.log('setScreenHash() was called with screenKey: '+screenKey)
 	  window.location.hash = screenKey;
 	}
 
 	parseHash() {
 	  var hash = window.location.hash;
-
-		console.log('hash: '+hash)
 
 	  if (hash) {
 	    // Split the hash value on the / character
@@ -22,6 +21,10 @@ class Route {
 	    return parts;
 	  } else {
 	    // Return the default array containing ['dashboard', '0']
+			console.log('parseHash check app.def.default_screen, result is '+app.def.default_screen)
+			if(app.def.default_screen) {
+				return [app.def.default_screen]
+			}
 	    return ['dashboard'];
 	  }
 	}
