@@ -2,8 +2,6 @@ class App {
 
 	constructor() {
 
-		console.log('Calling app.constructor()')
-
 		// Add feature controllers to app.
 		this.form   = new Form();
 		this.list   = new List()
@@ -16,7 +14,6 @@ class App {
 		this.screen = new Screen()
 
 		// Set API URL.
-		console.log('setting apiUrl to '+WPA_ApiUrl)
 		this.apiUrl = WPA_ApiUrl;
 
 		// Fetch app def.
@@ -26,12 +23,9 @@ class App {
 
 			// Init data store.
 			this.dataInit()
-
 			this.load()
 
 		})
-
-
 
 	}
 
@@ -53,9 +47,6 @@ class App {
 		this.route = new Route
 		const route = this.route.get()
 		const screenKey = route[0]
-
-		console.log('init routing... screenKey: '+screenKey)
-
 		const recordId = route[1] ? route[1] : false;
 		if(recordId) {
 			this.route.renderSingle(screenKey, recordId)
@@ -87,7 +78,6 @@ class App {
 			return response.json();
 		})
 		.then((responseJson) => {
-			console.log(responseJson);
 			app.def = responseJson.app_def
 
 			// Send event wpa_app_def_loaded.
