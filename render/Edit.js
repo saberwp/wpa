@@ -79,8 +79,12 @@ class Edit {
 			console.log("EDIT COMPLETE")
 			console.log(responseJson);
 
-			// Do list refresh.
-			app.list.refresh()
+			// Do table refresh.
+			app.table.refresh()
+
+			// Close modal.
+			app.modal.close()
+
 		})
 		.catch((error) => {
 			console.error(error);

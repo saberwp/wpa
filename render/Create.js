@@ -58,6 +58,13 @@ class Create {
 				}
 			})
 			document.dispatchEvent(event)
+
+			// Do table refresh.
+			app.table.refresh()
+
+			// Close modal.
+			app.modal.close()
+
 		})
 		.catch((error) => {
 			console.error(error);
