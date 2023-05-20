@@ -150,6 +150,7 @@ class CollectionTable {
 		const container = document.getElementById('wpa-collection-table-body')
 		container.innerHTML = ''
 		this.dataInsert(container)
+		this.init()
 	}
 
 	dataInsert(container) {

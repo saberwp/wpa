@@ -28,7 +28,7 @@ class Modal {
 
 	modalMain() {
 		const el = document.createElement('main')
-		el.classList.add('relative', 'transform', 'overflow-hidden', 'rounded-lg', 'bg-white', 'px-4', 'pb-4', 'pt-5', 'text-left', 'shadow-xl', 'transition-all', 'sm:my-8', 'sm:w-full', 'sm:max-w-sm', 'sm:p-6');
+		el.classList.add('relative', 'transform', 'overflow-hidden', 'rounded-lg', 'bg-gray-400', 'px-4', 'pb-4', 'pt-5', 'text-left', 'shadow-xl', 'transition-all', 'sm:my-8', 'sm:w-full', 'sm:max-w-sm', 'sm:p-6');
 		el.appendChild(this.header())
 		el.appendChild(this.content())
 		el.appendChild(this.buttons())

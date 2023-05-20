@@ -176,7 +176,6 @@ class App {
 
 	recordDeleteFromObject(id) {
 		const index = this.currentModelIndexStore();
-
 		if (index.hasOwnProperty(id)) {
 			delete index[id];
 		}
@@ -185,7 +184,7 @@ class App {
 	recordDeleteFromArray(id) {
 		const records = this.currentModelRecordStore();
 		for (let i = 0; i < records.length; i++) {
-			if (records[i].id === parseInt(id, 10)) {
+			if (parseInt(records[i].id) === parseInt(id, 10)) {
 				records.splice(i, 1);
 				return;
 			}

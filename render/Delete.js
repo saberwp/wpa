@@ -38,6 +38,13 @@ class Delete {
 		})
 		.then((responseJson) => {
 			console.log(responseJson);
+
+			// Do table refresh.
+			app.table.refresh()
+
+			// Close modal.
+			app.modal.close()
+
 		})
 		.catch((error) => {
 			console.error(error);
@@ -76,12 +83,6 @@ class Delete {
 
 		// Do delete from data store.
 		this.delete(id)
-
-		// Update list.
-		app.list.refresh()
-
-		// Close modal.
-		app.modal.close()
 
 	}
 

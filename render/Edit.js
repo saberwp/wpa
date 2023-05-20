@@ -10,9 +10,6 @@ class Edit {
 		// Retrieve all elements with the class 'edit-button'
     const editButtons = document.querySelectorAll('.edit-button');
 
-		console.log('editButtons:')
-		console.log(editButtons)
-
     // Add a click event listener to each element
     for (let i = 0; i < editButtons.length; i++) {
       editButtons[i].addEventListener('click', this.handleEditClick);
@@ -76,8 +73,6 @@ class Edit {
 			return response.json();
 		})
 		.then((responseJson) => {
-			console.log("EDIT COMPLETE")
-			console.log(responseJson);
 
 			// Do table refresh.
 			app.table.refresh()

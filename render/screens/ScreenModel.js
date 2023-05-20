@@ -28,7 +28,6 @@ class ScreenModel {
 
 			// Refresh table.
 			app.table.refresh()
-			app.table.init()
 
 		});
 
