@@ -18,8 +18,8 @@ class Edit {
 	handleEditClick(e) {
 
 		const modal = new Modal()
-		const formContent = app.form.make(appDef[app.data.currentModel])
-		modal.setHeaderLabel('Edit '+appDef[app.data.currentModel].title)
+		const formContent = app.form.make(app.def[app.data.currentModel])
+		modal.setHeaderLabel('Edit '+app.def[app.data.currentModel].title)
 		modal.setContent(formContent)
 		modal.open()
 
@@ -29,13 +29,13 @@ class Edit {
 		idField.value = id
 
 		// Update form field title if current model supports title field.
-		if(appDef[app.data.currentModel].title_field) {
+		if(app.def[app.data.currentModel].title_field) {
 			const titleField = document.getElementById('field-title')
 			titleField.value = record.title
 		}
 
 		// Update form fields.
-		appDef[app.data.currentModel].fields.forEach(( field ) => {
+		app.def[app.data.currentModel].fields.forEach(( field ) => {
 			const el = document.getElementById('field-'+field.key)
 			el.value = record[field.key]
 		})
@@ -56,7 +56,7 @@ class Edit {
 		app.data[app.data.currentModel].index = app.recordIndex(app.data[app.data.currentModel].record)
 
 		// Send API request.
-		fetch(app.apiUrl+appDef.key+'/'+app.data.currentModel+'/'+record.id, {
+		fetch(app.apiUrl+app.def.key+'/'+app.data.currentModel+'/'+record.id, {
 				method: "PUT",
 				body: JSON.stringify(record),
 				headers: {

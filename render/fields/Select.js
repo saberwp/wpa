@@ -31,7 +31,7 @@ class Select {
 
 	relationHandler(el, field) {
 		const fieldRelationModelKey = field.relation.model
-		const relationModel = appDef[fieldRelationModelKey]
+		const relationModel = app.def[fieldRelationModelKey]
 		const relationSide  = relationModel.relations[field.relation.side]
 		const relationRecords = app.data[relationSide.model].record
 

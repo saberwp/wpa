@@ -9,10 +9,16 @@ class DefaultAppShell {
 			el.classList.add('bg-gray-800')
 		}
 
-		el.appendChild( this.main() ) // Add header.
-		const footer = new Footer()
-		el.appendChild( footer.render() )
-		document.body.appendChild(el);
+		el.appendChild( this.main() )
+
+		if(app.def.footer !== false) {
+			const footer = new Footer()
+			el.appendChild( footer.render() )
+		}
+
+
+		const appContainer = document.getElementById('wpa-app')
+		appContainer.appendChild(el);
 	}
 
 	header() {
@@ -49,11 +55,19 @@ class DefaultAppShell {
 		el.id = 'app-main'
 		el.classList.add('flex')
 		el.classList.add('text-white')
-		el.appendChild( this.sidebar() ) // Add menu.
+
+		if(app.def.sidebar !== false) {
+			el.appendChild( this.sidebar() ) // Add menu.
+		}
 
 		const mainWrapEl = document.createElement('section')
 		mainWrapEl.id = 'app-main-wrap'
-		mainWrapEl.appendChild( this.header() ) // Add header.
+
+		if(app.def.header !== false) {
+			mainWrapEl.appendChild( this.header() ) // Add header.
+		}
+
+
 		mainWrapEl.appendChild( this.body() ) // Add body.
 		el.appendChild( mainWrapEl )
 

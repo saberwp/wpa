@@ -13,8 +13,8 @@ class Create {
 
 	handleCreateClick(e) {
 		const modal = new Modal()
-		const formContent = app.form.make(appDef[app.data.currentModel])
-		modal.setHeaderLabel('Create '+appDef[app.data.currentModel].title)
+		const formContent = app.form.make(app.def[app.data.currentModel])
+		modal.setHeaderLabel('Create '+app.def[app.data.currentModel].title)
 		modal.setContent(formContent)
 
 		// Attach form submit handler.
@@ -35,7 +35,7 @@ class Create {
 	// Send API request.
 	request(model, record) {
 
-		fetch(app.apiUrl+appDef.key+'/'+model.key, {
+		fetch(app.apiUrl+app.def.key+'/'+model.key, {
 				method: "POST",
 				body: JSON.stringify(record),
 				headers: {
@@ -71,7 +71,7 @@ class Create {
 		app.data[app.data.currentModel].index = app.recordIndex( app.data[app.data.currentModel].record )
 
 		// Send API request.
-		fetch(app.apiUrl+appDef.key+'/'+app.data.currentModel, {
+		fetch(app.apiUrl+app.def.key+'/'+app.data.currentModel, {
 				method: "POST",
 				body: JSON.stringify(record),
 				headers: {

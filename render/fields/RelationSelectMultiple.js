@@ -13,7 +13,7 @@
 	 // Relation model key is defined in field.relation.model.
 	 make(field) {
 
-		 this.relationModel = appDef[field.relation.model]
+		 this.relationModel = app.def[field.relation.model]
 		 const choicesRelationDef = this.relationModel.relations[field.relation.side]
 		 if(choicesRelationDef.type !== 'many') {
 			 console.error('Model relations in Relation Select Field did not validate as type=many.')
@@ -22,9 +22,9 @@
 		 // Get model key from the relation def.
 		 const choicesRelationModelKey = choicesRelationDef.model
 
-		 // Get the choices model def from appDef.
+		 // Get the choices model def from app.def.
 		 // choicesModelDef.field array defines the fields for this model.
-		 const choicesModelDef = appDef[choicesRelationModelKey]
+		 const choicesModelDef = app.def[choicesRelationModelKey]
 		 this.relationModelDef = choicesModelDef // Stash into class.
 
 		 // Create and append field elements.

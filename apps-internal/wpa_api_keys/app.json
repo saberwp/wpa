@@ -9,5 +9,10 @@
 	  "where": "back",
 	  "path": "wpa-keys"
   },
-	"default_screen": "api_key"
+	"default_screen": "api_key",
+	"header": false,
+	"sidebar": false,
+	"footer": false,
+	"dashboard": false,
+	"docs": false
 }

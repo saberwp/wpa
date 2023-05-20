@@ -97,10 +97,6 @@ class Admin {
 
 	public function keys_page() {
 
-		echo 'KEYS PAGE';
-
-		// Enq ApiKeys.js
-		// Fetch existing keys from DB.
 		$app_main_json = \file_get_contents(WPA_PATH . '/apps-internal/api_keys/app.json');
 		$app_main_def = json_decode( $app_main_json );
 		$app = new App();
@@ -109,12 +105,7 @@ class Admin {
 		$app->set_app_key('api_keys');
 		$app->init();
 
-
-		// @TODO init by key but it needs to find the app under wpa/apps-internal, optionals $dir_path?
-		// $app->init($app_key);
-		echo '<div class="wpa-app-loader" app-key="api_keys"></div>';
-		echo '<div id="app-body"></div>';
-		$app->render_app_def_script();
+		echo '<div id="wpa-app" app-key="api_keys"></div>';
 
 		// Render base URL for the API.
 		$rest_url = rest_url();

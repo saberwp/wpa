@@ -22,7 +22,7 @@ class Delete {
 		app.recordDeleteFromArray(id)
 
 		// Send API request.
-		fetch(app.apiUrl+appDef.key+'/'+app.data.currentModel+'/'+id, {
+		fetch(app.apiUrl+app.def.key+'/'+app.data.currentModel+'/'+id, {
 				method: "DELETE",
 				body: '{}',
 				headers: {

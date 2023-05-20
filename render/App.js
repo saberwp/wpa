@@ -44,7 +44,10 @@ class App {
 		this.menuClickHandler = this.menuClickHandler.bind(this)
 
 		// Call menuClickInit function to initialize the menu clicks
-		this.menuClickInit()
+		if(app.def.sidebar !== false) {
+			this.menuClickInit()
+		}
+
 
 		// Init routing.
 		this.route = new Route

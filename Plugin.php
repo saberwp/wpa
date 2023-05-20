@@ -15,6 +15,7 @@ class Plugin {
 	public function __construct() {
 
 		// Admin enqueue scripts.
+		// @TODO possibly move into inc/Admin.php as part of it's init process?
 		add_action( 'admin_enqueue_scripts', [$this, 'admin_scripts'] );
 
 		// Require functional API.
@@ -148,6 +149,8 @@ class Plugin {
 	    wp_enqueue_script('wpa-modal', WPA_URL . 'render/Modal.js', array(), '1.0', true);
 	    wp_enqueue_script('wpa-menu', WPA_URL . 'render/Menu.js', array(), '1.0', true);
 	    wp_enqueue_script('wpa-app', WPA_URL . 'render/App.js', array(), '1.0', true);
+			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
     }
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa') {

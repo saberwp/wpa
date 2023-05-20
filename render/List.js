@@ -70,7 +70,7 @@ class List {
 		el.classList.add('gap-1')
 		el.appendChild( this.listItemId(item) )
 		el.appendChild( this.listItemTitle(item) )
-		appDef[app.data.currentModel].fields.forEach(( field ) => {
+		app.def[app.data.currentModel].fields.forEach(( field ) => {
 			el.appendChild( this.listItemField(item, field) )
 		})
 		el.appendChild( this.listItemEditButton(item) )

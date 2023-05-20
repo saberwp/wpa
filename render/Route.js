@@ -32,8 +32,12 @@ class Route {
 	render(screenKey) {
 		const screen = new Screen()
 		screen.render(screenKey)
-		const activeMenuEl = app.menu.findMenuItemByScreenKey(screenKey)
-		app.menu.setActive(activeMenuEl)
+
+		if(app.def.sidebar !== false) {
+			const activeMenuEl = app.menu.findMenuItemByScreenKey(screenKey)
+			app.menu.setActive(activeMenuEl)
+		}
+
 	}
 
 	renderSingle(screenKey, recordId) {
