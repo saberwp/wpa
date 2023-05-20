@@ -16,9 +16,26 @@ class Modal {
 
 	container() {
 		const el = document.createElement('div')
-		el.classList = 'modal-container'
+		el.classList.add('modal-container', 'fixed', 'inset-0', 'bg-gray-200', 'bg-opacity-90', 'transition-opacity')
+		const wrap = document.createElement('div')
+		wrap.classList.add('flex', 'min-h-full', 'items-end', 'justify-center', 'p-4', 'text-center', 'sm:items-center', 'sm:p-0');
+		wrap.appendChild(this.modalMain())
+		el.appendChild(wrap)
+		return el
+	}
+
+	modalMain() {
+		const el = document.createElement('main')
+		el.classList.add('relative', 'transform', 'overflow-hidden', 'rounded-lg', 'bg-white', 'px-4', 'pb-4', 'pt-5', 'text-left', 'shadow-xl', 'transition-all', 'sm:my-8', 'sm:w-full', 'sm:max-w-sm', 'sm:p-6');
 		el.appendChild(this.header())
 		el.appendChild(this.content())
+		el.appendChild(this.buttons())
+		return el
+	}
+
+	buttons() {
+		const el = document.createElement('div')
+		el.innerHTML = '<div class="mt-5 sm:ml-10 sm:mt-4 sm:flex sm:pl-4"><button type="button" id="modal-close-button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-3 sm:mt-0 sm:w-auto">Cancel</button></div>'
 		return el
 	}
 
