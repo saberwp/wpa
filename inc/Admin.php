@@ -100,12 +100,10 @@ class Admin {
 
 	public function keys_page() {
 
-		$app_main_json = \file_get_contents(WPA_PATH . '/apps-internal/api_keys/app.json');
-		$app_main_def = json_decode( $app_main_json );
 		$app = new App();
 		$storage_path = wpa_app_storage_path_by_type('internal');
 		$app->set_storage_path($storage_path);
-		$app->set_app_key('api_keys');
+		$app->set_app_key('wpa_api_keys');
 		$app->init();
 
 		echo '<div id="wpa-app" app-key="api_keys"></div>';
