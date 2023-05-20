@@ -25,11 +25,9 @@ class Create {
 
 	recordModel(model, record) {
 
-		app.data[model.key].record.unshift(record)
-		app.data[model.key].index = app.recordIndex( app.data[model.key].record )
-
 		// Send API request.
 		this.request(model, record)
+
 	}
 
 	// Send API request.
@@ -51,6 +49,9 @@ class Create {
 		})
 		.then((responseJson) => {
 			console.log(responseJson)
+
+			const recordId = responseJson.model_id
+
 			const event = new CustomEvent('wpa_record_created', {
 				detail: {
 					model_key:responseJson.model_key,
@@ -58,6 +59,10 @@ class Create {
 				}
 			})
 			document.dispatchEvent(event)
+
+			record.id = recordId
+			app.data[model.key].record.unshift(record)
+			app.data[model.key].index = app.recordIndex( app.data[model.key].record )
 
 			// Do table refresh.
 			app.table.refresh()
