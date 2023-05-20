@@ -116,3 +116,23 @@ function wpa_app_registry() {
 	return $app_defs;
 
 }
+
+// Used when we have the app_key but we don't know the storage location.
+function wpa_load_app_def_by_key_any_storage($app_key) {
+	$result = false;
+	$app_registry = wpa_app_registry();
+	if(empty($app_registry)) { return $result; };
+	foreach($app_registry as $app_def) {
+		if($app_def->key === $app_key) {
+			$result = $app_def;
+		}
+	}
+	return $result;
+}
+
+// App defs may not have a type, default is "wpa". Internal apps set the type=internal. Some functions need the type set in the def.
+function wpa_app_set_type($app_def) {
+	$app_type = isset($app_def->type) ? $app_def->type : 'wpa';
+	$app_def->type = $app_type;
+	return $app_def;
+}

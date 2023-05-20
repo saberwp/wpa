@@ -221,11 +221,18 @@ class Api {
 	  global $wpdb;
 	  $table_name = self::make_table_name($app_key, $model_key);
 
-	  // Load model definition from JSON file.
+
 		$api = new Api;
-		$api->set_app_key($app_key);
-		$api->set_path_root($app_key);
-	  $model_json = file_get_contents($api->get_path_root().'models/'.$model_key.'.json');
+
+		// Load model definition from JSON file.
+		// Storage location will be either internal /apps-internal or WPA /wp-content/wpa/.
+		$app_def = wpa_load_app_def_by_key_any_storage($app_key);
+		$app_def = wpa_app_set_type($app_def);
+		$storage_path = wpa_app_storage_path_by_type($app_def->type);
+
+	  $model_json = file_get_contents($storage_path.$app_key.'/models/'.$model_key.'.json');
+
+
 	  $model = json_decode($model_json);
 
 		if($model->type === 'relation') {

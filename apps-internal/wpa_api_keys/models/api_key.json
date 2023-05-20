@@ -5,7 +5,7 @@
 	"title_plural": "API Keys",
 	"fields": [
 		{
-			"key": "key",
+			"key": "api_key",
 			"type": "text",
 			"label": "API Key",
 			"placeholder": "Enter API key..."
