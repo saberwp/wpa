@@ -20,7 +20,7 @@ class Form {
 		el.appendChild( this.fieldId() )
 
 		// Conditional display title field.
-		if(modelDef.title_field) {
+		if(modelDef.title_field !== false) {
 			el.appendChild( this.fieldTitle() )
 		}
 

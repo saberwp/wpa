@@ -31,7 +31,7 @@ class Edit {
 		idField.value = id
 
 		// Update form field title if current model supports title field.
-		if(app.def[app.data.currentModel].title_field) {
+		if(app.def[app.data.currentModel].title_field !== false) {
 			const titleField = document.getElementById('field-title')
 			titleField.value = record.title
 		}

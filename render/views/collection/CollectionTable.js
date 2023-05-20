@@ -19,8 +19,10 @@ class CollectionTable {
 
 	init() {
 
-		// Edit init.
-		app.edit.init()
+		// Edit init if model supports it.
+		if(this.provideEditOperation()) {
+			app.edit.init()
+		}
 
 		// Delete init.
 		app.delete.init()
@@ -53,6 +55,14 @@ class CollectionTable {
 
 	renderTitle() {
 		const setting = this.modelDef?.title_field;
+		if (setting === undefined || setting === true) {
+			return true
+		}
+		return false
+	}
+
+	provideEditOperation() {
+		const setting = this.modelDef?.operations?.edit;
 		if (setting === undefined || setting === true) {
 			return true
 		}
@@ -179,7 +189,9 @@ class CollectionTable {
 			el.appendChild( this.listItemField(item, field) )
 		})
 
-		el.appendChild( this.makeEditButton(item) )
+		if(this.provideEditOperation()) {
+			el.appendChild(this.makeEditButton(item))
+		}
 		el.appendChild( this.makeDeleteButton(item) )
 
 		return el
