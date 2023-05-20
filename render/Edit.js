@@ -2,11 +2,16 @@ class Edit {
 
 	init() {
 
+		console.log('Edit.init()')
+
 		// Bind the class instance to the click handler function
 		this.handleEditClick = this.handleEditClick.bind(this);
 
 		// Retrieve all elements with the class 'edit-button'
     const editButtons = document.querySelectorAll('.edit-button');
+
+		console.log('editButtons:')
+		console.log(editButtons)
 
     // Add a click event listener to each element
     for (let i = 0; i < editButtons.length; i++) {

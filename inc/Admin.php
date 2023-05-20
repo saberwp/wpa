@@ -158,6 +158,7 @@ class Admin {
 			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'wpa-app-styles', WPA_URL.'/styles/app.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'wpa-app-admin-styles', WPA_URL.'/styles/app-admin.css', array(), '1.0.0', 'all' );
 		}
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa') {

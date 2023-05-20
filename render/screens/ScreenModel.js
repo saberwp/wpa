@@ -18,18 +18,18 @@ class ScreenModel {
 		app.table = new CollectionTable('list-table', app.data.currentModel)
 		const tableElement = app.table.make()
 		body.appendChild(tableElement)
-		app.table.init()
+
 
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', () => {
-			// List init.
-			app.list.refresh();
 
 			// Create init.
 			app.create.init();
 
 			// Refresh table.
 			app.table.refresh()
+			app.table.init()
+
 		});
 
 	}

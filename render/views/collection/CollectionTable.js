@@ -19,6 +19,12 @@ class CollectionTable {
 
 	init() {
 
+		// Edit init.
+		app.edit.init()
+
+		// Delete init.
+		app.delete.init()
+
 		// Sorter init.
 		if( ! this.sorting.init ) {
 			this.sortingInit()
@@ -84,6 +90,14 @@ class CollectionTable {
 			}
 			cols.push(col)
 		})
+
+		// Add <th> for controls column.
+		const colControls = {
+			key: 'controls',
+			label: ''
+		}
+		cols.push(colControls)
+
 		return cols
 	}
 
@@ -126,7 +140,6 @@ class CollectionTable {
 		const el = document.createElement('tfoot')
 		const el2 = document.createElement('tr')
 		const el3 = document.createElement('th')
-		el3.innerHTML = 'Table footer content here.'
 		el2.appendChild(el3)
 		el.appendChild(el2)
 		return el
@@ -151,12 +164,6 @@ class CollectionTable {
 	itemMake(item) {
 		const el = document.createElement('tr')
 
-		// Do this only if ID is set to show in table.
-		// el.appendChild( this.listItemId(item) )
-
-		// Do this only if model has title and table set to show title.
-		// el.appendChild( this.listItemTitle(item) )
-
 		// By default we show ID, so if it's undefined or true, we render it.
 		if(this.renderId()) {
 			el.appendChild( this.itemFieldByKey(item, 'id') )
@@ -171,8 +178,8 @@ class CollectionTable {
 			el.appendChild( this.listItemField(item, field) )
 		})
 
-		// el.appendChild( this.listItemEditButton(item) )
-		// el.appendChild( this.listItemDeleteButton(item) )
+		el.appendChild( this.makeEditButton(item) )
+		el.appendChild( this.makeDeleteButton(item) )
 
 		return el
 	}
@@ -267,5 +274,24 @@ class CollectionTable {
 	sortToggle() {
 		this.sorting.dir = this.sorting.dir === 'asc' ? 'desc' : 'asc';
 	}
+
+	makeEditButton(item) {
+		const el = document.createElement('button')
+		el.innerHTML = 'Edit'
+		el.classList.add('edit-button')
+		el.classList.add('clickable')
+		el.setAttribute('object-id',item.id)
+		return el
+	}
+
+	makeDeleteButton(item) {
+		const el = document.createElement('button')
+		el.innerHTML = 'Delete'
+		el.classList.add('delete-button')
+		el.classList.add('clickable')
+		el.setAttribute('object-id',item.id)
+		return el
+	}
+
 
 }

@@ -12,5 +12,14 @@
 		}
 	],
 	"title_field": false,
-	"search": false
+	"search": false,
+	"collections": {
+		"table": {
+			"show_id": false,
+			"delete_button_label": "Remove"
+		}
+	},
+	"operations": {
+		"edit": false
+	}
 }
