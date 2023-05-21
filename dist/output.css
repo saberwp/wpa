@@ -866,12 +866,12 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-white\/20 {
-  background-color: rgb(255 255 255 / 0.2);
-}
-
 .bg-white\/10 {
   background-color: rgb(255 255 255 / 0.1);
+}
+
+.bg-white\/20 {
+  background-color: rgb(255 255 255 / 0.2);
 }
 
 .bg-opacity-90 {
@@ -1137,12 +1137,12 @@ video {
   fill: #e5e7eb;
 }
 
-.hover\:fill-white\/50:hover {
-  fill: rgb(255 255 255 / 0.5);
-}
-
 .hover\:fill-white\/40:hover {
   fill: rgb(255 255 255 / 0.4);
+}
+
+.hover\:fill-white\/50:hover {
+  fill: rgb(255 255 255 / 0.5);
 }
 
 @media (min-width: 640px) {
@@ -1177,10 +1177,6 @@ video {
 
   .sm\:w-full {
     width: 100%;
-  }
-
-  .sm\:max-w-sm {
-    max-width: 24rem;
   }
 
   .sm\:max-w-md {

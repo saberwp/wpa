@@ -119,9 +119,89 @@ class Admin {
 
 	public function debug_page() {
 
+		$php_version_report = $this->test_php_version();
+		$wpa_contents_directory_report = $this->test_wpa_contents_directory();
+
+		echo '<div id="wpa-admin-container" class="-ml-[20px] bg-gray-600 text-white wpa-admin-wrap">';
 		echo 'DEBUG PAGE';
+		echo '<table>';
+		echo '<tbody>';
+
+		// Single test row.
+		echo '<tr>';
+		echo '<td>';
+		echo 'PHP VERSION';
+		echo '</td>';
+		echo '<td>';
+		echo $php_version_report->version;
+		echo '</td>';
+		echo '</tr>';
+
+		// Single test row.
+		echo '<tr>';
+		echo '<td>';
+		echo 'WPA CONTENT DIRECTORY';
+		echo '</td>';
+		echo '<td>';
+		if($wpa_contents_directory_report->pass) {
+			echo 'EXISTS/WRITEABLE';
+		} else {
+			echo 'FAILED';
+		}
+		echo '</td>';
+		echo '</tr>';
+
+		echo '</tbody>';
+		echo '</table>';
+		echo '</div>';
+
+
 
 	}
+
+	function test_php_version() {
+
+		$result = new \stdClass;
+		$result->version = phpversion();
+
+		if (version_compare($result->version, '8.0.0', '>')) {
+			$result->pass = true;
+		} else {
+			$result->pass = false;
+		}
+		return $result;
+
+	}
+
+	function test_wpa_contents_directory() {
+		$result = new \stdClass;
+		$dir_path = WP_CONTENT_DIR . '/wpa';
+		$result->exists = false;
+		if(is_dir($dir_path)) {
+			$result->exists = true;
+		}
+		$result->writeable = false;
+		if (is_writable($dir_path)) {
+    	$result->writeable = true;
+		}
+		$result->pass = false;
+		if($result->writeable && $result->exists) {
+			$result->pass = true;
+		}
+		return $result;
+	}
+
+	function test_mysql_version() {
+		$result = new \stdClass;
+    global $wpdb;
+    $result->version = $wpdb->get_var("SELECT VERSION()");
+    $result->pass = false;
+    if (version_compare($result->version, '5.6', '>')) {
+      $result->pass = true;
+    }
+		return $result;
+}
+
 
 	public function admin_scripts($hook_suffix) {
 		global $pagenow;
@@ -164,8 +244,13 @@ class Admin {
 		}
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa') {
-
 			wp_enqueue_script( 'wpa-admin', WPA_URL.'js/admin.js', array(), '1.0.0', true );
+			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
+		}
+
+		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa-debug') {
+			wp_enqueue_script( 'wpa-admin-debug', WPA_URL.'js/AdminDebug.js', array(), '1.0.0', true );
 			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
 		}

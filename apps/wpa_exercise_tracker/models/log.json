@@ -1,0 +1,14 @@
+{
+	"key": "log",
+	"type": "standard",
+	"title": "Exercise Log",
+	"title_plural": "Exercise Logs",
+	"fields": [
+		{
+			"key": "rep_count",
+			"type": "number",
+			"label": "Reps",
+			"placeholder": "Total reps..."
+		}
+	]
+}

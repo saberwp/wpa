@@ -1,0 +1,11 @@
+{
+	"key": "wpa_exercise_tracker",
+	"title": "Exercise Tracker",
+	"models": [
+		"log"
+	],
+	"location": {
+		"where": "front",
+		"path": "exercise"
+	}
+}
