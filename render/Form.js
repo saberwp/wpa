@@ -9,9 +9,6 @@ class Form {
 	/* @param modelDef the definition of the model to build the form for. */
 	make(modelDef) {
 
-		console.log('Form.make() called with modelDef:')
-		console.log(modelDef)
-
 		const el = document.createElement('form')
 		el.setAttribute('model-key', modelDef.key)
 		el.id = 'save-form'
@@ -56,10 +53,30 @@ class Form {
 				el.appendChild( fieldEl )
 			}
 
+			if( field.type === 'keygen' ) {
+				const fieldMaker = new KeyGen()
+				const fieldEl = fieldMaker.make(field)
+				el.appendChild( fieldEl )
+			}
+
 		})
 
 		el.appendChild( this.saveButton() )
 		return el
+	}
+
+	init(modelDef) {
+
+		// Add fields to form.
+		modelDef.fields.forEach((field) => {
+
+			if( field.type === 'keygen' ) {
+				const fieldMaker = new KeyGen()
+				fieldMaker.init()
+			}
+
+		})
+
 	}
 
 	fieldId() {
@@ -119,6 +136,9 @@ class Form {
 			const formModelKey = event.target.getAttribute('model-key')
 			const formModelDef = app.def[formModelKey]
 			const formValues = this.formDataParse(formEl)
+
+			console.log(formModelDef)
+			console.log(formValues)
 
 			// Draft record.
 			const record = this.prepareRecord(formModelDef, formValues)

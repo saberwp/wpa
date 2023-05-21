@@ -141,6 +141,7 @@ class Admin {
 			wp_enqueue_script('wpa-data-manager', WPA_URL . 'render/DataManager.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-text-area', WPA_URL . 'render/fields/TextArea.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-select', WPA_URL . 'render/fields/Select.js', array(), '1.0', true);
+			wp_enqueue_script('wpa-module-fields-types-keygen', WPA_URL . 'modules/field/types/keygen/KeyGen.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/fields/RelationSelectMultiple.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);

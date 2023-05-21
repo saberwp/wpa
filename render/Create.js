@@ -17,13 +17,20 @@ class Create {
 		modal.setHeaderLabel('Create '+app.def[app.data.currentModel].title)
 		modal.setContent(formContent)
 
+
+
 		// Attach form submit handler.
 		app.form.submit(formContent)
 
 		modal.open()
+
+		// Run field init to enable fields to attach events.
+		app.form.init(app.def[app.data.currentModel])
 	}
 
 	recordModel(model, record) {
+
+		console.log(record)
 
 		// Send API request.
 		this.request(model, record)

@@ -6,7 +6,7 @@
 	"fields": [
 		{
 			"key": "api_key",
-			"type": "text",
+			"type": "keygen",
 			"label": "API Key",
 			"placeholder": "Enter API key..."
 		}
