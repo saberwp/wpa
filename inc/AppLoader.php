@@ -63,6 +63,13 @@ class AppLoader {
 		$app->set_storage_path($storage_path);
 		$app->set_app_key($app_key);
 		$app->init();
+
+		// Add logo to the app def.
+		$app->def->logo = false;
+		if(file_exists($storage_path.$app_key.'/logo.svg')) {
+			$app->def->logo = file_get_contents($storage_path.$app_key.'/logo.svg');
+		}
+
 		return $app->def;
 
 	}

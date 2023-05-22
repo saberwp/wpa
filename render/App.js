@@ -59,7 +59,7 @@ class App {
 	fetchAppDef() {
 
 		const data = {
-			'app_key': 'wpa_api_keys',
+			'app_key': document.getElementById('wpa-app').getAttribute('app-key'),
 		};
 
 		// Send API request.

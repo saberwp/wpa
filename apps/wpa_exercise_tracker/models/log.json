@@ -6,7 +6,7 @@
 	"fields": [
 		{
 			"key": "rep_count",
-			"type": "number",
+			"type": "text",
 			"label": "Reps",
 			"placeholder": "Total reps..."
 		}

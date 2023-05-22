@@ -106,7 +106,7 @@ class Admin {
 		$app->set_app_key('wpa_api_keys');
 		$app->init();
 
-		echo '<div id="wpa-app" app-key="api_keys"></div>';
+		echo '<div id="wpa-app" app-key="wpa_api_keys"></div>';
 
 		// Render base URL for the API.
 		$rest_url = rest_url();
@@ -123,8 +123,20 @@ class Admin {
 		$wpa_contents_directory_report = $this->test_wpa_contents_directory();
 
 		echo '<div id="wpa-admin-container" class="-ml-[20px] bg-gray-600 text-white wpa-admin-wrap">';
-		echo 'DEBUG PAGE';
-		echo '<table>';
+		echo '<h2 class="py-2 px-4 font-bold text-2xl text-white">DEBUG WPA ENVIRONMENT</h2>';
+		echo '<table class="min-w-full divide-y divide-gray-700 bg-gray-600">';
+
+		echo '<thead>';
+		echo '<tr>';
+		echo '<td>';
+		echo 'DEBUG TEST';
+		echo '</td>';
+		echo '<td>';
+		echo 'STATUS';
+		echo '</td>';
+		echo '</tr>';
+		echo '</thead>';
+
 		echo '<tbody>';
 
 		// Single test row.

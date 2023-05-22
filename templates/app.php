@@ -75,12 +75,5 @@ if( $app->brand_styles ) {
 		<script src="<?php echo WPA_URL; ?>render/App.js"></script>
   </head>
   <body>
-		<script>
-			const app = new App()
-			// Add appDef to app object.
-			// @TODO improve this by fetching the appDef by request?
-			app.def = appDef
-			app.load()
-		</script>
-  </body>
+		<div id="wpa-app" app-key="<?php echo $app->def->key; ?>"></div>
 </html>
