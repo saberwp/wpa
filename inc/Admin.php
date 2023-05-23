@@ -58,7 +58,7 @@ class Admin {
 		$am = new AppManager;
 		$available_app_keys = wpa_get_available_app_keys();
 
-		echo '<div id="wpa-admin-container" class="-ml-[20px] bg-gray-600 text-white wpa-admin-wrap">';
+		echo '<div id="wpa-admin-container" class="-ml-[20px] h-[calc(100vh-97px)] md:h-[calc(100vh-97px)] bg-gray-800 text-white">';
 
 		// Find apps installed, this includes custom apps created.
 		$wp_content_dir = WP_CONTENT_DIR;
@@ -106,7 +106,9 @@ class Admin {
 		$app->set_app_key('wpa_api_keys');
 		$app->init();
 
+		echo '<h2 class="py-2 px-4 font-bold text-2xl text-white bg-gray-800 -ml-[20px]">API KEYS</h2>';
 		echo '<div id="wpa-app" app-key="wpa_api_keys"></div>';
+
 
 		// Render base URL for the API.
 		$rest_url = rest_url();
@@ -122,7 +124,7 @@ class Admin {
 		$php_version_report = $this->test_php_version();
 		$wpa_contents_directory_report = $this->test_wpa_contents_directory();
 
-		echo '<div id="wpa-admin-container" class="-ml-[20px] bg-gray-600 text-white wpa-admin-wrap">';
+		echo '<div id="wpa-admin-container" class="-ml-[20px] h-[calc(100vh-97px)] md:h-[calc(100vh-97px)] bg-gray-800 text-white">';
 		echo '<h2 class="py-2 px-4 font-bold text-2xl text-white">DEBUG WPA ENVIRONMENT</h2>';
 		echo '<table class="min-w-full divide-y divide-gray-700 bg-gray-600">';
 
