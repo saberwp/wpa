@@ -9,6 +9,12 @@
 			"type": "text",
 			"label": "Reps",
 			"placeholder": "Total reps..."
+		},
+		{
+			"key": "timestamp",
+			"type": "date_time",
+			"label": "Date/Time",
+			"placeholder": "Select date and time..."
 		}
 	]
 }

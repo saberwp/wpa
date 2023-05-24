@@ -37,18 +37,26 @@ class DatabaseManager {
 	  switch ($field_type) {
 	    case 'text':
         return 'VARCHAR(255)';
+				break;
 			case 'textarea':
 				return 'TEXT';
+				break;
 	    case 'int':
         return 'INT';
+				break;
 			case 'number':
 				return 'DOUBLE';
+				break;
 			case 'decimal':
 				return 'DECIMAL';
+				break;
 	    case 'date':
+			case 'date_time':
         return 'DATETIME';
+				break;
 	    default:
         return '';
+				break;
 	  }
 	}
 
@@ -105,23 +113,29 @@ class DatabaseManager {
 	}
 
 	function create_table($table_name, $model_def) {
-		global $wpdb;
-	  $full_table_name = $wpdb->prefix . $table_name;
-		$charset_collate = $wpdb->get_charset_collate();
-		$sql  = 'CREATE TABLE ' . $full_table_name . '(';
-		$sql .= 'id mediumint(9) NOT NULL AUTO_INCREMENT,';
+    global $wpdb;
+    $full_table_name = $wpdb->prefix . $table_name;
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql  = 'CREATE TABLE ' . $full_table_name . '(';
+    $sql .= 'id mediumint(9) NOT NULL AUTO_INCREMENT,';
 
-		if( $model_def->type === 'relation' ) {
-			$sql .= $model_def->relations->left->model . '_id mediumint(9) NOT NULL,';
-			$sql .= $model_def->relations->right->model . '_id mediumint(9) NOT NULL,';
-		}
+    if ($model_def->type === 'relation') {
+        $sql .= $model_def->relations->left->model . '_id mediumint(9) NOT NULL,';
+        $sql .= $model_def->relations->right->model . '_id mediumint(9) NOT NULL,';
+    }
 
-		$sql .= "\nPRIMARY KEY (id)\n) $charset_collate;"; // Add the primary key and finish the SQL statement
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql ); // Create the table using dbDelta function
-		$existing_columns = $this->get_table_columns($table_name);
-		$this->update_table_fields($model_def, $full_table_name, $existing_columns);
+    $sql .= 'created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,';
+    $sql .= 'updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,';
+
+    $sql .= "\nPRIMARY KEY (id)\n) $charset_collate;"; // Add the primary key and finish the SQL statement
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql); // Create the table using dbDelta function
+
+    $existing_columns = $this->get_table_columns($table_name);
+    $this->update_table_fields($model_def, $full_table_name, $existing_columns);
 	}
+
 
 	function update_table_fields($model_def, $full_table_name, $existing_columns) {
 		$fields = $model_def->fields;
