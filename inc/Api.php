@@ -97,10 +97,9 @@ class Api {
 
 		$edit_data = array();
 
-		if($model->title_field) {
+		if(self::model_has_title($model)) {
 			$edit_data['title'] = $form_data['title'];
 		}
-
 
 		$relations_exist = 0;
 		foreach ($model->fields as $field) {
@@ -209,6 +208,13 @@ class Api {
 
 	}
 
+	private static function model_has_title($modelDef) {
+		if(!isset($model->title_field) || $model->title_field) {
+			return true;
+		}
+		return false;
+	}
+
 	public static function create_callback($request) {
 
 		// Get model key from API path.
@@ -240,7 +246,7 @@ class Api {
 			// Init data for insert.
 			$data = array();
 
-			if($model->title_field) {
+			if(self::model_has_title($model)) {
 				$data['title'] = $json_data['title'];
 			}
 
