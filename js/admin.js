@@ -10,16 +10,9 @@ class WpaAdmin {
 		this.container = document.getElementById('wpa-admin-container')
 	}
 
-	makeAppHeading() {
-		const el = document.createElement('h2')
-		el.classList.add('py-2', 'px-4', 'font-bold', 'text-2xl', 'text-white')
-		el.innerHTML = 'APP LIST'
-		this.container.appendChild(el)
-	}
-
 	makeAppGrid() {
 		const el = document.createElement('section')
-		el.classList.add('flex', 'flex-wrap', 'gap-x-4', 'gap-y-6', 'bg-gray-500', 'p-4')
+		el.classList.add('flex', 'flex-wrap', 'gap-x-4', 'gap-y-6', 'p-4', 'max-w-4xl')
 		this.data.forEach((app) => {
 			el.appendChild(this.makeAppCard(app))
 		})
@@ -250,7 +243,6 @@ class WpaAdmin {
 
 const admin = new WpaAdmin()
 admin.data = wpaAppDefsWithInstallFlag
-admin.makeAppHeading()
 admin.makeAppGrid()
 admin.eventsInit()
 

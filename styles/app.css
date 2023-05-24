@@ -80,42 +80,12 @@ body {
 	min-width: 20rem;
 }
 
-.p-1 {
-	padding: 1rem;
-}
-
-.bg-gray-800 {
-	background-color: #111827;
-}
-
-.list-none {
-	list-style: none;
-}
-
-.p-0 {
-	padding: 0;
-}
-
-.m-0 {
-	margin: 0;
-}
-
 .font-lg {
 	font-size: 1.25rem;
 }
 
 .font-semibold {
 	font-weight: 600;
-}
-
-.py-1 {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-}
-
-.px-1 {
-	padding-left: 1rem;
-	padding-right: 1rem;
 }
 
 .app-logo {

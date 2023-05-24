@@ -60,6 +60,8 @@ class Admin {
 
 		echo '<div id="wpa-admin-container" class="-ml-[20px] h-[calc(100vh-97px)] md:h-[calc(100vh-97px)] bg-gray-800 text-white">';
 
+		echo $this->load_page_header('APP LIST');
+
 		// Find apps installed, this includes custom apps created.
 		$wp_content_dir = WP_CONTENT_DIR;
 		$wpa_dir = $wp_content_dir . '/wpa';
@@ -98,6 +100,15 @@ class Admin {
 
 	}
 
+	private function load_page_header($page_title) {
+		ob_start();
+		require_once(WPA_PATH.'templates/components/wpa-admin-header.php');
+		$admin_header_template = ob_get_contents();
+		ob_end_clean();
+		$admin_header_template_populated = str_replace('{{page_title}}', $page_title, $admin_header_template);
+		return $admin_header_template_populated;
+	}
+
 	public function keys_page() {
 
 		$app = new App();
@@ -106,9 +117,10 @@ class Admin {
 		$app->set_app_key('wpa_api_keys');
 		$app->init();
 
-		echo '<h2 class="py-2 px-4 font-bold text-2xl text-white bg-gray-800 -ml-[20px]">API KEYS</h2>';
+		echo '<div id="wpa-admin-container" class="-ml-[20px] h-[calc(100vh-97px)] md:h-[calc(100vh-97px)] bg-gray-800 text-white">';
+		echo $this->load_page_header('API KEYS');
 		echo '<div id="wpa-app" app-key="wpa_api_keys"></div>';
-
+		echo '</div>';
 
 		// Render base URL for the API.
 		$rest_url = rest_url();
@@ -125,48 +137,61 @@ class Admin {
 		$wpa_contents_directory_report = $this->test_wpa_contents_directory();
 
 		echo '<div id="wpa-admin-container" class="-ml-[20px] h-[calc(100vh-97px)] md:h-[calc(100vh-97px)] bg-gray-800 text-white">';
-		echo '<h2 class="py-2 px-4 font-bold text-2xl text-white">DEBUG WPA ENVIRONMENT</h2>';
+		echo $this->load_page_header('DEBUG');
+		echo '<section class="px-4 max-w-lg bg-gray-600 rounded mx-4">';
 		echo '<table class="min-w-full divide-y divide-gray-700 bg-gray-600">';
 
 		echo '<thead>';
 		echo '<tr>';
-		echo '<td>';
+		echo '<th class="py-3.5 px-3 text-left text-sm font-semibold text-white">';
 		echo 'DEBUG TEST';
-		echo '</td>';
-		echo '<td>';
+		echo '</th>';
+		echo '<th class="py-3.5 px-3 text-left text-sm font-semibold text-white">';
 		echo 'STATUS';
-		echo '</td>';
+		echo '</th>';
 		echo '</tr>';
 		echo '</thead>';
 
-		echo '<tbody>';
+		echo '<tbody class="divide-y divide-gray-800">';
 
 		// Single test row.
 		echo '<tr>';
-		echo '<td>';
+		echo '<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">';
 		echo 'PHP VERSION';
 		echo '</td>';
-		echo '<td>';
+		echo '<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">';
 		echo $php_version_report->version;
 		echo '</td>';
 		echo '</tr>';
 
 		// Single test row.
 		echo '<tr>';
-		echo '<td>';
+		echo '<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">';
 		echo 'WPA CONTENT DIRECTORY';
 		echo '</td>';
-		echo '<td>';
+		echo '<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">';
 		if($wpa_contents_directory_report->pass) {
 			echo 'EXISTS/WRITEABLE';
 		} else {
-			echo 'FAILED';
+			echo 'FAILED TEST';
 		}
+		echo '</td>';
+		echo '</tr>';
+
+		$mysql_version_report = $this->test_mysql_version();
+		// Single test row.
+		echo '<tr>';
+		echo '<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">';
+		echo 'MYSQL VERSION';
+		echo '</td>';
+		echo '<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">';
+		echo $mysql_version_report->version;
 		echo '</td>';
 		echo '</tr>';
 
 		echo '</tbody>';
 		echo '</table>';
+		echo '</section>';
 		echo '</div>';
 
 

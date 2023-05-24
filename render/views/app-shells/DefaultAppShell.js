@@ -10,7 +10,7 @@ class DefaultAppShell {
 		}
 
 		if(app.def?.location?.where === 'back') {
-			el.classList.add('-ml-[20px]', 'h-[calc(100vh-97px)]', 'md:h-[calc(100vh-97px)]', 'bg-gray-800', 'text-white')
+			el.classList.add('h-[calc(100vh-97px)]', 'md:h-[calc(100vh-97px)]', 'bg-gray-800', 'text-white')
 		}
 
 		el.appendChild( this.main() )

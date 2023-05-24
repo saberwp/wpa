@@ -5,6 +5,7 @@ module.exports = {
 		"./inc/**/*.php",
 		"./js/**/*.js",
 		"./modules/**/*.js",
+		"./templates/**/*.php",
 	],
   theme: {
     extend: {},
