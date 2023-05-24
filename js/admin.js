@@ -1,12 +1,9 @@
-// @TODO provide click event for each install button with callback that does API fetch call to endpoint installer.
-
 class WpaAdmin {
 
 	container = false
 	data = false
 
 	constructor() {
-		console.log('constructor running in WpaAdmin()')
 		this.container = document.getElementById('wpa-admin-container')
 	}
 
@@ -37,7 +34,7 @@ class WpaAdmin {
 
 	makeAppCardBody(app) {
 		const el = document.createElement('section')
-		el.classList.add('flex', 'gap-4', 'items-center')
+		el.classList.add('wpa-app-card-body', 'flex', 'gap-4', 'items-center')
 		if(app.installed) {
 			el.appendChild(this.makeAppCardRefreshButton(app))
 		}
@@ -74,14 +71,15 @@ class WpaAdmin {
 			iconOpacity = .5
 		}
 		const el = document.createElement('div')
+		el.classList.add('wpa-app-uninstall-button')
 
 		let content = ''
 		if(app.installed) {
-			el.classList.add('cursor-pointer','wpa-app-uninstall-button')
+			el.classList.add('cursor-pointer')
 			content += '<svg class="fill-gray-400 hover:fill-gray-200" width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.35714 0H4.92857L4.6875 0.355273L3.14062 2.65625H2.67857H1.07143H0V4.25H1.07143V15.4062V17H2.67857H12.3214H13.9286V15.4062V4.25H15V2.65625H13.9286H12.3214H11.8594L10.3125 0.355273L10.0714 0H9.64286H5.35714ZM9.92745 2.65625H5.07254L5.78571 1.59375H9.21429L9.92745 2.65625ZM2.67857 15.4062V4.25H12.3214V15.4062H2.67857ZM10.7779 7.4375L9.64286 6.31191L9.07366 6.87637L7.5 8.43691L5.92634 6.87637L5.35714 6.31191L4.2221 7.4375L4.79129 8.00195L6.36496 9.5625L4.79129 11.123L4.2221 11.6875L5.35714 12.8131L5.92634 12.2486L7.5 10.6881L9.07366 12.2486L9.64286 12.8131L10.7779 11.6875L10.2087 11.123L8.63504 9.5625L10.2087 8.00195L10.7779 7.4375Z"/></svg>'
 		}
 		if(!app.installed) {
-			content += '<svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.35714 0H4.92857L4.6875 0.355273L3.14062 2.65625H2.67857H1.07143H0V4.25H1.07143V15.4062V17H2.67857H12.3214H13.9286V15.4062V4.25H15V2.65625H13.9286H12.3214H11.8594L10.3125 0.355273L10.0714 0H9.64286H5.35714ZM9.92745 2.65625H5.07254L5.78571 1.59375H9.21429L9.92745 2.65625ZM2.67857 15.4062V4.25H12.3214V15.4062H2.67857ZM10.7779 7.4375L9.64286 6.31191L9.07366 6.87637L7.5 8.43691L5.92634 6.87637L5.35714 6.31191L4.2221 7.4375L4.79129 8.00195L6.36496 9.5625L4.79129 11.123L4.2221 11.6875L5.35714 12.8131L5.92634 12.2486L7.5 10.6881L9.07366 12.2486L9.64286 12.8131L10.7779 11.6875L10.2087 11.123L8.63504 9.5625L10.2087 8.00195L10.7779 7.4375Z" fill="white" fill-opacity="'+iconOpacity+'"/></svg>'
+			content += '<svg class="fill-white/20" width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.35714 0H4.92857L4.6875 0.355273L3.14062 2.65625H2.67857H1.07143H0V4.25H1.07143V15.4062V17H2.67857H12.3214H13.9286V15.4062V4.25H15V2.65625H13.9286H12.3214H11.8594L10.3125 0.355273L10.0714 0H9.64286H5.35714ZM9.92745 2.65625H5.07254L5.78571 1.59375H9.21429L9.92745 2.65625ZM2.67857 15.4062V4.25H12.3214V15.4062H2.67857ZM10.7779 7.4375L9.64286 6.31191L9.07366 6.87637L7.5 8.43691L5.92634 6.87637L5.35714 6.31191L4.2221 7.4375L4.79129 8.00195L6.36496 9.5625L4.79129 11.123L4.2221 11.6875L5.35714 12.8131L5.92634 12.2486L7.5 10.6881L9.07366 12.2486L9.64286 12.8131L10.7779 11.6875L10.2087 11.123L8.63504 9.5625L10.2087 8.00195L10.7779 7.4375Z"/></svg>'
 		}
 		el.innerHTML = content
 		el.setAttribute('app-key',app.key)
@@ -99,10 +97,9 @@ class WpaAdmin {
 		return el
 	}
 
-	// @TODO Use #wpa-app-refresh-button for refresh button.
-
 	makeAppCardVisitButton(app) {
 		const el = document.createElement('div')
+		el.classList.add('wpa-app-link')
 		let content = ''
 		if(app.installed) {
 			el.classList.add('cursor-pointer')
@@ -155,8 +152,7 @@ class WpaAdmin {
 		  })
 		    .then(function(response) {
 		      if (response.ok) {
-		        console.log(response);
-						self.appCardRefresh('installed', appKey)
+						self.appCardRefreshInstalled(appKey)
 		      } else {
 		        console.error('App install failed!');
 		      }
@@ -181,7 +177,6 @@ class WpaAdmin {
 		const handleUninstallClick = function(event) {
 		  event.preventDefault();
 
-			console.log('uninstall click...')
 
 			const appKey = event.currentTarget.getAttribute('app-key')
 
@@ -199,7 +194,7 @@ class WpaAdmin {
 		    .then(function(response) {
 		      if (response.ok) {
 		        console.log(response);
-						self.appCardRefresh('uninstalled', appKey)
+						//self.appCardRefreshUninstalled(appKey)
 		      } else {
 		        console.error('App uninstall failed!');
 		      }
@@ -214,10 +209,48 @@ class WpaAdmin {
 	  });
 	}
 
-	appCardRefresh(status, appKey) {
+	appDefinitionByKey(key) {
+		let match = false
+		this.data.forEach((appDef) => {
+			if(appDef.key === key) {
+				match = appDef
+			}
+		})
+		return match
+	}
+
+	appCardRefreshInstalled(appKey) {
+
+		const appDef = this.appDefinitionByKey(appKey)
+		appDef.installed = true
+
+
 		const cardEl = document.getElementById('wpa-app-'+appKey)
 		const statusElement = cardEl.querySelector('.wpa-app-card-status h2');
 		statusElement.innerHTML = 'INSTALLED'
+
+		// Replace install button with refresh button.
+		const installButtonElement = cardEl.querySelector('.wpa-app-install-button');
+		installButtonElement.remove()
+		const refreshButtonElement = this.makeAppCardRefreshButton(appDef)
+		const appCardBodyElement = cardEl.querySelector('.wpa-app-card-body');
+		const appLinkElement = cardEl.querySelector('.wpa-app-link');
+		appCardBodyElement.insertBefore(refreshButtonElement, appLinkElement)
+
+		// Replace link deactivated button with active link button.
+
+		const appVisitButton = this.makeAppCardVisitButton(appDef)
+		appLinkElement.remove()
+		appCardBodyElement.appendChild(appVisitButton)
+
+		// Activate delete app button.
+		const uninstallButtonElement = cardEl.querySelector('.wpa-app-uninstall-button');
+		uninstallButtonElement.classList.add('cursor-pointer')
+		const uninstallButtonIconElement = uninstallButtonElement.querySelector('svg');
+		uninstallButtonIconElement.classList.remove('fill-white/20')
+		uninstallButtonIconElement.classList.add('fill-gray-400')
+
+
 	}
 
 	attachAppRefreshButtonClickEvent() {
@@ -226,11 +259,7 @@ class WpaAdmin {
 	  installButtons.forEach(button => {
 	    button.addEventListener('click', event => {
 	      event.preventDefault();
-
 	      const appKey = button.getAttribute('app-key')
-
-				console.log('app key is ' + appKey)
-
 				const appRefresh = new AppRefresh()
 				appRefresh.run(appKey)
 			});
