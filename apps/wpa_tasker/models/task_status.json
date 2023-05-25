@@ -11,5 +11,12 @@
 		  "type": "one",
 		  "model": "status"
 		}
-	}
+	},
+	"fields": [
+		{
+			"key": "test123",
+			"type": "text",
+			"label": "Test 123"
+		}
+	]
 }

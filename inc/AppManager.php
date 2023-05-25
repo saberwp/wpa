@@ -89,16 +89,20 @@ class AppManager {
 
 			$app_key = $params['app_key'];
 
-			$this->app_refresh_routine($app_key);
+			$resp->result = $this->app_refresh_routine($app_key);
 
 		} else {
 			$this->message = 'App key parameter missing';
 		}
 
+		$resp->log = $this->log;
 		return rest_ensure_response($resp);
 	}
 
 	public function app_refresh_routine($app_key, $app_type = 'wpa') {
+
+		$resp = new \stdClass;
+
 		// Load app definition.
 		$app = new App();
 		$storage_path = wpa_app_storage_path_by_type($app_type);
@@ -113,6 +117,9 @@ class AppManager {
 			$db_manager = new DatabaseManager;
 			$db_manager->refresh($table_name, $model_def);
 		}
+
+		return $resp;
+
 	}
 
 	public function available() {

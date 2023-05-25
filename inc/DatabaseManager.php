@@ -54,8 +54,11 @@ class DatabaseManager {
 			case 'date_time':
         return 'DATETIME';
 				break;
+			case 'relation_select':
+				return false;
+				break;
 	    default:
-        return '';
+        return 'TEXT';
 				break;
 	  }
 	}
@@ -66,6 +69,9 @@ class DatabaseManager {
 		$field_key   = $field->key;
 		$field_type  = $field->type;
 		$column_type = $this->get_column_type_from_field_type($field->type);
+
+		// If column type false it is because the field type was not at all supported or was type that does not need column.
+		if(!$column_type) { return false; }
 
 		if (!in_array($field_key, $existing_columns)) {
 			// Add the column if it doesn't exist
@@ -138,6 +144,11 @@ class DatabaseManager {
 
 
 	function update_table_fields($model_def, $full_table_name, $existing_columns) {
+
+		if(!isset($model_def->fields)) {
+			return false; // No fields defined in model.
+		}
+		
 		$fields = $model_def->fields;
 
 		// Make title field if it is active (or unset, default active) in defined model.
