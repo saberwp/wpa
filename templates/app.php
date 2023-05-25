@@ -48,8 +48,12 @@ if( $app->brand_styles ) {
 
 		<!-- WPA Validators -->
 		<script src="<?php echo WPA_URL; ?>render/modules/form/FormValidator.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/modules/form/Field.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/validators/required/RequiredField.js"></script>
+		<script src="<?php echo WPA_URL; ?>modules/field/types/text/TextField.js"></script>
+		<script src="<?php echo WPA_URL; ?>modules/field/types/keygen/KeyGen.js"></script>
+		<script src="<?php echo WPA_URL; ?>modules/field/types/date_time/DateTime.js"></script>
 		<script src="<?php echo WPA_URL; ?>js/date-time-picker-component.min.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Logo.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/components/Footer.js"></script>

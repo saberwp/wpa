@@ -6,6 +6,8 @@
  */
 class Form {
 
+	fieldInstances = []
+
 	/* @param modelDef the definition of the model to build the form for. */
 	make(modelDef) {
 
@@ -24,40 +26,49 @@ class Form {
 		// Add fields to form.
 		modelDef.fields.forEach((field) => {
 
-			if( field.type === 'text' ) {
-				el.appendChild( this.field(field) )
+			let fieldEl = ''
+
+			/* Try to load field type from Field() class. */
+			const fieldClass = new Field()
+			const fieldType = fieldClass.loadFieldTypeClass(field.type)
+			if(fieldType) {
+				this.fieldInstances.push(fieldType)
+				fieldEl = fieldType.make(field)
 			}
 
-			if( field.type === 'textarea' ) {
-				const fieldMaker = new TextArea()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
+			// Continue with older checks by type.
+			if(!fieldType) {
+
+				if( field.type === 'textarea' ) {
+					const fieldMaker = new TextArea()
+					fieldEl = fieldMaker.make(field)
+				}
+
+				if( field.type === 'select' ) {
+					const fieldMaker = new Select()
+					fieldEl = fieldMaker.make(field)
+				}
+
+				if( field.type === 'relation_select' ) {
+					const fieldMaker = new Select()
+					fieldEl = fieldMaker.make(field)
+				}
+
+				// Relation Select Multiple /render/fields/SelectMultiple.js
+				if( field.type === 'relation_select_multiple' ) {
+					const fieldMaker = new RelationSelectMultiple()
+					fieldEl = fieldMaker.make(field)
+				}
+
+				if( field.type === 'keygen' ) {
+					const fieldMaker = new KeyGen()
+					fieldEl = fieldMaker.make(field)
+				}
+
 			}
 
-			if( field.type === 'select' ) {
-				const fieldMaker = new Select()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-			if( field.type === 'relation_select' ) {
-				const fieldMaker = new Select()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-			// Relation Select Multiple /render/fields/SelectMultiple.js
-			if( field.type === 'relation_select_multiple' ) {
-				const fieldMaker = new RelationSelectMultiple()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
-
-			if( field.type === 'keygen' ) {
-				const fieldMaker = new KeyGen()
-				const fieldEl = fieldMaker.make(field)
-				el.appendChild( fieldEl )
-			}
+			// Do the append of the field element.
+			el.appendChild( fieldEl )
 
 		})
 
@@ -66,6 +77,11 @@ class Form {
 	}
 
 	init(modelDef) {
+
+		this.fieldInstances.forEach((fieldInstance) => {
+			console.log(fieldInstance)
+			fieldInstance.init()
+		})
 
 		// Add fields to form.
 		modelDef.fields.forEach((field) => {
@@ -97,15 +113,6 @@ class Form {
 		return el
 	}
 
-	field(field) {
-		const el = document.createElement('input')
-		el.type = field.type
-		el.placeholder = field.placeholder
-		el.id = 'field-' + field.key
-		el.name = 'field-' + field.key
-		return el
-	}
-
 	saveButton() {
 		const el = document.createElement('input')
 		el.type = 'submit'
@@ -127,6 +134,10 @@ class Form {
 	formDataParse(formEl) {
 		const formData = new FormData(formEl);
 		const data = Object.fromEntries(formData.entries());
+
+		console.log('formDataParse')
+		console.log(data)
+
 		return data
 	}
 

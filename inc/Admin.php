@@ -247,6 +247,7 @@ class Admin {
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa-keys') {
 			wp_enqueue_script('wpa-form-validator', WPA_URL . 'render/modules/form/FormValidator.js', array(), '1.0', true);
+			wp_enqueue_script('wpa-form-field', WPA_URL . 'render/modules/form/Field.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-field-validator', WPA_URL . 'render/modules/form/fields/FieldValidator.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-required-field', WPA_URL . 'render/modules/form/validators/required/RequiredField.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-date-time-picker', WPA_URL . 'js/date-time-picker-component.min.js', array(), '1.0', true);
@@ -261,6 +262,8 @@ class Admin {
 			wp_enqueue_script('wpa-text-area', WPA_URL . 'render/fields/TextArea.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-select', WPA_URL . 'render/fields/Select.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-module-fields-types-keygen', WPA_URL . 'modules/field/types/keygen/KeyGen.js', array(), '1.0', true);
+			wp_enqueue_script('wpa-module-fields-types-date-time', WPA_URL . 'modules/field/types/date_time/DateTime.js', array(), '1.0', true);
+			wp_enqueue_script('wpa-module-fields-types-text', WPA_URL . 'modules/field/types/text/TextField.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/fields/RelationSelectMultiple.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
