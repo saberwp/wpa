@@ -13,7 +13,6 @@ class Api {
 
 	public $key = 'KR928NV81G01';  // @TODO security issue, remove key.
 	public $app_key = false;
-	public $app_path_root;
 
 	public function init() {
 		add_action('rest_api_init', [$this, 'register_api_endpoints']);
@@ -25,14 +24,6 @@ class Api {
 
 	public function get_app_key() {
 		return $this->app_key;
-	}
-
-	public function set_path_root($app_key) {
-		$this->app_path_root = WP_CONTENT_DIR . '/wpa/'.$app_key.'/';
-	}
-
-	public function get_path_root() {
-		return $this->app_path_root;
 	}
 
 	// Define the API route handler function.
@@ -82,7 +73,6 @@ class Api {
 		// Setup API object.
 		$api = new Api;
 		$api->set_app_key($app_key);
-		$api->set_path_root($app_key);
 
 		// Do DB update.
 		global $wpdb;
@@ -91,8 +81,8 @@ class Api {
 		// Load model definition from JSON file
 		$app_def = wpa_load_app_def_by_key_any_storage($app_key);
 		$app_def = wpa_app_set_type($app_def);
-		$storage_path = wpa_app_storage_path_by_type($app_def->type);
-	  $model_json = file_get_contents($storage_path.$app_key.'/models/'.$model_key.'.json');
+		$api->storage_path = wpa_app_storage_path_by_type($app_def->type);
+	  $model_json = file_get_contents($api->storage_path.$app_key.'/models/'.$model_key.'.json');
 	  $model = json_decode($model_json);
 
 		$edit_data = array();
@@ -103,6 +93,7 @@ class Api {
 
 		$relations_exist = 0;
 		foreach ($model->fields as $field) {
+
 		  // Add to $data query using $field->key and matching key from $json_data.
 		  if (isset($form_data[$field->key]) && $field->type !== 'relation_select') {
 		    $edit_data[$field->key] = $form_data[$field->key];
@@ -128,7 +119,7 @@ class Api {
 
 		// If relations exist, do relations handling.
 		if( $relations_exist === 1 ) {
-			$response->relations = $api->relations_process($api, $model, $id, $form_data);
+			$response->relations = $api->relations_process($model, $id, $form_data, $app_key);
 		}
 
 		return rest_ensure_response($response);
@@ -138,7 +129,9 @@ class Api {
 	// @param $model Definition for the model being edited, e.g. Task model.
 	// @param $id ID for the model record being edited.
 	// @param $form_data Array form values submitted during the edit.
-	public function relations_process($api, $model, $id, $form_data) {
+	public function relations_process($model, $id, $form_data, $app_key) {
+
+		echo "Relations Process \n";
 
 		global $wpdb;
 		$result = new \stdClass;
@@ -149,8 +142,10 @@ class Api {
 			if (isset($form_data[$field->key]) && $field->type === 'relation_select') {
 
 				// Load task_status model def.
-				$relation_model_json = file_get_contents( $api->get_path_root() . '/models/' . $field->relation->model . '.json');
+				$relation_model_json = file_get_contents($this->storage_path.$app_key.'/models/' . $field->relation->model . '.json');
 				$relation_model = json_decode( $relation_model_json );
+
+				var_dump($relation_model);
 
 				// Parse the 2 database column names from $relation_model.
 				if( $field->relation->side === 'left' ) {
@@ -231,44 +226,47 @@ class Api {
 	  $table_name = self::make_table_name($app_key, $model_key);
 
 		$api = new Api;
+		$api->set_app_key($app_key);
 
 		// Load model definition from JSON file.
 		$app_def = wpa_load_app_def_by_key_any_storage($app_key);
 		$app_def = wpa_app_set_type($app_def);
-		$storage_path = wpa_app_storage_path_by_type($app_def->type);
-	  $model_json = file_get_contents($storage_path.$app_key.'/models/'.$model_key.'.json');
+		$api->storage_path = wpa_app_storage_path_by_type($app_def->type);
+	  $model_json = file_get_contents($api->storage_path.$app_key.'/models/'.$model_key.'.json');
 	  $model = json_decode($model_json);
 
 		if($model->type === 'relation') {
 			$api = new Api;
-			$data = $api->createRelationInsertData($model, $json_data);
+			$form_data = $api->createRelationInsertData($model, $json_data);
 		} else {
 			// Init data for insert.
-			$data = array();
+			$form_data = array();
 
 			if(self::model_has_title($model)) {
-				$data['title'] = $json_data['title'];
+				$form_data['title'] = $json_data['title'];
 			}
 
+			$relations_exist = 0;
 		  foreach ($model->fields as $field) {
-		    // Add to $data query using $field->key and matching key from $json_data.
 
 				if($field->type === 'relation_select_multiple') {
 					continue;
 				}
 
-				if($field->type === 'relation_select') {
-					continue;
+				// Flag special handling for relation select fields.
+				if (isset($json_data[$field->key]) && $field->type === 'relation_select') {
+					$relations_exist = 1;
 				}
 
-		    if (isset($json_data[$field->key])) {
-		      $data[$field->key] = $json_data[$field->key];
+		    if (isset($form_data[$field->key]) && $field->type !== 'relation_select') {
+		      $form_data[$field->key] = $json_data[$field->key];
 		    }
+
 		  }
 		}
 
 		// Do database insert.
-	  $result = $wpdb->insert($table_name, $data);
+	  $result = $wpdb->insert($table_name, $form_data);
 
 	  if ($result === false) {
 	    // Handle insert error.
@@ -277,10 +275,8 @@ class Api {
 	    $response->message = 'Error processing insert request.';
 			$response->model_key = $model_key;
 			$response->table_name = $table_name;
-			$response->insert_data = $data;
-			$response->path_root = $api->get_path_root();
+			$response->insert_data = $form_data;
 			$response->model_json = $model_json;
-	    return rest_ensure_response($response);
 	  } else {
 	    // Handle insert success.
 	    $response = new \stdClass;
@@ -290,11 +286,17 @@ class Api {
 	    $response->result = $result;
 			$response->model_key = $model_key;
 			$response->table_name = $table_name;
-			$response->insert_data = $data;
-			$response->path_root = $api->get_path_root();
+			$response->insert_data = $form_data;
 			$response->model_json = $model_json;
-	    return rest_ensure_response($response);
 	  }
+
+		// If relations exist, do relations handling.
+		if( $relations_exist === 1 ) {
+			$response->relations = $api->relations_process($model, $wpdb->insert_id, $json_data, $app_key);
+		}
+
+		return rest_ensure_response($response);
+
 	}
 
 	public function createRelationInsertData($model, $form_data) {
@@ -346,12 +348,11 @@ class Api {
 
 			// Set app key and path root.
 			$this->set_app_key($app_key);
-			$this->set_path_root($app_key);
 
 			$app = new App();
 			$app_type = isset($app_def->type) ? $app_def->type : 'wpa';
-			$storage_path = wpa_app_storage_path_by_type($app_type);
-			$app->set_storage_path($storage_path);
+			$this->storage_path = wpa_app_storage_path_by_type($app_type);
+			$app->set_storage_path($this->storage_path);
 			$app->set_app_key($app_key);
 			$app->init();
 
