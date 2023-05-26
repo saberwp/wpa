@@ -2,7 +2,8 @@
 	"key": "wpa_sleep",
 	"title": "Sleep Manager",
 	"models": [
-		"sleep_log"
+		"sleep_log",
+		"goal"
 	],
 	"location": {
 		"where": "front",

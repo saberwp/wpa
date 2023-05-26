@@ -1,0 +1,14 @@
+{
+	"key": "goal",
+	"type": "standard",
+	"title": "Sleep Goal",
+	"title_plural": "Sleep Goals",
+	"fields": [
+		{
+			"key": "description",
+			"type": "textarea",
+			"label": "Description",
+			"placeholder": "Describe your sleep goal..."
+		}
+	]
+}

@@ -9,6 +9,12 @@
 			"type": "textarea",
 			"label": "Notes",
 			"placeholder": "Sleep Log notes..."
+		},
+		{
+			"key": "start",
+			"type": "date_time",
+			"label": "Start Sleep Time",
+			"placeholder": ""
 		}
 	]
 }

@@ -54,12 +54,12 @@ class AppLoader {
 			}
 		}
 
-		$app_type = isset($app_def->type) ? $app_def->type : 'wpa';
+		$app_def->type = isset($app_def->type) ? $app_def->type : 'wpa';
 
 		$this->log[] = 'App type is '.$app_def->type.'.';
 
 		$app = new App();
-		$storage_path = wpa_app_storage_path_by_type($app_type);
+		$storage_path = wpa_app_storage_path_by_type($app_def->type);
 		$app->set_storage_path($storage_path);
 		$app->set_app_key($app_key);
 		$app->init();
