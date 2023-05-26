@@ -27,6 +27,11 @@
 				"model": "task_status",
 				"side": "right"
 			}
+		},
+		{
+			"key": "assignee",
+			"type": "user_select",
+			"label": "Assignee"
 		}
 	]
 }

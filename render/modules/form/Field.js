@@ -9,6 +9,9 @@ class Field {
 			case 'text':
 	      fieldTypeClass = new TextField()
 	      break;
+			case 'user_select':
+	      fieldTypeClass = new UserSelectField()
+	      break;
 	    default:
 	      break;
 	  }

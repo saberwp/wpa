@@ -61,6 +61,7 @@ if( $app->brand_styles ) {
 		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/validators/required/RequiredField.js"></script>
 		<script src="<?php echo WPA_URL; ?>modules/field/types/text/TextField.js"></script>
+		<script src="<?php echo WPA_URL; ?>modules/field/types/user_select/UserSelectField.js"></script>
 		<script src="<?php echo WPA_URL; ?>modules/field/types/keygen/KeyGen.js"></script>
 		<script src="<?php echo WPA_URL; ?>modules/field/types/date_time/DateTime.js"></script>
 		<script src="<?php echo WPA_URL; ?>js/date-time-picker-component.min.js"></script>

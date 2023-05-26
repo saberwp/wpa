@@ -264,6 +264,7 @@ class Admin {
 			wp_enqueue_script('wpa-module-fields-types-keygen', WPA_URL . 'modules/field/types/keygen/KeyGen.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-module-fields-types-date-time', WPA_URL . 'modules/field/types/date_time/DateTime.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-module-fields-types-text', WPA_URL . 'modules/field/types/text/TextField.js', array(), '1.0', true);
+			wp_enqueue_script('wpa-module-fields-types-user-select', WPA_URL . 'modules/field/types/user_select/UserSelectField.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/fields/RelationSelectMultiple.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
 			wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
