@@ -16,6 +16,7 @@ class Api {
 
 	public function init() {
 		require_once(WPA_PATH.'inc/ApiCreate.php');
+		require_once(WPA_PATH.'inc/ApiRelations.php');
 		add_action('rest_api_init', [$this, 'register_api_endpoints']);
 	}
 
@@ -120,84 +121,11 @@ class Api {
 
 		// If relations exist, do relations handling.
 		if( $relations_exist === 1 ) {
-			$response->relations = $api->relations_process($model, $id, $form_data, $app_key);
+			$api_relations = new ApiRelations();
+			$response->relations = $api_relations->process($model, $id, $form_data, $app_key);
 		}
 
 		return rest_ensure_response($response);
-	}
-
-	// $id is the record id for the main model record.
-	// @param $model Definition for the model being edited, e.g. Task model.
-	// @param $id ID for the model record being edited.
-	// @param $form_data Array form values submitted during the edit.
-	public function relations_process($model, $id, $form_data, $app_key) {
-
-		global $wpdb;
-		$result = new \stdClass;
-
-		foreach ($model->fields as $field) {
-
-			// Handling for relation select fields.
-			if (isset($form_data[$field->key]) && $field->type === 'relation_select') {
-
-				// Load task_status model def.
-				$relation_model_json = file_get_contents($this->storage_path.$app_key.'/models/' . $field->relation->model . '.json');
-				$relation_model = json_decode( $relation_model_json );
-
-				// Parse the 2 database column names from $relation_model.
-				if( $field->relation->side === 'left' ) {
-					$first_col = $relation_model->relations->right->model . '_id';
-					$second_col = $relation_model->relations->left->model . '_id';
-				}
-
-				if( $field->relation->side === 'right' ) {
-					$first_col = $relation_model->relations->left->model . '_id';
-					$second_col = $relation_model->relations->right->model . '_id';
-				}
-
-				// Get the relation ID from the form data.
-				$relation_id = $form_data[$field->key];
-
-				$table_name = $this->make_table_name($this->get_app_key(), $field->relation->model);
-				$query = "SELECT * FROM $table_name WHERE $first_col = $id";
-				$row = $wpdb->get_row($query);
-
-				// If relation record exists, check if the value is different.
-				$unchanged = 1;
-				if($row) {
-
-					if($row->{$first_col} !== $id || $row->{$second_col} !== $relation_id) {
-						$unchanged = 0;
-					}
-
-					// If value is same, exit now.
-					if( ! $unchanged ) {
-
-						// Do update.
-						$edit_data = [];
-						$edit_data[$first_col] = $id;
-						$edit_data[$second_col] = $relation_id;
-						$where = array(
-						  'id' => $row->id,
-						);
-						$result->{$field->key} = $wpdb->update($table_name, $edit_data, $where);
-					}
-
-				}
-
-				// If relation record does not exist, insert it into relation table.
-				if( ! $row ) {
-					$insert_data = [];
-					$insert_data[$first_col] = $id;
-					$insert_data[$second_col] = $relation_id;
-					$result->{$field->key} = $wpdb->insert($table_name, $insert_data);
-				}
-
-			}
-		}
-
-		return $result;
-
 	}
 
 	private static function model_has_title($modelDef) {
@@ -215,92 +143,42 @@ class Api {
 		$app_key = $route_parts[3];
 	  $model_key = $route_parts[4];
 
-	  // Get request body.
-	  $json_data = $request->get_json_params();
+		// Init the ApiCreate class.
+		$api_create = new ApiCreate();
+		$api_create->app_key = $app_key;
+		$api_create->model_key = $model_key;
+		$api_create->form_data = $request->get_json_params();
+		$api_create->table_name = self::make_table_name($app_key, $model_key);
+		$api_create->init();
+		$api_create->parse_form_data();
+		$api_create->db_insert();
 
-	  // Do DB insert.
-	  global $wpdb;
-	  $table_name = self::make_table_name($app_key, $model_key);
-
-		$api = new Api;
-		$api->set_app_key($app_key);
-
-		// Load model definition from JSON file.
-		$app_def = wpa_load_app_def_by_key_any_storage($app_key);
-		$app_def = wpa_app_set_type($app_def);
-		$api->storage_path = wpa_app_storage_path_by_type($app_def->type);
-	  $model_json = file_get_contents($api->storage_path.$app_key.'/models/'.$model_key.'.json');
-	  $model = json_decode($model_json);
-
-		if($model->type === 'relation') {
-			$api = new Api;
-			$form_data = $api->createRelationInsertData($model, $json_data);
-		} else {
-			// Init data for insert.
-			$form_data = array();
-
-			if(self::model_has_title($model)) {
-				$form_data['title'] = $json_data['title'];
-			}
-
-			$relations_exist = 0;
-		  foreach ($model->fields as $field) {
-
-				if($field->type === 'relation_select_multiple') {
-					continue;
-				}
-
-				// Flag special handling for relation select fields.
-				if (isset($json_data[$field->key]) && $field->type === 'relation_select') {
-					$relations_exist = 1;
-				}
-
-		    if (isset($json_data[$field->key]) && $field->type !== 'relation_select') {
-		      $form_data[$field->key] = $json_data[$field->key];
-		    }
-
-		  }
-		}
-
-		// Do database insert.
-	  $result = $wpdb->insert($table_name, $form_data);
-
-	  if ($result === false) {
+	  if ($api_create->insert_result === false) {
 	    // Handle insert error.
 	    $response = new \stdClass;
 	    $response->success = false;
 	    $response->message = 'Error processing insert request.';
-			$response->model_key = $model_key;
-			$response->table_name = $table_name;
-			$response->insert_data = $form_data;
-			$response->model_json = $model_json;
 	  } else {
 	    // Handle insert success.
 	    $response = new \stdClass;
 	    $response->success = true;
 	    $response->message = 'Request processed successfully.';
-	    $response->model_id = $wpdb->insert_id;
-	    $response->result = $result;
-			$response->model_key = $model_key;
-			$response->table_name = $table_name;
-			$response->insert_data = $form_data;
-			$response->model_json = $model_json;
+			$response->insert_id = $api_create->insert_id;
 	  }
 
 		// If relations exist, do relations handling.
-		if( $relations_exist === 1 ) {
-			$response->relations = $api->relations_process($model, $wpdb->insert_id, $json_data, $app_key);
+		if( $api_create->relations_exist === 1 ) {
+			$api_relations = new ApiRelations;
+			$api_relations->app_key = $api_create->app_key;
+			$api_relations->model_def = $api_create->model_def;
+			$api_relations->record_id = $api_create->insert_id;
+			$api_relations->storage_path = $api_create->storage_path;
+			$api_relations->form_data = $api_create->form_data;
+			$response->relations = $api_relations->process();
 		}
 
 		return rest_ensure_response($response);
 
-	}
-
-	public function createRelationInsertData($model, $form_data) {
-		$insert_data = ['id' => 0];
-		$insert_data[$model->relations->left->model.'_id']  = $form_data[$model->relations->left->model.'_id'];
-		$insert_data[$model->relations->right->model.'_id'] = $form_data[$model->relations->right->model.'_id'];
-		return $insert_data;
 	}
 
 	public function delete_callback($request) {
