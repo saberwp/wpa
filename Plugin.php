@@ -1,14 +1,18 @@
 <?php
 
 /*
- * Plugin Name: WPA (WordPress Application Framework)
- * Version: 1.0.7
+ * Plugin Name: WPA
+ * Author: Saber Technical Ukraine
+ * Description: WPA (WordPress Apps) provides app development within WordPress with a no-code or low-code approach. The plugin ships prebuilt apps as examples or for install and usage. Users can create their own apps using entirely JSON configuration files. Developers can extend WPA apps using hooks and standardized PHP and Javascript classes.
+ * Donate link: https://saberwp.com/donate/
+ * Version: 1.0.8
  */
 
 namespace WPA;
 
 define( 'WPA_PATH', plugin_dir_path( __FILE__ ) . '/' );
 define( 'WPA_URL', plugin_dir_url( __FILE__ ) );
+define( 'WPA_VERSION', '1.0.8' );
 
 class Plugin {
 
