@@ -66,10 +66,6 @@ class WpaAdmin {
 	}
 
 	makeAppCardRemoveButton(app) {
-		let iconOpacity = .15
-		if(app.installed) {
-			iconOpacity = .5
-		}
 		const el = document.createElement('div')
 		el.classList.add('wpa-app-uninstall-button')
 
@@ -169,8 +165,6 @@ class WpaAdmin {
 
 	attachUninstallButtonClickEvent() {
 
-
-
 		const installButtons = document.querySelectorAll('.wpa-app-uninstall-button');
 		const self = this;
 
@@ -194,7 +188,7 @@ class WpaAdmin {
 		    .then(function(response) {
 		      if (response.ok) {
 		        console.log(response);
-						//self.appCardRefreshUninstalled(appKey)
+						self.appCardRefreshUninstalled(appKey)
 		      } else {
 		        console.error('App uninstall failed!');
 		      }
@@ -249,6 +243,56 @@ class WpaAdmin {
 		const uninstallButtonIconElement = uninstallButtonElement.querySelector('svg');
 		uninstallButtonIconElement.classList.remove('fill-white/20')
 		uninstallButtonIconElement.classList.add('fill-gray-400')
+
+
+	}
+
+	// Refresh the altered app card after uninstall.
+	appCardRefreshUninstalled(appKey) {
+
+		const appDef = this.appDefinitionByKey(appKey)
+		appDef.installed = false
+
+		console.log('app uninstalled...')
+
+		const cardEl = document.getElementById('wpa-app-'+appKey)
+		const statusElement = cardEl.querySelector('.wpa-app-card-status h2');
+		statusElement.innerHTML = 'UNINSTALLED'
+
+		// Deactivate delete app button.
+		const newUninstallButtonEl = this.makeAppCardRemoveButton(appDef);
+		const currentUninstallButtonElement = cardEl.querySelector('.wpa-app-uninstall-button');
+		if (currentUninstallButtonElement) {
+		  const parentElement = currentUninstallButtonElement.parentNode;
+		  parentElement.insertBefore(newUninstallButtonEl, currentUninstallButtonElement);
+		  currentUninstallButtonElement.remove();
+		}
+
+		// Replace link activated button with inactive link button.
+		const appLinkElement = cardEl.querySelector('.wpa-app-link');
+		const appCardBodyElement = cardEl.querySelector('.wpa-app-card-body');
+		const appVisitButton = this.makeAppCardVisitButton(appDef)
+		appLinkElement.remove()
+		appCardBodyElement.appendChild(appVisitButton)
+
+		// Replace install button with refresh button.
+		const refreshButtonElement = cardEl.querySelector('.wpa-app-refresh-button');
+		refreshButtonElement.remove()
+		const installButtonElement = this.makeAppCardInstallButton(appDef)
+		appCardBodyElement.insertBefore(installButtonElement, appVisitButton)
+
+		// @TODO Notify user of result.
+
+
+
+
+
+
+
+
+
+
+
 
 
 	}
