@@ -17,8 +17,6 @@ class Create {
 		modal.setHeaderLabel('Create '+app.def[app.data.currentModel].title)
 		modal.setContent(formContent)
 
-
-
 		// Attach form submit handler.
 		app.form.submit(formContent)
 
@@ -39,6 +37,9 @@ class Create {
 
 	// Send API request.
 	request(model, record) {
+
+		// Add user to record.
+		record['author_user_id'] = app.userId;
 
 		fetch(app.apiUrl+app.def.key+'/'+model.key, {
 				method: "POST",

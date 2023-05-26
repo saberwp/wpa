@@ -34,14 +34,23 @@ if( $app->brand_styles ) {
 		<link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/date-time-picker-component.min.css">
 
 		<?php
+
 			// Render base URL for the API.
 			$rest_url = rest_url();
 			$api_url = $rest_url . 'wp/v2/';
 
-
 			echo '<script>';
 			echo 'var WPA_ApiUrl = "' . $api_url . '"';
 			echo '</script>';
+
+			// Render current WP user ID.
+			$rest_url = rest_url();
+			$api_url = $rest_url . 'wp/v2/';
+
+			echo '<script>';
+			echo 'var WPA_CurrentUserID = "' . get_current_user_id() . '"';
+			echo '</script>';
+
 		?>
 		<?php $app->render_app_def_script(); ?>
 

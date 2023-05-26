@@ -124,10 +124,11 @@ class DatabaseManager {
     $charset_collate = $wpdb->get_charset_collate();
     $sql  = 'CREATE TABLE ' . $full_table_name . '(';
     $sql .= 'id mediumint(9) NOT NULL AUTO_INCREMENT,';
+		$sql .= 'author_user_id mediumint(9) NOT NULL DEFAULT 0,';
 
     if ($model_def->type === 'relation') {
-        $sql .= $model_def->relations->left->model . '_id mediumint(9) NOT NULL,';
-        $sql .= $model_def->relations->right->model . '_id mediumint(9) NOT NULL,';
+      $sql .= $model_def->relations->left->model . '_id mediumint(9) NOT NULL,';
+      $sql .= $model_def->relations->right->model . '_id mediumint(9) NOT NULL,';
     }
 
     $sql .= 'created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,';
@@ -148,7 +149,7 @@ class DatabaseManager {
 		if(!isset($model_def->fields)) {
 			return false; // No fields defined in model.
 		}
-		
+
 		$fields = $model_def->fields;
 
 		// Make title field if it is active (or unset, default active) in defined model.

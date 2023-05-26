@@ -16,6 +16,9 @@ class App {
 		// Set API URL.
 		this.apiUrl = WPA_ApiUrl;
 
+		// Set Current User ID.
+		this.userId = WPA_CurrentUserID;
+
 		// Fetch app def.
 		this.fetchAppDef()
 
