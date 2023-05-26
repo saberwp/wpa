@@ -255,7 +255,7 @@ class Api {
 					$relations_exist = 1;
 				}
 
-		    if (isset($form_data[$field->key]) && $field->type !== 'relation_select') {
+		    if (isset($json_data[$field->key]) && $field->type !== 'relation_select') {
 		      $form_data[$field->key] = $json_data[$field->key];
 		    }
 
