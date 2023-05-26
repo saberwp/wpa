@@ -67,8 +67,8 @@
 
 			 const modelDef = this.relationModelDef
 			 const formClass = new Form()
-			 const formEl = formClass.makeForModel(modelDef)
-			 formClass.addSubmitEventHandler(formEl)
+			 const formEl = formClass.make(modelDef)
+			 formClass.submit(formEl)
 
 			 // Set current model inline.
 			 app.data.currentModelInline = modelDef
@@ -87,6 +87,9 @@
 	 // Catch wpa_record_created event and do the relationship create between the new record and the edited base record.
 	 relateInlineCreatedRecordEvent() {
 		 document.addEventListener('wpa_record_created', (event) => {
+
+			 console.log('Event wpa_record_created...')
+			 console.log(event.detail)
 
 			if(event.detail.model_key !== 'budget_item') {
 				return;

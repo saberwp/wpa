@@ -164,6 +164,7 @@ class Api {
 	    $response->success = true;
 	    $response->message = 'Request processed successfully.';
 			$response->insert_id = $api_create->insert_id;
+			$response->model_key = $api_create->model_def->key;
 	  }
 
 		// If relations exist, do relations handling.

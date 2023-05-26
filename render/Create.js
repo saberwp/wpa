@@ -27,12 +27,7 @@ class Create {
 	}
 
 	recordModel(model, record) {
-
-		console.log(record)
-
-		// Send API request.
 		this.request(model, record)
-
 	}
 
 	// Send API request.
@@ -56,6 +51,8 @@ class Create {
 			return response.json();
 		})
 		.then((responseJson) => {
+
+			console.log('responseJson at line 61 Create.js')
 			console.log(responseJson)
 
 			const recordId = responseJson.model_id
@@ -63,7 +60,7 @@ class Create {
 			const event = new CustomEvent('wpa_record_created', {
 				detail: {
 					model_key:responseJson.model_key,
-					record_id:responseJson.model_id
+					record_id:responseJson.insert_id
 				}
 			})
 			document.dispatchEvent(event)
@@ -78,36 +75,6 @@ class Create {
 			// Close modal.
 			app.modal.close()
 
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-	}
-
-	create(record) {
-
-		// Update local data store.
-		app.data[app.data.currentModel].record.unshift(record)
-		app.data[app.data.currentModel].index = app.recordIndex( app.data[app.data.currentModel].record )
-
-		// Send API request.
-		fetch(app.apiUrl+app.def.key+'/'+app.data.currentModel, {
-				method: "POST",
-				body: JSON.stringify(record),
-				headers: {
-				"Content-Type": "application/json",
-				"API-KEY": "KR928NV81G01"
-			},
-		})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			return response.json();
-		})
-		.then((responseJson) => {
-			console.log(responseJson);
-			console.log('777 create handler after create...')
 		})
 		.catch((error) => {
 			console.error(error);
