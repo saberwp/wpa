@@ -4,7 +4,8 @@
 	"models": [
 		"task",
 		"status",
-		"task_status"
+		"task_status",
+		"settings"
 	],
 	"location": {
 		"where": "front",

@@ -12,7 +12,7 @@ class Menu {
 		el.appendChild(this.menuItem('Dashboard', 'dashboard'))
 		app.def.models.forEach(( modelKey ) => {
 			const model = app.def[modelKey]
-			if( model.type === 'standard' ) {
+			if( model.type === 'standard' || model.type === 'settings' ) {
 				el.appendChild( this.menuItemModel( model ))
 			}
 		})

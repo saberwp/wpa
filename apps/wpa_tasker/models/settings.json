@@ -1,0 +1,14 @@
+{
+	"key": "settings",
+	"type": "settings",
+	"title": "Settings",
+	"title_plural": "Settings",
+	"fields": [
+		{
+			"key": "name",
+			"type": "text",
+			"label": "Name",
+			"placeholder": "Enter your name..."
+		}
+	]
+}

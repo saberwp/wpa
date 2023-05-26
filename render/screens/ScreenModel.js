@@ -2,13 +2,18 @@ class ScreenModel {
 
 	render(screenKey) {
 
-		console.log(screenKey)
-
 		// Set current model data.
 		app.data.currentModel = screenKey
 
 		// Data load.
 		app.dm.fetch(screenKey)
+
+		// Do settings model render if model.type is settings.
+		const modelDef = app.def[app.data.currentModel]
+		if(modelDef.type === 'settings') {
+			this.settingsModelRender()
+			return; // Return before any rendering and before the event hook into app_loaded_data.
+		}
 
 		const body = document.getElementById('app-body')
 		body.innerHTML = ''
@@ -47,8 +52,6 @@ class ScreenModel {
 
 			if(e.detail.modelKey !== screenKey) { return }
 
-			console.log('doing app_data_loaded callback at 51....')
-
 			// List init.
 			app.list.refresh();
 
@@ -57,9 +60,6 @@ class ScreenModel {
 
 			// Get single row from data store.
 			const record = app.data[screenKey].index[recordId]
-			console.log(screenKey)
-			console.log(recordId)
-			console.log(record)
 
 			app.modal.setHeaderLabel('Task ' + record.id)
 			const singleContent = document.createElement('div')
@@ -71,6 +71,30 @@ class ScreenModel {
 		});
 
 
+
+	}
+
+	settingsModelRender() {
+
+		// Make form.
+		const formContent = app.form.make(app.def[app.data.currentModel])
+
+		// Attach form submit handler.
+		app.form.submit(formContent)
+
+		const body = document.getElementById('app-body')
+		body.innerHTML = ''
+		body.appendChild(formContent)
+
+		// Run field init to enable fields to attach events.
+		app.form.init(app.def[app.data.currentModel])
+
+		// Delay making list until after custom event "app_data_loaded".
+		document.addEventListener('app_data_loaded', () => {
+
+			console.log('callback inside settingsModelRender/app_data_loaded event')
+
+		});
 
 	}
 

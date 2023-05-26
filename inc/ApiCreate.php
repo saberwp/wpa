@@ -33,6 +33,7 @@ class ApiCreate {
 
 		switch($this->model_def->type) {
 			case 'standard':
+			case 'settings':
 				$this->make_standard_insert_data();
 				break;
 			case 'relation':
