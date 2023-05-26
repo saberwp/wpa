@@ -15,6 +15,7 @@ class Api {
 	public $app_key = false;
 
 	public function init() {
+		require_once(WPA_PATH.'inc/ApiCreate.php');
 		add_action('rest_api_init', [$this, 'register_api_endpoints']);
 	}
 
@@ -131,8 +132,6 @@ class Api {
 	// @param $form_data Array form values submitted during the edit.
 	public function relations_process($model, $id, $form_data, $app_key) {
 
-		echo "Relations Process \n";
-
 		global $wpdb;
 		$result = new \stdClass;
 
@@ -144,8 +143,6 @@ class Api {
 				// Load task_status model def.
 				$relation_model_json = file_get_contents($this->storage_path.$app_key.'/models/' . $field->relation->model . '.json');
 				$relation_model = json_decode( $relation_model_json );
-
-				var_dump($relation_model);
 
 				// Parse the 2 database column names from $relation_model.
 				if( $field->relation->side === 'left' ) {
