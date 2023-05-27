@@ -53,9 +53,8 @@ if( $app->brand_styles ) {
 
 		?>
 		<?php $app->render_app_def_script(); ?>
-
-
-		<!-- WPA Validators -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="<?php echo WPA_URL; ?>render/Report.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/FormValidator.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/Field.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>

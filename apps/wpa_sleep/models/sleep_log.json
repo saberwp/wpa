@@ -8,12 +8,18 @@
 			"key": "notes",
 			"type": "textarea",
 			"label": "Notes",
-			"placeholder": "Sleep Log notes..."
+			"placeholder": "Sleep log notes..."
 		},
 		{
 			"key": "start",
 			"type": "date_time",
-			"label": "Start Sleep Time",
+			"label": "Sleep Start",
+			"placeholder": ""
+		},
+		{
+			"key": "end",
+			"type": "date_time",
+			"label": "Wake Time",
 			"placeholder": ""
 		}
 	]
