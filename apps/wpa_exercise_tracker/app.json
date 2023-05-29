@@ -2,7 +2,8 @@
 	"key": "wpa_exercise_tracker",
 	"title": "Exercise Tracker",
 	"models": [
-		"log"
+		"log",
+		"time_log"
 	],
 	"location": {
 		"where": "front",

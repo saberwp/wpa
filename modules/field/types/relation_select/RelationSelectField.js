@@ -14,6 +14,8 @@ class RelationSelectField {
 		return el
 	}
 
+	init() {}
+
 	relationHandler(el, field) {
 		const fieldRelationModelKey = field.relation.model
 		const relationModel = app.def[fieldRelationModelKey]

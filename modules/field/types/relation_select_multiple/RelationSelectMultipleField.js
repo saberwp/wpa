@@ -49,6 +49,8 @@
 		 return el
 	 }
 
+	 init() {}
+
 	 inlineCreateButton(field) {
 
 		 const el = document.createElement('button')

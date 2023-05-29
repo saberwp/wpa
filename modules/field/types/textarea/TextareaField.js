@@ -10,4 +10,6 @@ class TextareaField {
 
 	}
 
+	init() {}
+
 }

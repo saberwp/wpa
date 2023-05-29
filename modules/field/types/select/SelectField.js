@@ -16,6 +16,8 @@ class SelectField {
 		return el
 	}
 
+	init() {}
+
 	choicesStatic(el, field) {
 		field.choices.forEach((choice) => {
 			const opt = document.createElement('option')
