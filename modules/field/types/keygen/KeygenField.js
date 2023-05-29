@@ -1,4 +1,10 @@
-class KeyGen {
+class KeygenField {
+
+	fieldDef = false
+
+	constructor(fieldDef) {
+		this.fieldDef = fieldDef
+	}
 
 	key = 'keygen'
 	title = 'Key Generator Field'

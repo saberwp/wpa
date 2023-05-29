@@ -1,0 +1,12 @@
+class EmailField {
+
+	make() {
+
+	}
+
+	init() {
+		
+
+	}
+
+}

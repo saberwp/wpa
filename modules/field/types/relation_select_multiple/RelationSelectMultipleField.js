@@ -1,12 +1,12 @@
 /*
- * Select Multiple Field Type
+ * Relation Select Multiple Field Type
  *
  * Used to select multiple records from a related model.
  * Example usage: you have projects and tasks in the app. When editing projects you want to be able to add multiple existing tasks into the project by creating a relationship between the project and task records.
  * As a field this script only handles rendering and function of the field. The relationship model it is managing must be defined as a relation model first.
  */
 
- class RelationSelectMultiple {
+ class RelationSelectMultipleField {
 
 	 relationModel = false
 

@@ -28,47 +28,16 @@ class Form {
 
 			let fieldEl = ''
 
-			/* Try to load field type from Field() class. */
+			/* Load field type from Field() class. */
 			const fieldClass = new Field()
 			const fieldType = fieldClass.loadFieldTypeClass(field.type, field)
 			if(fieldType) {
 				this.fieldInstances.push(fieldType)
 				fieldEl = fieldType.make(field)
+				el.appendChild( fieldEl )
+			} else {
+				console.error('Could not load field.type '+field.type)
 			}
-
-			// Continue with older checks by type.
-			if(!fieldType) {
-
-				if( field.type === 'textarea' ) {
-					const fieldMaker = new TextArea()
-					fieldEl = fieldMaker.make(field)
-				}
-
-				if( field.type === 'select' ) {
-					const fieldMaker = new Select()
-					fieldEl = fieldMaker.make(field)
-				}
-
-				if( field.type === 'relation_select' ) {
-					const fieldMaker = new Select()
-					fieldEl = fieldMaker.make(field)
-				}
-
-				// Relation Select Multiple /render/fields/SelectMultiple.js
-				if( field.type === 'relation_select_multiple' ) {
-					const fieldMaker = new RelationSelectMultiple()
-					fieldEl = fieldMaker.make(field)
-				}
-
-				if( field.type === 'keygen' ) {
-					const fieldMaker = new KeyGen()
-					fieldEl = fieldMaker.make(field)
-				}
-
-			}
-
-			// Do the append of the field element.
-			el.appendChild( fieldEl )
 
 		})
 

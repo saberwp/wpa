@@ -1,4 +1,4 @@
-class TextArea {
+class TextareaField {
 
 	make(field) {
 

@@ -15,7 +15,7 @@ class Report {
 		content += this.summaryStat()
 		content += this.makeChart()
 
-		app.dm.fetch('sleep_log')
+		//app.dm.fetch('sleep_log')
 		document.addEventListener('app_data_loaded', (event) => {
 			if(event.detail.modelKey === 'sleep_log') {
 				this.records = event.detail.records

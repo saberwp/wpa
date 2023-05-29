@@ -20,6 +20,8 @@ if( $app->brand_styles ) {
 
 ?>
 
+<?php ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,40 +56,16 @@ if( $app->brand_styles ) {
 		?>
 		<?php $app->render_app_def_script(); ?>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Report.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/modules/form/FormValidator.js"></script>
-		<script src="<?php echo WPA_URL; ?>modules/field/Field.js"></script>
-		<script src="<?php echo WPA_URL; ?>modules/field/FieldInstance.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/modules/form/validators/required/RequiredField.js"></script>
-		<script src="<?php echo WPA_URL; ?>modules/field/types/text/TextField.js"></script>
-		<script src="<?php echo WPA_URL; ?>modules/field/types/user_select/UserSelectField.js"></script>
-		<script src="<?php echo WPA_URL; ?>modules/field/types/keygen/KeyGen.js"></script>
-		<script src="<?php echo WPA_URL; ?>modules/field/types/date_time/DateTime.js"></script>
-		<script src="<?php echo WPA_URL; ?>js/date-time-picker-component.min.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/components/Logo.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/components/Footer.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/views/app-shells/DefaultAppShell.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Route.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Screen.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/views/collection/CollectionSorting.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/views/collection/CollectionTable.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/DataManager.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/fields/TextArea.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/fields/Select.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/fields/RelationSelectMultiple.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/screens/ScreenDashboard.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/screens/ScreenModel.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/screens/ScreenDocs.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Form.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Edit.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Create.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Delete.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/List.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/Modal.js"></script>
-    <script src="<?php echo WPA_URL; ?>render/Menu.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/App.js"></script>
+
+		<!-- Standard WP header part. -->
+		<meta charset="<?php bloginfo( 'charset' ); ?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<?php wp_head(); ?>
+
   </head>
+
   <body>
 		<div id="wpa-app" app-key="<?php echo $app->def->key; ?>"></div>
+		<?php wp_footer(); ?>
+	</body>
 </html>

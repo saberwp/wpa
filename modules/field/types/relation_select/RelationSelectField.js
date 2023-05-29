@@ -1,32 +1,17 @@
-class Select {
+class RelationSelectField {
+
+	fieldDef = false
+
+	constructor(fieldDef) {
+		this.fieldDef = fieldDef
+	}
 
 	make(field) {
-
-		// Init field create.
 		const el = document.createElement('select')
 		el.id = 'field-' + field.key
 		el.name = 'field-' + field.key
-
-		// Set choices
-		if(field.type === 'relation_select') {
-			this.relationHandler(el, field)
-		}
-
-		// Static choices.
-		if(field.type !== 'relation_select') {
-			this.choicesStatic(el, field)
-		}
-
+		this.relationHandler(el, field)
 		return el
-	}
-
-	choicesStatic(el, field) {
-		field.choices.forEach((choice) => {
-			const opt = document.createElement('option')
-			opt.value = choice.value
-			opt.innerHTML = choice.label
-			el.appendChild(opt)
-		})
 	}
 
 	relationHandler(el, field) {
