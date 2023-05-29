@@ -1,5 +1,7 @@
 class App {
 
+	userId = 0
+
 	constructor() {
 
 		// Add feature controllers to app.
@@ -17,7 +19,10 @@ class App {
 		this.apiUrl = WPA_ApiUrl;
 
 		// Set Current User ID.
-		this.userId = WPA_CurrentUserID;
+		if (typeof WPA_CurrentUserID !== 'undefined') {
+			this.userId = WPA_CurrentUserID
+		}
+
 
 		// Fetch app def.
 		this.fetchAppDef()

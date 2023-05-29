@@ -200,7 +200,6 @@ class CollectionTable {
 	itemFieldByKey(item, key) {
 		const el = document.createElement('td')
 		el.classList.add(
-		  'whitespace-nowrap',
 		  'px-3',
 		  'py-4',
 		  'text-sm',
@@ -213,7 +212,6 @@ class CollectionTable {
 	listItemField(item, field) {
 		const el = document.createElement('td')
 		el.classList.add(
-		  'whitespace-nowrap',
 		  'px-3',
 		  'py-4',
 		  'text-sm',
