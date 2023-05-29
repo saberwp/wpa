@@ -25,7 +25,14 @@ class Router {
 		// Detect route in query vars.
 		if ( isset( $wp_query->query_vars['name'] ) && in_array( $wp_query->query_vars['name'], $app_paths ) ) {
 
-			$this->enqueue_scripts();
+			add_action('wp_enqueue_scripts', [$this,'enqueue_scripts']);
+
+			add_filter('show_admin_bar', function($show) {
+		    return false;
+			}, 99);
+
+			remove_action('wp_head', '_admin_bar_bump_cb');
+
 
 			// Set global to indicate the app key for the current app, because this is needed in the app template.
 			$app_map = $app_data['app_map'];
@@ -42,6 +49,9 @@ class Router {
 	}
 
 	public function enqueue_scripts() {
+
+		$this->deregister_registered_stylesheets();
+
 		wp_enqueue_script('wpa-form-validator', WPA_URL . 'modules/form/FormValidator.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-field', WPA_URL . 'modules/field/Field.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-field-validator', WPA_URL . 'modules/field/FieldValidator.js', array(), '1.0', true);
@@ -75,6 +85,23 @@ class Router {
 		wp_enqueue_script('wpa-modal', WPA_URL . 'render/Modal.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-menu', WPA_URL . 'render/Menu.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-app', WPA_URL . 'render/App.js', array(), '1.0', true);
+	}
+
+	public function deregister_registered_stylesheets() {
+	    global $wp_styles;
+
+	    // List of stylesheets to keep
+	    $stylesheets_to_keep = array();
+
+	    // Loop through all registered stylesheets
+	    foreach ($wp_styles->registered as $handle => $style) {
+	        // Check if the stylesheet is not in the list of stylesheets to keep
+	        if (!in_array($handle, $stylesheets_to_keep)) {
+	            // Deregister the stylesheet
+	            wp_dequeue_style($handle);
+	            wp_deregister_style($handle);
+	        }
+	    }
 	}
 
 	public function app_data() {

@@ -64,7 +64,7 @@ if( $app->brand_styles ) {
 
   </head>
 
-  <body>
+  <body class="min-h-screen bg-gray-800">
 		<div id="wpa-app" app-key="<?php echo $app->def->key; ?>"></div>
 		<?php wp_footer(); ?>
 	</body>

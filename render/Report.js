@@ -1,7 +1,13 @@
 class Report {
 
-	modelKey = false
+	dataModelKey = false
+	dataFieldKey = false
 	records  = []
+
+	constructor(dataModelKey, dataFieldKey) {
+		this.dataModelKey = dataModelKey
+		this.dataFieldKey = dataFieldKey
+	}
 
 	// @TODO fetch sleep logs.
 		// Render chart.
@@ -10,20 +16,28 @@ class Report {
 				  // Render goals as a line across chart.
 
 	make() {
+
+		app.dm.fetch(this.dataModelKey)
+
+		document.addEventListener('app_data_loaded', (event) => {
+			if(event.detail.modelKey === this.dataModelKey) {
+				this.records = event.detail.records
+				this.chartInit()
+
+				const logCountStatEl = document.getElementById('report-summary-log-count')
+				logCountStatEl.innerHTML = this.records.length
+			}
+		})
+
 		let content = ''
+
 		content += this.makeTimeRangeFiltersStandard()
 		content += this.summaryStat()
 		content += this.makeChart()
 
-		//app.dm.fetch('sleep_log')
-		document.addEventListener('app_data_loaded', (event) => {
-			if(event.detail.modelKey === 'sleep_log') {
-				this.records = event.detail.records
-				this.chartInit()
-			}
-		})
-
 		return content
+
+
 	}
 
 	makeTimeRangeFiltersStandard() {
@@ -65,9 +79,10 @@ class Report {
 	summaryStat() {
 		let content = ''
 		content += '<dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">'
-		content += '<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8"><dt class="text-sm font-medium leading-6 text-gray-500">'
+		content += '<div class="flex flex-wrap gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8"><dt class="text-sm font-medium leading-6 text-gray-500">'
 		content += 'Log Entries</dt>'
-		content += '<dd class="text-xs font-medium text-gray-700">+4.75%</dd><dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">5</dd></div>'
+		content += '<dd id="report-summary-log-count" class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">'
+		content += '</dd></div>'
 		content += '</dl>'
 		return content
 	}
@@ -79,39 +94,81 @@ class Report {
 	}
 
 	chartInit() {
-		const ctx = document.getElementById('wpa-report-chart');
-
-		// Extract start times into an array
-		const startTimes = this.records.map(sleepLog => sleepLog.start);
-
-		// Convert start times to corresponding numeric values
-		const data = startTimes.map(startTime => this.convertDateTimeToNumeric(startTime));
+	  const ctx = document.getElementById('wpa-report-chart');
+	  const grouped = this.groupRecordsByDay();
+	  const logCountData = this.groupRecordCountDaily().data;
 
 	  new Chart(ctx, {
-	    type: 'line',
+	    type: 'bar',
 	    data: {
-	      labels: startTimes,
-	      datasets: [{
-	        label: 'Sleep Start Times',
-	        data: data,
-	        borderWidth: 1
-	      }]
+	      labels: grouped.labels,
+	      datasets: [
+	        {
+	          label: 'Log Report',
+	          data: grouped.data,
+	          borderWidth: 1
+	        },
+	        {
+	          label: 'Log Count',
+	          data: logCountData,
+	          borderWidth: 1
+	        }
+	      ]
 	    },
 	    options: {
 	      scales: {
-	        y: {
-	          beginAtZero: false
-	        }
+	        y: {}
 	      }
 	    }
 	  });
 	}
 
-	convertDateTimeToNumeric(dateTime) {
-	  const date = new Date(dateTime);
-	  const hours = date.getHours();
-	  const minutes = date.getMinutes();
-	  return hours + minutes / 60;
+
+	groupRecordsByDay() {
+	  const groups = {};
+	  const labels = [];
+	  const data = [];
+
+	  for (const record of this.records) {
+	    const createdDate = new Date(record.moment);
+	    const day = createdDate.toISOString().split('T')[0];
+
+	    if (!groups[day]) {
+	      groups[day] = [];
+	      labels.push(day);
+	      data.push(0);
+	    }
+
+	    groups[day].push(record);
+	    data[labels.indexOf(day)] += Number(record.time);
+	  }
+
+	  return { data, labels };
 	}
+
+	groupRecordCountDaily() {
+	  const groups = {};
+	  const labels = [];
+	  const data = [];
+
+	  for (const record of this.records) {
+	    const createdDate = new Date(record.moment);
+	    const day = createdDate.toISOString().split('T')[0];
+	    const label = `Log Count ${day}`;
+
+	    if (!groups[day]) {
+	      groups[day] = [];
+	      labels.push(label);
+	      data.push(0);
+	    }
+
+	    groups[day].push(record);
+	    data[labels.indexOf(label)] += 1;
+	  }
+
+	  return { data, labels };
+	}
+
+
 
 }

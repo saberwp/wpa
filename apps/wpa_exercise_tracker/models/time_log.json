@@ -11,6 +11,11 @@
 			"placeholder": "Memo..."
 		},
 		{
+			"key": "moment",
+			"type": "date_time",
+			"label": "When"
+		},
+		{
 			"key": "time",
 			"type": "text",
 			"label": "Time (Minutes)",
