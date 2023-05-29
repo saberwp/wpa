@@ -236,16 +236,11 @@ class CollectionTable {
 
 	sort(field, dir) {
 
-		console.log("Sorting data before/after")
-		console.log(this.sorting)
-
 		// Check if already sorted by this field, if it is just call sortReverse().
 		if( field === this.sorting.field ) {
-			console.log('sort by same field, reversing...')
 			this.sortReverse()
 			this.sortToggle()
 			this.refresh()
-			console.log(this.sorting)
 			return;
 		}
 
@@ -256,8 +251,6 @@ class CollectionTable {
 			field: field,
 			dir: dir
 		}
-
-		console.log(this.sorting)
 
 		// Sort stored data.
 		app.currentModelRecordStore().sort((a, b) => {

@@ -8,9 +8,6 @@ class Screen {
 	}
 
 	render(screenKey) {
-
-		console.log('Screen key is '+screenKey)
-
 		const route = new Route()
 		route.setScreenHash(screenKey)
 

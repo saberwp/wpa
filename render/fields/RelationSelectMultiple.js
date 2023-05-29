@@ -88,9 +88,6 @@
 	 relateInlineCreatedRecordEvent() {
 		 document.addEventListener('wpa_record_created', (event) => {
 
-			 console.log('Event wpa_record_created...')
-			 console.log(event.detail)
-
 			if(event.detail.model_key !== 'budget_item') {
 				return;
 			}

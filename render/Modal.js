@@ -28,7 +28,7 @@ class Modal {
 
 	modalMain() {
 		const el = document.createElement('main')
-		el.classList.add('relative', 'transform', 'overflow-hidden', 'rounded-lg', 'bg-gray-900', 'px-4', 'pb-4', 'pt-5', 'text-left', 'shadow-xl', 'transition-all', 'sm:my-8', 'sm:w-full', 'sm:max-w-md', 'sm:p-6');
+		el.classList.add('relative', 'transform', 'rounded-lg', 'bg-gray-900', 'px-4', 'pb-4', 'pt-5', 'text-left', 'shadow-xl', 'transition-all', 'sm:my-8', 'sm:w-full', 'sm:max-w-md', 'sm:p-6');
 		el.appendChild(this.header())
 		el.appendChild(this.content())
 		el.appendChild(this.buttons())
@@ -50,7 +50,6 @@ class Modal {
 	}
 
 	close() {
-		console.log('close button click...')
 		const el = document.querySelector('.modal')
 		el.removeEventListener('click', this.close)
 		el.remove()

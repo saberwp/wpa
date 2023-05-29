@@ -1,16 +1,16 @@
 class Field {
 
-	loadFieldTypeClass(fieldType) {
+	loadFieldTypeClass(fieldType, fieldDef) {
 		let fieldTypeClass = false
 	  switch (fieldType) {
 	    case 'date_time':
-	      fieldTypeClass = new DateTime()
+	      fieldTypeClass = new DateTime(fieldDef)
 	      break;
 			case 'text':
-	      fieldTypeClass = new TextField()
+	      fieldTypeClass = new TextField(fieldDef)
 	      break;
 			case 'user_select':
-	      fieldTypeClass = new UserSelectField()
+	      fieldTypeClass = new UserSelectField(fieldDef)
 	      break;
 	    default:
 	      break;

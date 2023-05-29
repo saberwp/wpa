@@ -6,7 +6,6 @@ class Route {
 	}
 
 	setScreenHash(screenKey) {
-		console.log('setScreenHash() was called with screenKey: '+screenKey)
 	  window.location.hash = screenKey;
 	}
 
@@ -21,7 +20,6 @@ class Route {
 	    return parts;
 	  } else {
 	    // Return the default array containing ['dashboard', '0']
-			console.log('parseHash check app.def.default_screen, result is '+app.def.default_screen)
 			if(app.def.default_screen) {
 				return [app.def.default_screen]
 			}
@@ -43,7 +41,6 @@ class Route {
 	renderSingle(screenKey, recordId) {
 		const screen = new Screen()
 		screen.renderSingle(screenKey, recordId)
-		console.log(screenKey)
 		const activeMenuEl = app.menu.findMenuItemByScreenKey(screenKey)
 		app.menu.setActive(activeMenuEl)
 	}

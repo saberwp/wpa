@@ -9,9 +9,6 @@ class RequiredField {
 			result.pass = true
 		}
 
-		console.log('result in RF:')
-		console.log(result)
-
 		return result
 
 	}

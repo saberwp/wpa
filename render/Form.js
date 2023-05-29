@@ -30,7 +30,7 @@ class Form {
 
 			/* Try to load field type from Field() class. */
 			const fieldClass = new Field()
-			const fieldType = fieldClass.loadFieldTypeClass(field.type)
+			const fieldType = fieldClass.loadFieldTypeClass(field.type, field)
 			if(fieldType) {
 				this.fieldInstances.push(fieldType)
 				fieldEl = fieldType.make(field)
@@ -77,9 +77,7 @@ class Form {
 	}
 
 	init(modelDef) {
-
 		this.fieldInstances.forEach((fieldInstance) => {
-			console.log(fieldInstance)
 			fieldInstance.init()
 		})
 
@@ -134,10 +132,6 @@ class Form {
 	formDataParse(formEl) {
 		const formData = new FormData(formEl);
 		const data = Object.fromEntries(formData.entries());
-
-		console.log('formDataParse')
-		console.log(data)
-
 		return data
 	}
 
@@ -148,16 +142,11 @@ class Form {
 			const formModelDef = app.def[formModelKey]
 			const formValues = this.formDataParse(formEl)
 
-			console.log(formModelDef)
-			console.log(formValues)
-
 			// Draft record.
 			const record = this.prepareRecord(formModelDef, formValues)
 
 			// Do validation.
 			const validationResult = this.validate(record, formModelDef)
-			console.log('validationResult:')
-			console.log(validationResult)
 
 			if(!validationResult.pass) {
 				// No pass validation.
@@ -175,8 +164,6 @@ class Form {
 
 	validateFailHandler() {
 		const container = document.querySelector('.modal-container > main')
-		console.log('fail handler...')
-		console.log(container)
 		const el = document.createElement('div')
 		el.classList.add('validation-error')
 		el.innerHTML = 'Validation failed.'

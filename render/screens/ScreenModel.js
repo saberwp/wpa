@@ -92,8 +92,7 @@ class ScreenModel {
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', () => {
 
-			console.log('callback inside settingsModelRender/app_data_loaded event')
-
+	
 		});
 
 	}

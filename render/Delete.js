@@ -37,7 +37,6 @@ class Delete {
 			return response.json();
 		})
 		.then((responseJson) => {
-			console.log(responseJson);
 
 			// Do table refresh.
 			app.table.refresh()
@@ -75,8 +74,6 @@ class Delete {
 	}
 
 	handleConfirmClick(e) {
-
-		console.log('deleting confirmed...')
 		const id = e.target.getAttribute('object-id')
 
 		const record = app.record(id)

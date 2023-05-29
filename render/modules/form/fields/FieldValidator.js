@@ -2,8 +2,6 @@ class FieldValidator {
 
 	test(field, value) {
 
-		console.log('FieldValidator.test()')
-
 		const result = {
 			pass: false
 		}
@@ -18,12 +16,7 @@ class FieldValidator {
 				failCount++
 			}
 		})
-
-		console.log('fail count:')
-		console.log(failCount)
-
 		if(failCount === 0) {
-			console.log('setting pass to true...')
 			result.pass = true
 		}
 
@@ -32,19 +25,14 @@ class FieldValidator {
 
 	testSingle(validationDef, value) {
 
-		console.log('FieldValidator.testSingle()')
-		console.log(validationDef.type)
-
 		// Select validation based on defined "type" property.
 		let validator = false
 		if(validationDef.type === 'required') {
-			console.log('setting validator to required...')
 			validator = new RequiredField()
 		}
 
 		// Abort if validator could not be found (invalid key used in definition for instance)
 		if(!validator) {
-			console.log('validator was false here?')
 			return { pass: false } // We return as if validation failed.
 		}
 

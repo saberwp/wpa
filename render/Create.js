@@ -52,9 +52,6 @@ class Create {
 		})
 		.then((responseJson) => {
 
-			console.log('responseJson at line 61 Create.js')
-			console.log(responseJson)
-
 			const recordId = responseJson.model_id
 
 			const event = new CustomEvent('wpa_record_created', {

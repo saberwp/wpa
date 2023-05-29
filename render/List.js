@@ -123,11 +123,7 @@ class List {
 	}
 
 	sortHandler() {
-
-			console.log('sorting....')
-			console.log(this)
-			this.sort('id', 'desc')
-
+		this.sort('id', 'desc')
 	}
 
 	sortToggle() {
@@ -138,7 +134,6 @@ class List {
 
 		// Check if already sorted by this field, if it is just call sortReverse().
 		if( field === this.sorting.field ) {
-			console.log('sort by same field, reversing...')
 			this.sortReverse()
 			this.sortToggle()
 			this.refresh()

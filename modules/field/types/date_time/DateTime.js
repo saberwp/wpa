@@ -3,21 +3,19 @@ class DateTime {
 	fieldDef = false
 
 	constructor(fieldDef) {
-		this.def = fieldDef
+		this.fieldDef = fieldDef
 	}
 
-	make(field) {
-		console.log('make field key: ' + field.key)
+	make() {
 		const el = document.createElement('div')
 		let content = ''
-		content += '<div id="datetimepicker"><input type="hidden" class="date_output" id="field-'+field.key+'" name="field-'+field.key+'" value=""></div>'
+		content += '<div class="datetimepicker-'+this.fieldDef.key+'"><input type="hidden" class="date_output" id="field-'+this.fieldDef.key+'" name="field-'+this.fieldDef.key+'" value=""></div>'
 		el.innerHTML = content
 		return el
 	}
 
 	init() {
-		const dateTimePicker = new DateTimePickerComponent.DateTimePicker("datetimepicker")
-		console.log(dateTimePicker)
+		const dateTimePicker = new DateTimePickerComponent.DateTimePicker('.datetimepicker-'+this.fieldDef.key)
 	}
 
 }

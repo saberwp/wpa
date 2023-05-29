@@ -84,8 +84,6 @@ class Report {
 		// Extract start times into an array
 		const startTimes = this.records.map(sleepLog => sleepLog.start);
 
-		console.log(startTimes)
-
 		// Convert start times to corresponding numeric values
 		const data = startTimes.map(startTime => this.convertDateTimeToNumeric(startTime));
 

@@ -56,7 +56,8 @@ if( $app->brand_styles ) {
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/Report.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/FormValidator.js"></script>
-		<script src="<?php echo WPA_URL; ?>render/modules/form/Field.js"></script>
+		<script src="<?php echo WPA_URL; ?>modules/field/Field.js"></script>
+		<script src="<?php echo WPA_URL; ?>modules/field/FieldInstance.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/fields/FieldValidator.js"></script>
 		<script src="<?php echo WPA_URL; ?>render/modules/form/validators/required/RequiredField.js"></script>
 		<script src="<?php echo WPA_URL; ?>modules/field/types/text/TextField.js"></script>

@@ -2,8 +2,6 @@ class Edit {
 
 	init() {
 
-		console.log('Edit.init()')
-
 		// Bind the class instance to the click handler function
 		this.handleEditClick = this.handleEditClick.bind(this);
 
