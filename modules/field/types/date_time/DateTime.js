@@ -1,6 +1,9 @@
 class DateTime {
 
+	// See source: https://github.com/marcellosurdi/DateTimePickerComponent
+
 	fieldDef = false
+	fieldInit = false
 
 	constructor(fieldDef) {
 		this.fieldDef = fieldDef
@@ -9,13 +12,18 @@ class DateTime {
 	make() {
 		const el = document.createElement('div')
 		let content = ''
-		content += '<div class="datetimepicker-'+this.fieldDef.key+'"><input type="hidden" class="date_output" id="field-'+this.fieldDef.key+'" name="field-'+this.fieldDef.key+'" value=""></div>'
+		content += '<div id="datetimepicker-'+this.fieldDef.key+'"><input type="hidden" class="date_output" id="field-'+this.fieldDef.key+'" name="field-'+this.fieldDef.key+'" value=""></div>'
 		el.innerHTML = content
 		return el
 	}
 
 	init() {
-		const dateTimePicker = new DateTimePickerComponent.DateTimePicker('.datetimepicker-'+this.fieldDef.key)
+		if(!this.fieldInit) {
+			console.log('DateTime init()')
+			const dateTimePicker = new DateTimePickerComponent.DateTimePicker('datetimepicker-'+this.fieldDef.key)
+			this.fieldInit = true
+			console.log(dateTimePicker)
+		}
 	}
 
 }

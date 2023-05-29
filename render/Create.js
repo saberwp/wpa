@@ -12,6 +12,9 @@ class Create {
 	}
 
 	handleCreateClick(e) {
+
+		console.log('handleCreateClick in Create()')
+
 		const modal = new Modal()
 		const formContent = app.form.make(app.def[app.data.currentModel])
 		modal.setHeaderLabel('Create '+app.def[app.data.currentModel].title)

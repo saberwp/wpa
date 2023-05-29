@@ -52,6 +52,7 @@ class Modal {
 	close() {
 		const el = document.querySelector('.modal')
 		el.removeEventListener('click', this.close)
+		el.innerHTML = ''
 		el.remove()
 	}
 
