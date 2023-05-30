@@ -71,7 +71,7 @@ class Create {
 
 			record.id = recordId
 			app.data[model.key].record.unshift(record)
-			app.data[model.key].index = app.recordIndex( app.data[model.key].record )
+			app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
 
 			// Do table refresh.
 			app.table.refresh()

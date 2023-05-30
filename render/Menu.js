@@ -11,7 +11,7 @@ class Menu {
 		el.classList.add('font-semibold')
 		el.appendChild(this.menuItem('Dashboard', 'dashboard'))
 
-		
+
 
 		app.def.models.forEach(( modelKey ) => {
 			const model = app.def[modelKey]
@@ -61,6 +61,24 @@ class Menu {
 	    }
 	  }
 	  return null;
+	}
+
+	clickInit() {
+		const ulElement  = document.getElementById('app-menu-main');
+		const liElements = ulElement.getElementsByTagName('li');
+
+		for (let i = 0; i < liElements.length; i++) {
+			const liElement = liElements[i];
+			liElement.addEventListener('click', this.clickHandler.bind(this));
+		}
+	}
+
+	clickHandler(e) {
+		const screenKey = e.target.getAttribute('screen')
+		const menu = new Menu()
+		menu.setActive(e.target)
+		const screen = new Screen()
+		screen.render(screenKey)
 	}
 
 }

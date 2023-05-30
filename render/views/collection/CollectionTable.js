@@ -156,7 +156,7 @@ class CollectionTable {
 	}
 
 	refresh() {
-		this.data = app.currentModelRecordStore()
+		this.data = app.dm.currentModelRecordStore()
 		const container = document.getElementById('wpa-collection-table-body')
 		container.innerHTML = ''
 		this.dataInsert(container)
@@ -253,7 +253,7 @@ class CollectionTable {
 		}
 
 		// Sort stored data.
-		app.currentModelRecordStore().sort((a, b) => {
+		app.dm.currentModelRecordStore().sort((a, b) => {
 			const aVal = a[field];
 			const bVal = b[field];
 
@@ -272,7 +272,7 @@ class CollectionTable {
 	}
 
 	sortReverse() {
-		app.currentModelRecordStore().reverse();
+		app.dm.currentModelRecordStore().reverse();
 	}
 
 	sortToggle() {
