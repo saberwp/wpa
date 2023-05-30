@@ -38,6 +38,33 @@ class DataManager {
 			.catch(error => console.error(error));
 	}
 
+	fetchRelation(recordModelKey, recordId, relation) {
+
+		const relationModelKey = relation.model
+		const apiUrl = app.apiUrl+app.def.key+'/'+relationModelKey+'/'+recordModelKey+'/'+recordId
+
+		fetch(apiUrl, { headers: {
+        'API-KEY': 'KR928NV81G01'
+    	}
+		})
+			.then(response => response.json())
+			.then(data => {
+
+				// Dispatch custom event "app_data_loaded_relation".
+			  const event = new CustomEvent('app_data_loaded_relation', {
+					detail: {
+						recordModelKey: recordModelKey,
+						relationModelKey: relationModelKey,
+						recordId: recordId,
+						records: data.records
+					}
+				})
+			  document.dispatchEvent(event)
+
+			})
+			.catch(error => console.error(error));
+	}
+
 	// Automatically loads from current model data storage.
 	record(id) {
 		return app.data[app.data.currentModel].index[id]

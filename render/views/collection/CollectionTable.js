@@ -173,6 +173,9 @@ class CollectionTable {
 	 * Make all the table rows (record items)
 	 */
 	itemMake(item) {
+
+		console.log(item)
+
 		const el = document.createElement('tr')
 
 		// By default we show ID, so if it's undefined or true, we render it.
@@ -186,7 +189,12 @@ class CollectionTable {
 		}
 
 		this.modelDef.fields.forEach(( field ) => {
-			el.appendChild( this.listItemField(item, field) )
+			if(field.type !== 'relation_select') {
+				el.appendChild( this.listItemField(item, field) )
+			}
+			if(field.type === 'relation_select') {
+				el.appendChild( this.listItemFieldRelation(item, field) )
+			}
 		})
 
 		if(this.provideEditOperation()) {
@@ -218,6 +226,42 @@ class CollectionTable {
 		  'text-gray-300'
 		)
 		el.innerHTML = item[ field.key ]
+		return el
+	}
+
+	listItemFieldRelation(item, field) {
+		const el = document.createElement('td')
+		el.id = 'record-'+item.id+'-'+field.key
+		el.classList.add(
+		  'px-3',
+		  'py-4',
+		  'text-sm',
+		  'text-gray-300'
+		)
+		el.innerHTML = 'Pending...'
+
+		// Do request for data required.
+		app.dm.fetchRelation(this.modelKey, item.id, field.relation)
+		document.addEventListener('app_data_loaded_relation', (event) => {
+			if(event.detail.recordId === item.id && event.detail.relationModelKey === field.relation.model && event.detail.recordModelKey === this.modelKey) {
+				if(event.detail?.records && event.detail.records.length > 0) {
+					const relationModelDef = app.def[field.relation.model]
+					const renderModelKey = relationModelDef.relations[field.relation.side].model
+					const records = event.detail.records
+					records.forEach((relationRecord) => {
+						const relatedRecord = app.data[renderModelKey].index[relationRecord[renderModelKey+'_id']]
+						if(relatedRecord) {
+							el.innerHTML = relatedRecord.id + ' / ' + relatedRecord.title
+						} else {
+							el.innerHTML = relationRecord.id
+						}
+					})
+				} else {
+					el.innerHTML = '--'
+				}
+			}
+		})
+
 		return el
 	}
 
