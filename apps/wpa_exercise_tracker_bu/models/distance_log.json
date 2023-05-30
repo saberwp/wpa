@@ -1,0 +1,21 @@
+{
+	"key": "distance_log",
+	"type": "standard",
+	"title": "Distance Log",
+	"title_plural": "Distance Log",
+	"fields": [
+		{
+			"key": "value",
+			"type": "text",
+			"label": "Distance (kms)",
+			"placeholder": "Total distance in kms..."
+		},
+		{
+			"key": "timestamp",
+			"type": "date_time",
+			"label": "Date/Time",
+			"placeholder": "Select date and time..."
+		}
+	],
+	"title_field": false
+}

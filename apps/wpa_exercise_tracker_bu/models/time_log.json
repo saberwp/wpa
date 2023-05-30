@@ -1,0 +1,21 @@
+{
+	"key": "time_log",
+	"type": "standard",
+	"title": "Time Log",
+	"title_plural": "Exercise Time Logs",
+	"fields": [
+		{
+			"key": "value",
+			"type": "text",
+			"label": "Time (minutes)",
+			"placeholder": "Total time..."
+		},
+		{
+			"key": "timestamp",
+			"type": "date_time",
+			"label": "Date/Time",
+			"placeholder": "Select date and time..."
+		}
+	],
+	"title_field": false
+}

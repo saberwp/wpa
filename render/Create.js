@@ -7,6 +7,10 @@ class Create {
 		this.handleCreateClick = this.handleCreateClick.bind(this);
 
 		const createButton = document.getElementById('create-button')
+
+		// Remove then add to ensure only 1.
+		console.log('adding create click event')
+		createButton.removeEventListener('click', this.handleCreateClick);
 		createButton.addEventListener('click', this.handleCreateClick);
 
 	}

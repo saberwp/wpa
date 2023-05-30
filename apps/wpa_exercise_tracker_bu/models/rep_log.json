@@ -1,11 +1,11 @@
 {
-	"key": "log",
+	"key": "rep_log",
 	"type": "standard",
-	"title": "Exercise Log",
-	"title_plural": "Exercise Logs",
+	"title": "Rep Log",
+	"title_plural": "Rep Log",
 	"fields": [
 		{
-			"key": "rep_count",
+			"key": "value",
 			"type": "text",
 			"label": "Reps",
 			"placeholder": "Total reps..."
@@ -16,5 +16,6 @@
 			"label": "Date/Time",
 			"placeholder": "Select date and time..."
 		}
-	]
+	],
+	"title_field": false
 }

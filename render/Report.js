@@ -1,40 +1,38 @@
 class Report {
 
-	dataModelKey = false
-	dataFieldKey = false
+	def = false
 	records  = []
+	chart = false
 
-	constructor(dataModelKey, dataFieldKey) {
-		this.dataModelKey = dataModelKey
-		this.dataFieldKey = dataFieldKey
+	constructor(def) {
+		this.def = def
+		return this
 	}
 
-	// @TODO fetch sleep logs.
-		// Render chart.
-		  // Render sleep log start/end onto chart as bars.
-			  // Fetch goals.
-				  // Render goals as a line across chart.
+	appDataLoadedCallback(event) {
+		if(event.detail.modelKey !== this.def.dataModelKey) { return }
+
+		this.records = event.detail.records
+
+		if(!this.chart) {
+			this.chartInit()
+		}
+
+		const logCountStatEl = document.getElementById('report-summary-record-count')
+		logCountStatEl.innerHTML = this.records.length
+	}
 
 	make() {
 
-		app.dm.fetch(this.dataModelKey)
+		document.removeEventListener('app_data_loaded', this.appDataLoadedCallback)
+		document.addEventListener('app_data_loaded', this.appDataLoadedCallback.bind(this))
 
-		document.addEventListener('app_data_loaded', (event) => {
-			if(event.detail.modelKey === this.dataModelKey) {
-				this.records = event.detail.records
-				this.chartInit()
-
-				const logCountStatEl = document.getElementById('report-summary-log-count')
-				logCountStatEl.innerHTML = this.records.length
-			}
-		})
+		app.dm.fetch(this.def.dataModelKey)
 
 		let content = ''
-
 		content += this.makeTimeRangeFiltersStandard()
 		content += this.summaryStat()
 		content += this.makeChart()
-
 		return content
 
 
@@ -81,7 +79,7 @@ class Report {
 		content += '<dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">'
 		content += '<div class="flex flex-wrap gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8"><dt class="text-sm font-medium leading-6 text-gray-500">'
 		content += 'Log Entries</dt>'
-		content += '<dd id="report-summary-log-count" class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">'
+		content += '<dd id="report-summary-record-count" class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">'
 		content += '</dd></div>'
 		content += '</dl>'
 		return content
@@ -89,16 +87,16 @@ class Report {
 
 	makeChart() {
 		let content = ''
-		content += '<canvas id="wpa-report-chart"></canvas>'
+		content += '<canvas id="wpa-report-chart-'+this.def.key+'"></canvas>'
 		return content
 	}
 
 	chartInit() {
-	  const ctx = document.getElementById('wpa-report-chart');
+	  const ctx = document.getElementById('wpa-report-chart-'+this.def.key);
 	  const grouped = this.groupRecordsByDay();
 	  const logCountData = this.groupRecordCountDaily().data;
 
-	  new Chart(ctx, {
+	  this.chart = new Chart(ctx, {
 	    type: 'bar',
 	    data: {
 	      labels: grouped.labels,
@@ -121,8 +119,10 @@ class Report {
 	      }
 	    }
 	  });
-	}
 
+		console.log('made chart '+this.chart.id)
+
+	}
 
 	groupRecordsByDay() {
 	  const groups = {};
@@ -130,7 +130,7 @@ class Report {
 	  const data = [];
 
 	  for (const record of this.records) {
-	    const createdDate = new Date(record.moment);
+	    const createdDate = new Date(record[this.def.dataGroupFieldKey]);
 	    const day = createdDate.toISOString().split('T')[0];
 
 	    if (!groups[day]) {
@@ -140,7 +140,7 @@ class Report {
 	    }
 
 	    groups[day].push(record);
-	    data[labels.indexOf(day)] += Number(record.time);
+	    data[labels.indexOf(day)] += Number(record[this.def.dataFieldKey]);
 	  }
 
 	  return { data, labels };
@@ -152,7 +152,7 @@ class Report {
 	  const data = [];
 
 	  for (const record of this.records) {
-	    const createdDate = new Date(record.moment);
+	    const createdDate = new Date(record[this.def.dataGroupFieldKey]);
 	    const day = createdDate.toISOString().split('T')[0];
 	    const label = `Log Count ${day}`;
 

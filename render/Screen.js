@@ -8,6 +8,9 @@ class Screen {
 	}
 
 	render(screenKey) {
+
+		this.sendScreenChangeEvent()
+
 		const route = new Route()
 		route.setScreenHash(screenKey)
 
@@ -29,6 +32,12 @@ class Screen {
 		const screen = new ScreenModel()
 		screen.render(screenKey)
 
+	}
+
+	sendScreenChangeEvent() {
+		// Send event wpa_app_def_loaded.
+		const event = new CustomEvent('wpa_screen_change')
+		document.dispatchEvent(event)
 	}
 
 }

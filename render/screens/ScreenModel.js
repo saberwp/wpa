@@ -24,15 +24,15 @@ class ScreenModel {
 		const tableElement = app.table.make()
 		body.appendChild(tableElement)
 
+		app.create.init()
+
 
 		// Delay making list until after custom event "app_data_loaded".
-		document.addEventListener('app_data_loaded', () => {
+		document.addEventListener('app_data_loaded', (event) => {
 
-			// Create init.
-			app.create.init();
-
-			// Refresh table.
-			app.table.refresh()
+			if(event.detail.modelKey === app.data.currentModel) {
+				app.table.refresh()
+			}
 
 		});
 
@@ -92,7 +92,7 @@ class ScreenModel {
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', () => {
 
-	
+
 		});
 
 	}
