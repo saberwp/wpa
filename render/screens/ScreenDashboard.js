@@ -4,6 +4,8 @@ class ScreenDashboard {
 
 	render() {
 
+
+
 		console.log('render dashboard')
 
 		let content = ''
@@ -49,6 +51,14 @@ class ScreenDashboard {
 
 		// Close container.
 		content += '</div>'
+
+		const alert = new Alert()
+		alert.bg = 'bg-green-500'
+		alert.delay = 1000
+		alert.dismissAuto = false
+		alert.setMessage('Good Job', 'Blah blah blah.')
+		alert.build()
+		alert.render()
 
 		body.innerHTML = content
 

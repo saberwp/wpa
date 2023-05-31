@@ -51,7 +51,8 @@ class Router {
 	public function enqueue_scripts() {
 
 		$this->deregister_registered_stylesheets();
-
+		wp_enqueue_script('wpa-alert-message', WPA_URL . 'modules/alert/AlertMessage.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-alert', WPA_URL . 'modules/alert/Alert.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-validator', WPA_URL . 'modules/form/FormValidator.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-field', WPA_URL . 'modules/field/Field.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-field-validator', WPA_URL . 'modules/field/FieldValidator.js', array(), '1.0', true);
@@ -84,6 +85,7 @@ class Router {
 		wp_enqueue_script('wpa-list', WPA_URL . 'render/List.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-modal', WPA_URL . 'render/Modal.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-menu', WPA_URL . 'render/Menu.js', array(), '1.0', true);
+
 		wp_enqueue_script('wpa-app', WPA_URL . 'render/App.js', array(), '1.0', true);
 	}
 
