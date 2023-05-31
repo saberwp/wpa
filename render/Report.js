@@ -18,7 +18,9 @@ class Report {
 			this.chartInit()
 		}
 
-		const logCountStatEl = document.getElementById('report-summary-record-count')
+		const reportContainerEl = document.getElementById('wpa-report-'+this.def.key)
+		console.log(reportContainerEl)
+		const logCountStatEl = reportContainerEl.querySelector('.report-summary-record-count')
 		logCountStatEl.innerHTML = this.records.length
 	}
 
@@ -30,43 +32,74 @@ class Report {
 		app.dm.fetch(this.def.dataModelKey)
 
 		let content = ''
+		content += '<section id="wpa-report-'+this.def.key+'">'
+		content += '<div>'
+		content += '<h2 class="text-lg font-semibold">'
+		content += this.def.title
+		content += '</h2>'
+		content += '</div>'
 		content += this.makeTimeRangeFiltersStandard()
-		content += this.summaryStat()
+		content += this.makeGroupingSelector()
 		content += this.makeChart()
+		content += this.summaryStat()
+		content += '</section>'
 		return content
+	}
 
+	makeGroupingSelector() {
+		const groupOptions = this.groupOptionsArray()
+		let content = ''
+		content += '<section class="bg-white/10 p-1">'
+		content += '<h4 class="text-xs text-white/30">GROUP BY</h4>'
+		content += '<ul class="flex flex-wrap gap-2">'
+		groupOptions.forEach((groupOption) => {
+			content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
+			content += groupOption
+			content += '</li>'
+		})
+		content += '</ul>'
+		content += '</section>'
+		return content
+	}
 
+	groupOptionsArray() {
+		return [
+			'Day',
+			'Week',
+			'Month',
+			'Year'
+		]
 	}
 
 	makeTimeRangeFiltersStandard() {
 		let content = ''
-		content += '<section>'
+		content += '<section class="mb-3 mt-2">'
 		content += '<ul class="flex flex-wrap gap-2">'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += 'TODAY'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += '24-HOURS'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += 'THIS WEEK'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += '7-DAYS'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += 'THIS MONTH'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += '30-DAYS'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += 'THIS YEAR'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += '1-YEAR'
 		content += '</li>'
-		content += '<li class="cursor-pointer bg-white text-gray-800 text-sm font-semibold rounded px-2">'
+		content += '<li class="cursor-pointer bg-white text-gray-800 text-xs font-semibold rounded px-2">'
 		content += 'ALL-TIME'
 		content += '</li>'
 		content += '</ul>'
@@ -76,12 +109,10 @@ class Report {
 
 	summaryStat() {
 		let content = ''
-		content += '<dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">'
-		content += '<div class="flex flex-wrap gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8"><dt class="text-sm font-medium leading-6 text-gray-500">'
-		content += 'Log Entries</dt>'
-		content += '<dd id="report-summary-record-count" class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">'
-		content += '</dd></div>'
-		content += '</dl>'
+		content += '<div class="bg-white/10 my-2 flex flex-col flex-wrap justify-center items-center gap-x-4 gap-y-2 px-2 py-4 sm:px-6 xl:px-8">'
+		content += '<dd class="report-summary-record-count text-2xl font-medium leading-4 tracking-tight text-white/20"></dd>'
+		content += '<dt class="text-sm font-medium leading-3 text-white/20">Record Count</dt>'
+		content += '</div>'
 		return content
 	}
 
@@ -94,7 +125,6 @@ class Report {
 	chartInit() {
 	  const ctx = document.getElementById('wpa-report-chart-'+this.def.key);
 	  const grouped = this.groupRecordsByDay();
-	  const logCountData = this.groupRecordCountDaily().data;
 
 	  this.chart = new Chart(ctx, {
 	    type: 'bar',
@@ -102,13 +132,8 @@ class Report {
 	      labels: grouped.labels,
 	      datasets: [
 	        {
-	          label: 'Log Report',
+	          label: 'Logs',
 	          data: grouped.data,
-	          borderWidth: 1
-	        },
-	        {
-	          label: 'Log Count',
-	          data: logCountData,
 	          borderWidth: 1
 	        }
 	      ]
@@ -120,8 +145,6 @@ class Report {
 	    }
 	  });
 
-		console.log('made chart '+this.chart.id)
-
 	}
 
 	groupRecordsByDay() {
@@ -131,44 +154,22 @@ class Report {
 
 	  for (const record of this.records) {
 	    const createdDate = new Date(record[this.def.dataGroupFieldKey]);
-	    const day = createdDate.toISOString().split('T')[0];
 
-	    if (!groups[day]) {
-	      groups[day] = [];
-	      labels.push(day);
-	      data.push(0);
-	    }
+			if (!isNaN(createdDate)) {
+		    const day = createdDate.toISOString().split('T')[0];
 
-	    groups[day].push(record);
-	    data[labels.indexOf(day)] += Number(record[this.def.dataFieldKey]);
+		    if (!groups[day]) {
+		      groups[day] = [];
+		      labels.push(day);
+		      data.push(0);
+		    }
+
+		    groups[day].push(record);
+		    data[labels.indexOf(day)] += Number(record[this.def.dataFieldKey]);
+			}
 	  }
 
 	  return { data, labels };
 	}
-
-	groupRecordCountDaily() {
-	  const groups = {};
-	  const labels = [];
-	  const data = [];
-
-	  for (const record of this.records) {
-	    const createdDate = new Date(record[this.def.dataGroupFieldKey]);
-	    const day = createdDate.toISOString().split('T')[0];
-	    const label = `Log Count ${day}`;
-
-	    if (!groups[day]) {
-	      groups[day] = [];
-	      labels.push(label);
-	      data.push(0);
-	    }
-
-	    groups[day].push(record);
-	    data[labels.indexOf(label)] += 1;
-	  }
-
-	  return { data, labels };
-	}
-
-
 
 }
