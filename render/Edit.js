@@ -72,6 +72,15 @@ class Edit {
 		})
 		.then((responseJson) => {
 
+			const recordId = responseJson.model_id
+
+			// Show alert.
+			const alert = new Alert()
+			alert.bg = 'bg-green-800'
+			alert.setMessage('Record Edited Successfully', 'Changes to record ID '+recordId+' were saved.')
+			alert.build()
+			alert.render()
+
 			// Do table refresh.
 			app.table.refresh()
 

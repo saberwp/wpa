@@ -66,9 +66,13 @@ class Alert {
 
 		if(this.dismissAuto) {
 			setTimeout(() => {
-		    this.el.remove();
+		    this.dismiss();
 		  }, this.delay+this.duration);
 		}
+	}
+
+	dismiss() {
+		this.el.remove();
 	}
 
 	addContainerClass(className) {
