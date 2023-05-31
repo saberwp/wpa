@@ -15,7 +15,7 @@ class Admin {
 	        'manage_options',
 	        'wpa',
 	        [$this, 'main_content'],
-	        'dashicons-admin-generic',
+	        WPA_URL.'assets/wp-menu-icon.svg',
 	        20
 	    );
 
