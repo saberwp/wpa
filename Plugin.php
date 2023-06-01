@@ -34,10 +34,6 @@ class Plugin {
 		$al = new AppLoader();
 		$al->init();
 
-
-		// App Repo include
-		require_once(WPA_PATH.'inc/AppRepo.php');
-
 		// Admin init.
 		require_once(WPA_PATH.'inc/Admin.php');
 		$api = new \WPA\Admin();
