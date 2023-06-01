@@ -43,19 +43,6 @@ class Plugin {
 		$api = new \WPA\Admin();
 		$api->init();
 
-		add_action( 'init', function() {
-
-			if ( wp_doing_ajax() || wp_doing_cron() ) {
-	        return;
-	    }
-
-	    if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-json/' ) ) {
-	        return;
-	    }
-
-		});
-
-
 		/*****
 
 		API Init.
@@ -80,31 +67,6 @@ class Plugin {
 		require_once(WPA_PATH.'inc/Activate.php');
 		$activate = new Activate();
 		$activate->run();
-
-	}
-
-	public function deactivate() {
-
-
-	}
-
-	public function update() {
-
-
-
-	}
-
-	public function installed_apps() {
-
-		// Find apps loaded.
-		$wp_content_dir = WP_CONTENT_DIR;
-		$wpa_dir = $wp_content_dir . '/wpa';
-
-		$app_keys = array_filter( scandir( $wpa_dir ), function( $item ) use ( $wpa_dir ) {
-			return is_dir( $wpa_dir . '/' . $item ) && ! in_array( $item, array( '.', '..' ) );
-		});
-
-		return $app_keys;
 
 	}
 
