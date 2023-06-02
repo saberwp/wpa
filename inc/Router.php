@@ -51,6 +51,10 @@ class Router {
 	public function enqueue_scripts() {
 
 		$this->deregister_registered_stylesheets();
+		wp_enqueue_script('wpa-classyui-text-button', WPA_URL . 'classyui/TextButton.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-button', WPA_URL . 'classyui/IconButton.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-flex', WPA_URL . 'classyui/Flex.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-svg', WPA_URL . 'classyui/Svg.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-alert-message', WPA_URL . 'modules/alert/AlertMessage.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-alert', WPA_URL . 'modules/alert/Alert.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-validator', WPA_URL . 'modules/form/FormValidator.js', array(), '1.0', true);

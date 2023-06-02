@@ -9,7 +9,7 @@ class ScreenDashboard {
 		console.log('render dashboard')
 
 		let content = ''
-		content += '<div class="flex flex-wrap gap-6">'
+		content += '<div class="wpa-app-container flex flex-wrap gap-6">'
 		const body = document.getElementById('app-body')
 
 		// Rep log report.
@@ -47,6 +47,26 @@ class ScreenDashboard {
 		this.report = new Report(def3)
 		content += '<div class="wpa-dashboard-widget basis-20">'
 		content += this.report.make()
+		content += '</div>'
+
+		// Try new button with transitions.
+		content += '<div>'
+
+		// TextButton
+		const button1 = new TextButton
+		button1.setId('warning-button')
+		button1.setContent('SAVE')
+		button1.make()
+		content += button1.markup()
+
+		// IconButton
+		const button2 = new IconButton
+		button2.setId('success-button')
+		button2.setIcon()
+		button2.setText('SUCCESS')
+		button2.make()
+		content += button2.markup()
+
 		content += '</div>'
 
 		// Close container.

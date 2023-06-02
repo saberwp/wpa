@@ -3,6 +3,7 @@ class DefaultAppShell {
 	appContainer() {
 		const el = document.createElement('main')
 		el.id = 'app-container'
+		el.classList.add('flex-grow')
 		if( app.def.brand && app.def.brand.app_container_background ) {
 			el.classList.add('app-container-background')
 		} else {
@@ -20,8 +21,8 @@ class DefaultAppShell {
 			el.appendChild( footer.render() )
 		}
 
-
 		const appContainer = document.getElementById('wpa-app')
+		appContainer.classList.add('h-screen', 'flex')
 		appContainer.appendChild(el);
 	}
 
@@ -95,7 +96,10 @@ class DefaultAppShell {
 		el.classList.add('items-center')
 		el.classList.add('gap-1')
 		el.classList.add('font-semibold')
-		el.appendChild(this.logo())
+
+		const logoEl = this.logo()
+		logoEl.classList.add('w-8')
+		el.appendChild(logoEl)
 		return el
 	}
 
