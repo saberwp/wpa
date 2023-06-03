@@ -66,8 +66,7 @@ class Menu {
 	    return "primary";
 	  }
 	}
-
-
+	
 	menuItem( title, screenKey ) {
 		const el = document.createElement('li')
 		el.innerHTML = title

@@ -6,17 +6,17 @@ class IconLogo extends ComponentBase {
 	constructor() {
 		super()
 		this.elType = 'a'
-		this.addChild('icon', 'Svg') // Nest an SVG element in property this.icon.
+		this.addChild('Svg') // Nest an SVG element in property this.icon.
 	}
 
 	build() {
 		if(this.svgMarkup) {
-			this.children.icon.svgMarkup = this.svgMarkup
+			this.children[0].svgMarkup = this.svgMarkup
 		}
 		if(this.svgURL) {
-			this.children.icon.svgURL = this.svgURL
+			this.children[0].svgURL = this.svgURL
 		}
-		this.children.icon.make()
+		this.children[0].make()
 		this.make()
 		this.el.href = 'https://saberwp.com'
 	}

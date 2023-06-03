@@ -77,7 +77,6 @@ class DefaultAppShell {
 		return el
 	}
 
-	// @TODO move to Sidebar() class.
 	sidebar() {
 
 		const sidebar = new Sidebar()
@@ -89,8 +88,26 @@ class DefaultAppShell {
 		iconLogo.build()
 		sidebar.setContent(iconLogo.get())
 
-		// Add primary menu.
-		sidebar.setContent(app.menu.make())
+		// Primary nav.
+		const navModels = app.menu.processModels()
+		const navItems = [
+			{
+				title: 'Dashboard',
+				screen: 'dashboard'
+			}
+		]
+		navModels.primary.forEach((modelDef) => {
+			const navItem = {
+				title: modelDef.title,
+				screen: modelDef.key
+			}
+			navItems.push(navItem)
+		})
+		const navH = new NavH()
+		navH.setId('app-menu-primary')
+		navH.setData(navItems)
+		navH.build()
+		sidebar.setContent(navH.get())
 
 		// Add secondary menu.
 		app.menu.setType('secondary')

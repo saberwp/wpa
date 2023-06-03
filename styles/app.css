@@ -41,13 +41,6 @@
 	box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.2);
 }
 
-#app-footer {
-	gap: 1rem;
-	align-items: center;
-	justify-content: center;
-	border-top: 1px solid #FFF;
-}
-
 button {
 	background-color: var(--primary-color);
 	color: #FFF;

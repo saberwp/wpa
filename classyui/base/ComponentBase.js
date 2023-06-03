@@ -4,7 +4,7 @@ class ComponentBase {
 	elType = 'div'
 	id = null
 	classes = []
-	children = {}
+	children = []
 	classMap = {
 	  Svg,
 	  Anchor,
@@ -21,10 +21,10 @@ class ComponentBase {
 		this.el = document.createElement(this.elType)
 		this.el.classList.add(...this.defaultClasses())
 		if(this.id) {
-			el.id = this.id
+			this.el.id = this.id
 		}
 
-		Object.values(this.children).forEach((childComponent) => {
+		this.children.forEach((childComponent) => {
 		  this.el.appendChild(childComponent.get());
 		});
 
@@ -46,14 +46,12 @@ class ComponentBase {
 		this.el.appendChild(contentEl)
 	}
 
-	addChild(propertyName, componentName) {
-		this.children[propertyName] = new this.classMap[componentName]()
+	addChild(componentName) {
+		this.children.push(new this.classMap[componentName]())
 	}
 
 	defaultClasses() {
-		return ['py-2', 'px-4', 'mr-0.125', 'basis-60']
+		return []
 	}
-
-
 
 }
