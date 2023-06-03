@@ -51,10 +51,17 @@ class Router {
 	public function enqueue_scripts() {
 
 		$this->deregister_registered_stylesheets();
+
+		wp_enqueue_script('wpa-classyui-component-base', WPA_URL . 'classyui/base/ComponentBase.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-svg', WPA_URL . 'classyui/Svg.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-logo', WPA_URL . 'classyui/IconLogo.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-anchor', WPA_URL . 'classyui/Anchor.js', array(), '1.0', true);
+
+
 		wp_enqueue_script('wpa-classyui-text-button', WPA_URL . 'classyui/TextButton.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-icon-button', WPA_URL . 'classyui/IconButton.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-sidebar', WPA_URL . 'classyui/Sidebar.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-flex', WPA_URL . 'classyui/Flex.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-classyui-svg', WPA_URL . 'classyui/Svg.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-alert-message', WPA_URL . 'modules/alert/AlertMessage.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-alert', WPA_URL . 'modules/alert/Alert.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-validator', WPA_URL . 'modules/form/FormValidator.js', array(), '1.0', true);

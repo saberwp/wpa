@@ -79,49 +79,24 @@ class DefaultAppShell {
 
 	// @TODO move to Sidebar() class.
 	sidebar() {
-		const el = document.createElement('section')
-		el.id = 'app-sidebar'
-		el.classList.add('min-w-20')
-		el.classList.add('p-1')
-		el.classList.add('mr-0.125')
-		el.appendChild(this.brand())
-		el.appendChild(app.menu.make())
-		return el
-	}
 
-	brand() {
-		const el = document.createElement('section')
-		el.classList.add('app-brand')
-		el.classList.add('flex')
-		el.classList.add('items-center')
-		el.classList.add('gap-1')
-		el.classList.add('font-semibold')
+		const sidebar = new Sidebar()
+		sidebar.setId('app-sidebar')
 
-		const logoEl = this.logo()
-		logoEl.classList.add('w-8')
-		el.appendChild(logoEl)
-		return el
-	}
+		// Add logo.
+		const iconLogo = new IconLogo()
+		iconLogo.setSvgMarkup(app.def.logo)
+		iconLogo.build()
+		sidebar.setContent(iconLogo.get())
 
-	logo() {
-		const _logo = new Logo
-		return _logo.render()
-	}
+		// Add primary menu.
+		sidebar.setContent(app.menu.make())
 
-	appName() {
-		const el = document.createElement('div')
-		el.innerHTML = app.def.title
-		el.classList.add('font-lg')
-		return el
-	}
+		// Add secondary menu.
+		app.menu.setType('secondary')
+		sidebar.setContent(app.menu.make())
 
-	screenTitle() {
-		const el = document.createElement('h2')
-		el.classList.add('text-lg')
-		el.classList.add('font-semibold')
-		el.classList.add('mb-4')
-		el.innerHTML = 'Tasks' // @TODO make dynamic if needed?
-		return el
+		return sidebar.get()
 	}
 
 }
