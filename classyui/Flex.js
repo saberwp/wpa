@@ -1,11 +1,12 @@
-class Flex {
+class Flex extends ComponentBase {
 
-	el = null
+	constructor() {
+		super()
+		this.defaultClasses = ['flex', 'items-center', 'gap-4']
+	}
 
-	make() {
-		const el = document.createElement('div')
-		el.classList.add('flex', 'gap-4')
-		this.el = el
+	build() {
+		this.make()
 	}
 
 }

@@ -1,7 +1,5 @@
 class Menu {
 
-	type = 'primary'
-
 	setType(type) {
 		this.type = type
 	}
@@ -24,65 +22,12 @@ class Menu {
 		return navModels
 	}
 
-	make() {
-
-		const modelNavData = this.processModels()
-
-		if(this.type === 'primary') {
-			const el = document.createElement('ul')
-			el.id = 'app-menu-primary'
-			el.classList.add('menu-horiz', 'text-white/60', 'list-none', 'pt-4', 'pb-6', 'm-0', 'text-base', 'font-semibold', 'border-b-2', 'border-white/30')
-			el.appendChild(this.menuItem('Dashboard', 'dashboard'))
-
-			modelNavData.primary.forEach(( model ) => {
-				el.appendChild( this.menuItemModel( model ))
-			})
-
-			return el
-		}
-
-		if(this.type === 'secondary') {
-			const el = document.createElement('ul')
-			el.id = 'app-menu-secondary'
-			el.classList.add('menu-horiz')
-			el.classList.add('list-none')
-			el.classList.add('p-0', 'm-0', 'mt-6', 'text-white/50', 'text-sm', 'font-semibold')
-
-			modelNavData.secondary.forEach(( model ) => {
-				el.appendChild( this.menuItemModel( model ))
-			})
-
-			el.appendChild(this.menuItem('Docs', 'docs'))
-			el.appendChild(this.menuItem('Settings', 'settings'))
-			el.appendChild(this.menuItem('Account', 'account'))
-			return el
-		}
-	}
-
 	getAppMenu(model) {
 	  if (model && model.app_menu) {
 	    return model.app_menu;
 	  } else {
 	    return "primary";
 	  }
-	}
-
-	menuItem( title, screenKey ) {
-		const el = document.createElement('li')
-		el.innerHTML = title
-		el.classList.add('wpa-app-menu-item', 'cursor-pointer', 'py-0.5', 'px-0.5')
-		el.setAttribute('screen', screenKey)
-		return el
-	}
-
-	menuItemModel(navModel) {
-		const el = document.createElement('li')
-		el.innerHTML = navModel.title
-		el.classList.add('wpa-app-menu-item', 'cursor-pointer')
-		el.classList.add('py-0.5')
-		el.classList.add('px-0.5', 'hover:text-white/80')
-		el.setAttribute('screen', navModel.key)
-		return el
 	}
 
 	setActive(el) {

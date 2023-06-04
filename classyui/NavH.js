@@ -15,7 +15,6 @@ class NavH extends ComponentBase {
 			if(this.itemType === 'icon') {
 				c = new IconNavItem()
 				c.setIcon(navItemData.icon)
-				c.addClass('fill-white')
 			} else {
 				c = new NavItem()
 			}

@@ -62,7 +62,7 @@ class ComponentBase {
 	}
 
 	removeDefaultClass(className) {
-		// remove className from array this.default
+	  this.defaultClasses = this.defaultClasses.filter((cls) => cls !== className);
 	}
 
 }

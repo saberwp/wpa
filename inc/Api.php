@@ -43,7 +43,7 @@ class Api {
 		// Load data.
 		global $wpdb;
 		$table_name = $this->make_table_name( $app_key, $model_key );
-		$results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC LIMIT 10");
+		$results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC LIMIT 100");
 
     $records = array();
     foreach ($results as $result) {

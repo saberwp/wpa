@@ -6,7 +6,7 @@ class Svg extends ComponentBase {
 	constructor() {
 		super()
 		this.elType = 'svg'
-		this.defaultClasses = ['w-8', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in']
+		this.defaultClasses = ['w-6', 'fill-white/50', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in']
 	}
 
 	make() {
@@ -32,6 +32,7 @@ class Svg extends ComponentBase {
 					const newEl = this.svgObjectify(svgData)
 					this.el.replaceWith(newEl)
 					this.el = newEl
+
 					this.fadeIn()
 				})
 				.catch(error => {
@@ -69,12 +70,17 @@ class Svg extends ComponentBase {
 	  const newSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 	  newSVG.setAttribute('viewBox', viewBox)
 	  newSVG.innerHTML = svgElement.innerHTML
-		newSVG.classList.add(...this.defaultClasses)
+		const classList = this.defaultClasses.concat(this.classes);
+		newSVG.classList.add(...classList)
 	  return newSVG
 	}
 
 	setSvgURL(svgURL) {
 		this.svgURL = svgURL
+	}
+
+	setSvgMarkup(svgMarkup) {
+		this.svgMarkup = svgMarkup
 	}
 
 }
