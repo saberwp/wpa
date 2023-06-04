@@ -2,6 +2,7 @@ class IconNavItem extends ComponentBase {
 
 	title = ''
 	screen = ''
+	icon = ''
 
 	constructor() {
 		super()
@@ -11,7 +12,8 @@ class IconNavItem extends ComponentBase {
 
 	build() {
 		const icon = this.addChild('Svg')
-		icon.setSvgURL('/wp-content/plugins/wpa/assets/logo-mark.svg')
+		console.log(this.icon)
+		icon.setSvgURL(this.icon)
 		icon.make()
 
 		const text = this.addChild('Span')
@@ -30,6 +32,10 @@ class IconNavItem extends ComponentBase {
 
 	setScreen(screen) {
 		this.screen = screen
+	}
+
+	setIcon(icon) {
+		this.icon = icon
 	}
 
 }

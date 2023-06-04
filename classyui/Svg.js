@@ -48,6 +48,8 @@ class Svg extends ComponentBase {
 	}
 
 	async svgLoad(url) {
+		console.log('svgLoad:')
+		console.log(url)
 	  try {
 	    const response = await fetch(url);
 	    if (response.ok) {

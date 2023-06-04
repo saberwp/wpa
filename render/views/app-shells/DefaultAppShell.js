@@ -94,13 +94,15 @@ class DefaultAppShell {
 		const navItems = [
 			{
 				title: 'Dashboard',
-				screen: 'dashboard'
+				screen: 'dashboard',
+				icon: '/wp-content/plugins/wpa/assets/house-heart-sharp-regular.svg'
 			}
 		]
 		navModels.primary.forEach((modelDef) => {
 			const navItem = {
 				title: modelDef.title,
-				screen: modelDef.key
+				screen: modelDef.key,
+				icon: '/wp-content/plugins/wpa/assets/logo-mark.svg'
 			}
 			navItems.push(navItem)
 		})
@@ -110,6 +112,8 @@ class DefaultAppShell {
 		pnav.setData(navItems)
 		pnav.addClass('mt-6')
 		pnav.addClass('gap-4')
+
+		// Do the build to create the IconNavItem children.
 		pnav.build()
 
 		// Secondary nav.

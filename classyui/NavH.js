@@ -14,12 +14,15 @@ class NavH extends ComponentBase {
 			let c = null
 			if(this.itemType === 'icon') {
 				c = new IconNavItem()
+				c.setIcon(navItemData.icon)
+				c.addClass('fill-white')
 			} else {
 				c = new NavItem()
 			}
 
 			c.setTitle(navItemData.title)
 			c.setScreen(navItemData.screen)
+
 			c.build()
 			this.children.push(c)
 		})
