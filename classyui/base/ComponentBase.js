@@ -8,8 +8,12 @@ class ComponentBase {
 	classMap = {
 	  Svg,
 	  Anchor,
-	  // Add more class mappings as needed
+		NavH,
+		IconLogo,
+		Span
 	}
+	defaultClasses = []
+	classes = []
 	loaded = false
 
 	constructor() {
@@ -19,14 +23,15 @@ class ComponentBase {
 	make() {
 
 		this.el = document.createElement(this.elType)
-		this.el.classList.add(...this.defaultClasses())
+		const classList = this.defaultClasses.concat(this.classes);
+		this.el.classList.add(...classList)
 		if(this.id) {
 			this.el.id = this.id
 		}
 
 		this.children.forEach((childComponent) => {
 		  this.el.appendChild(childComponent.get());
-		});
+		})
 
 	}
 
@@ -47,11 +52,17 @@ class ComponentBase {
 	}
 
 	addChild(componentName) {
-		this.children.push(new this.classMap[componentName]())
+		const childComponent = new this.classMap[componentName]()
+		this.children.push(childComponent)
+		return childComponent
 	}
 
-	defaultClasses() {
-		return []
+	addClass(className) {
+		this.classes.push(className)
+	}
+
+	removeDefaultClass(className) {
+		// remove className from array this.default
 	}
 
 }

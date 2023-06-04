@@ -58,6 +58,8 @@ class Router {
 		wp_enqueue_script('wpa-classyui-anchor', WPA_URL . 'classyui/Anchor.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-nav-h', WPA_URL . 'classyui/NavH.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-nav-item', WPA_URL . 'classyui/NavItem.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-nav-item', WPA_URL . 'classyui/IconNavItem.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-span', WPA_URL . 'classyui/Span.js', array(), '1.0', true);
 
 		wp_enqueue_script('wpa-classyui-text-button', WPA_URL . 'classyui/TextButton.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-icon-button', WPA_URL . 'classyui/IconButton.js', array(), '1.0', true);

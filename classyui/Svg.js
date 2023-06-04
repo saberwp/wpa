@@ -6,25 +6,27 @@ class Svg extends ComponentBase {
 	constructor() {
 		super()
 		this.elType = 'svg'
+		this.defaultClasses = ['w-8', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in']
 	}
 
 	make() {
-		// Make placeholder.
-		if(!this.loaded) {
-			this.el = document.createElement('div')
-			this.el.classList.add('animate-pulse', 'bg-gray-300', 'rounded', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in')
-			this.el.innerHTML = '...'
-		}
 
 		// Load SVG from existing markup.
 		if(this.svgMarkup) {
-			console.log('at 21, svgMarkup')
 			this.el = this.svgObjectify(this.svgMarkup)
 			this.fadeIn()
 		}
 
 		// Load SVG from URL.
 		if(this.svgURL) {
+
+			// Make placeholder.
+			if(!this.loaded) {
+				this.el = document.createElement('div')
+				this.el.classList.add('animate-pulse', 'bg-gray-300', 'rounded', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in')
+				this.el.innerHTML = '...'
+			}
+
 			this.svgLoad(this.svgURL)
 				.then(svgData => {
 					const newEl = this.svgObjectify(svgData)
@@ -65,13 +67,12 @@ class Svg extends ComponentBase {
 	  const newSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 	  newSVG.setAttribute('viewBox', viewBox)
 	  newSVG.innerHTML = svgElement.innerHTML
-		newSVG.classList.add(...this.defaultClasses())
+		newSVG.classList.add(...this.defaultClasses)
 	  return newSVG
 	}
 
-	defaultClasses() {
-		return ['w-8', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in']
+	setSvgURL(svgURL) {
+		this.svgURL = svgURL
 	}
-
 
 }

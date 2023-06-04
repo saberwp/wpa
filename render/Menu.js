@@ -66,7 +66,7 @@ class Menu {
 	    return "primary";
 	  }
 	}
-	
+
 	menuItem( title, screenKey ) {
 		const el = document.createElement('li')
 		el.innerHTML = title
@@ -115,7 +115,15 @@ class Menu {
 	}
 
 	clickHandler(e) {
-		const screenKey = e.target.getAttribute('screen')
+		let target = ''
+		console.log(e)
+		if (e.target.tagName === 'LI') {
+	    target = e.target
+	  } else {
+	    target = e.currentTarget
+	  }
+		console.log(target)
+		const screenKey = target.getAttribute('screen')
 		const menu = new Menu()
 		menu.setActive(e.target)
 		const screen = new Screen()

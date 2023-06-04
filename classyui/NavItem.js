@@ -6,6 +6,7 @@ class NavItem extends ComponentBase {
 	constructor() {
 		super()
 		this.elType = 'li'
+		this.defaultClasses = ['cursor-pointer', 'text-white/50', 'hover:text-white/30', 'font-semibold', 'p-0', 'm-0']
 	}
 
 	build() {
@@ -21,10 +22,6 @@ class NavItem extends ComponentBase {
 
 	setScreen(screen) {
 		this.screen = screen
-	}
-
-	defaultClasses() {
-		return ['cursor-pointer', 'text-white/50', 'font-semibold', 'p-0', 'm-0']
 	}
 
 }

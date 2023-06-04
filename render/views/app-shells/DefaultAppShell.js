@@ -81,15 +81,16 @@ class DefaultAppShell {
 
 		const sidebar = new Sidebar()
 		sidebar.setId('app-sidebar')
+		const iconLogo = sidebar.addChild('IconLogo')
 
 		// Add logo.
-		const iconLogo = new IconLogo()
 		iconLogo.setSvgMarkup(app.def.logo)
 		iconLogo.build()
-		sidebar.setContent(iconLogo.get())
+
+		// Get models for rendering in navs.
+		const navModels = app.menu.processModels()
 
 		// Primary nav.
-		const navModels = app.menu.processModels()
 		const navItems = [
 			{
 				title: 'Dashboard',
@@ -103,16 +104,55 @@ class DefaultAppShell {
 			}
 			navItems.push(navItem)
 		})
-		const navH = new NavH()
-		navH.setId('app-menu-primary')
-		navH.setData(navItems)
-		navH.build()
-		sidebar.setContent(navH.get())
+		const pnav = sidebar.addChild('NavH')
+		pnav.setId('app-menu-primary')
+		pnav.setItemType('icon')
+		pnav.setData(navItems)
+		pnav.addClass('mt-6')
+		pnav.addClass('gap-4')
+		pnav.build()
 
-		// Add secondary menu.
-		app.menu.setType('secondary')
-		sidebar.setContent(app.menu.make())
+		// Secondary nav.
+		const secondaryNavItems = []
+		navModels.secondary.forEach((modelDef) => {
+			const navItem = {
+				title: modelDef.title,
+				screen: modelDef.key
+			}
+			secondaryNavItems.push(navItem)
+		})
+		secondaryNavItems.push(
+			{
+				title: 'Docs',
+				screen: 'docs'
+			}
+		)
+		secondaryNavItems.push(
+			{
+				title: 'Settings',
+				screen: 'settings'
+			}
+		)
+		secondaryNavItems.push(
+			{
+				title: 'Account',
+				screen: 'account'
+			}
+		)
 
+		const snav = sidebar.addChild('NavH')
+		snav.setId('app-menu-secondary')
+		snav.setData(secondaryNavItems)
+		snav.addClass('text-base')
+		snav.addClass('mt-6')
+		snav.addClass('pt-6')
+		pnav.addClass('gap-2')
+		snav.addClass('border-t-2')
+		snav.addClass('border-white/30')
+
+		snav.build()
+
+		sidebar.make()
 		return sidebar.get()
 	}
 
