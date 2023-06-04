@@ -10,7 +10,8 @@ class ComponentBase {
 	  Anchor,
 		NavH,
 		IconLogo,
-		Span
+		Span,
+		FormSelectOption
 	}
 	defaultClasses = []
 	classes = []
@@ -30,6 +31,7 @@ class ComponentBase {
 		}
 
 		this.children.forEach((childComponent) => {
+			childComponent.build()
 		  this.el.appendChild(childComponent.get());
 		})
 
@@ -63,6 +65,11 @@ class ComponentBase {
 
 	removeDefaultClass(className) {
 	  this.defaultClasses = this.defaultClasses.filter((cls) => cls !== className);
+	}
+
+	// Components must override.
+	build() {
+		this.make()
 	}
 
 }

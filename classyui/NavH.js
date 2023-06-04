@@ -22,7 +22,6 @@ class NavH extends ComponentBase {
 			c.setTitle(navItemData.title)
 			c.setScreen(navItemData.screen)
 
-			c.build()
 			this.children.push(c)
 		})
 		this.make()

@@ -12,14 +12,11 @@ class IconNavItem extends ComponentBase {
 
 	build() {
 		const icon = this.addChild('Svg')
-		console.log(this.icon)
 		icon.setSvgURL(this.icon)
-		icon.make()
 
 		const text = this.addChild('Span')
 		text.setText(this.title)
 		this.addClass('leading-none')
-		text.build()
 
 		this.make()
 		this.el.setAttribute('screen', this.screen)

@@ -1,5 +1,7 @@
 class FormElementInput extends ComponentBase {
 
+	placeholder = ''
+
 	constructor() {
 		super()
 		this.elType = 'input'
@@ -8,6 +10,11 @@ class FormElementInput extends ComponentBase {
 
 	build() {
 		this.make()
+		this.el.placeholder = this.placeholder
+	}
+
+	setPlaceholder(placeholder) {
+		this.placeholder = placeholder
 	}
 
 }

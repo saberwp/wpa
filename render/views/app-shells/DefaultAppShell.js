@@ -77,16 +77,41 @@ class DefaultAppShell {
 
 		// Make exercise select.
 		const exerciseSelect = new FormSelect()
+		exerciseSelect.setData([
+			{
+				label: "Pushups",
+				value: 1
+			},
+			{
+				label: "Heel Raises",
+				value: 2
+			},
+		])
 		exerciseSelect.build()
 		container.el.appendChild(exerciseSelect.get())
 
 		// Make log type select.
 		const logTypeSelect = new FormSelect()
+		logTypeSelect.setData([
+			{
+				label: "Reps",
+				value: 1
+			},
+			{
+				label: "Distance",
+				value: 2
+			},
+			{
+				label: "Time",
+				value: 3
+			},
+		])
 		logTypeSelect.build()
 		container.el.appendChild(logTypeSelect.get())
 
 		// Make value input.
 		const valueInput = new FormElementInput()
+		valueInput.placeholder = 6
 		valueInput.build()
 		container.el.appendChild(valueInput.get())
 
@@ -142,7 +167,6 @@ class DefaultAppShell {
 
 		// Add logo.
 		iconLogo.setSvgMarkup(app.def.logo)
-		iconLogo.build()
 
 		// Get models for rendering in navs.
 		const navModels = app.menu.processModels()
@@ -169,9 +193,6 @@ class DefaultAppShell {
 		pnav.setData(navItems)
 		pnav.addClass('mt-6')
 		pnav.addClass('gap-4')
-
-		// Do the build to create the IconNavItem children.
-		pnav.build()
 
 		// Secondary nav.
 		const secondaryNavItems = []
@@ -211,9 +232,7 @@ class DefaultAppShell {
 		snav.addClass('border-t-2')
 		snav.addClass('border-white/30')
 
-		snav.build()
-
-		sidebar.make()
+		sidebar.build()
 		return sidebar.get()
 	}
 
