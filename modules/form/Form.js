@@ -8,7 +8,12 @@ class Form {
 
 	fieldInstances = []
 
-	/* @param modelDef the definition of the model to build the form for. */
+	/*
+	 * Maker Method
+	 * @example form.make(modelDef)
+	 * @param modelDef the definition of the model to build the form for.
+	 * @return DomElement type=form
+	 */
 	make(modelDef) {
 
 		const el = document.createElement('form')
@@ -19,7 +24,7 @@ class Form {
 		el.appendChild( this.fieldId() )
 
 		// Conditional display title field.
-		if(modelDef.title_field !== false) {
+		if(modelDef.title_field !== false && modelDef.type === 'standard') {
 			el.appendChild( this.fieldTitle() )
 		}
 

@@ -52,16 +52,6 @@ button {
 
 /* Form & Fields */
 
-form {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	margin: 1rem 0;
-	padding: 1.25rem 1.75rem;
-	border-radius: 0.25rem;
-	min-width: 10rem;
-}
-
 input {
 	min-width: 10rem;
 	max-width: 20rem;
