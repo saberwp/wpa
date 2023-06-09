@@ -50,20 +50,13 @@ class ApiCreate {
 		return $this->insert_result;
 	}
 
-	private function model_has_title() {
-		if(!isset($this->model_def->title_field) || $this->model_def->title_field) {
-			return true;
-		}
-		return false;
-	}
-
 	public function make_standard_insert_data() {
 
 		// Set author_user_id to current WP user.
 		$this->insert_data['author_user_id'] = $this->form_data['author_user_id'];
 
 		// Set title if supported by model.
-		if($this->model_has_title()) {
+		if(Model::title_field_active($this->model_def)) {
 			$this->insert_data['title'] = $this->form_data['title'];
 		}
 
