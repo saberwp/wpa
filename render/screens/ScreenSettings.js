@@ -14,7 +14,6 @@ class ScreenSettings {
 
 		// Sidebar
 		const sidebar = wrapper.addChild('AppShellSidebar')
-		sidebar.addClass('bg-gray-300')
 
 		// AppBody
 		const appBody = wrapper.addChild('Flex')
