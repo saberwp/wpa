@@ -68,6 +68,8 @@ class Router {
 		wp_enqueue_script('wpa-classyui-form-button', WPA_URL . 'classyui/FormButton.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-select', WPA_URL . 'classyui/FormSelect.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-select-option', WPA_URL . 'classyui/FormSelectOption.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-app-shell', WPA_URL . 'classyui/AppShell/AppShell.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-app-shell-sidebar', WPA_URL . 'classyui/AppShell/AppShellSidebar.js', array(), '1.0', true);
 
 		wp_enqueue_script('wpa-classyui-text-button', WPA_URL . 'classyui/TextButton.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-icon-button', WPA_URL . 'classyui/IconButton.js', array(), '1.0', true);
@@ -99,6 +101,7 @@ class Router {
 		wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-docs', WPA_URL . 'render/screens/ScreenDocs.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-screen-settings', WPA_URL . 'render/screens/ScreenSettings.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-report', WPA_URL . 'render/Report.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form', WPA_URL . 'modules/form/Form.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-edit', WPA_URL . 'render/Edit.js', array(), '1.0', true);

@@ -8,10 +8,18 @@ class ComponentBase {
 	classMap = {
 	  Svg,
 	  Anchor,
+		Avatar,
 		NavH,
 		IconLogo,
 		Span,
-		FormSelectOption
+		FormSelectOption,
+		Flex,
+		AppShellSidebar,
+		NavDropdown,
+		DividerH,
+		FormSelect,
+		FormElementInput,
+		FormButton
 	}
 	defaultClasses = []
 	classes = []

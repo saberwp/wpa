@@ -29,10 +29,10 @@ class Svg extends ComponentBase {
 
 			this.svgLoad(this.svgURL)
 				.then(svgData => {
+					this.loaded = true
 					const newEl = this.svgObjectify(svgData)
-					this.el.replaceWith(newEl)
+					const result = this.el.replaceWith(newEl)
 					this.el = newEl
-
 					this.fadeIn()
 				})
 				.catch(error => {
