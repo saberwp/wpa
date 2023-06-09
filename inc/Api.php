@@ -251,7 +251,7 @@ class Api {
 				if($model_def->type === 'settings') {
 
 					// Fetch settings for a given user.
-	        register_rest_route('wp/v2', $route_base . '/' . $model_def->key . '/user/(?P<id>\d+)', array(
+	        register_rest_route('wp/v2', $route_base . '/user/(?P<id>\d+)', array(
 	            'methods' => 'GET',
 	            'callback' => [$this, 'settings_by_user_fetch_callback'],
 							'args' => array('id'),
@@ -296,6 +296,35 @@ class Api {
 		$data = new \stdClass;
 		$data->message = "Fetch from relation_fetch_callback.";
 		$data->records = $records;
+		$data->query = $wpdb->last_query;
+		return rest_ensure_response($data);
+
+	}
+
+	public function settings_by_user_fetch_callback($request) {
+
+		// Get model key from API path.
+		$route = $request->get_route();
+    $route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
+    $model_key = $route_parts[4];
+		$relation_model_key = $route_parts[5];
+
+		// Get User ID.
+		$user_id = $request->get_param('id');
+
+		// Load data.
+		global $wpdb;
+		$table_name = $this->make_table_name( $app_key, $model_key );
+		$result = $wpdb->get_row(
+			"SELECT * FROM $table_name
+				WHERE author_user_id = $user_id
+				ORDER BY id DESC");
+
+		// Return the data as a JSON response.
+		$data = new \stdClass;
+		$data->message = "Fetch from settings_by_user_fetch_callback().";
+		$data->records = $result;
 		$data->query = $wpdb->last_query;
 		return rest_ensure_response($data);
 
