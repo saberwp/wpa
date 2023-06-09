@@ -1,12 +1,23 @@
 class TextField {
 
-	make(field) {
-		const el = document.createElement('input')
-		el.type = field.type
-		el.placeholder = field.placeholder
-		el.id = 'field-' + field.key
-		el.name = 'field-' + field.key
-		return el
+	fieldDef = false
+	component = false
+
+	constructor(fieldDef) {
+		this.fieldDef = fieldDef
+	}
+
+	componentType() {
+		return 'Input'
+	}
+
+	setComponent(component) {
+		this.component = component
+	}
+
+	componentConfigure(component) {
+		this.component.setId('field-'+this.fieldDef.key)
+		this.component.setPlaceholder(this.fieldDef.placeholder)
 	}
 
 	init() {}

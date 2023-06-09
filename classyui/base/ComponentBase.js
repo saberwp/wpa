@@ -22,7 +22,8 @@ class ComponentBase {
 		FormButton,
 		InputID,
 		SaveButton,
-		SaveForm
+		SaveForm,
+		Input
 	}
 	defaultClasses = []
 	classes = []
