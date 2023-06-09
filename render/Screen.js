@@ -30,7 +30,7 @@ class Screen {
 
 		// Settings handler.
 		if(screenKey === 'settings') {
-			let screen = new ScreenSettings()
+			let screen = new ScreenSettings(screenKey)
 			screen.render()
 			return
 		}

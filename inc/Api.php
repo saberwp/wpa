@@ -90,7 +90,7 @@ class Api {
 
 		$edit_data = array();
 
-		if(self::model_has_title($model)) {
+		if(Model::title_field_active($model)) {
 			$edit_data['title'] = $form_data['title'];
 		}
 
@@ -147,7 +147,7 @@ class Api {
 		// Get ID.
 		$id = $request->get_param('id');
 
-		// Do DB update.
+		// Do DB delete.
 		global $wpdb;
 		$table_name = $this->make_table_name($app_key, $model_key);
 
@@ -324,7 +324,8 @@ class Api {
 		// Return the data as a JSON response.
 		$data = new \stdClass;
 		$data->message = "Fetch from settings_by_user_fetch_callback().";
-		$data->records = $result;
+		$data->model_key = $model_key;
+		$data->record = $result;
 		$data->query = $wpdb->last_query;
 		return rest_ensure_response($data);
 

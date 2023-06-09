@@ -1,7 +1,50 @@
 class ScreenSettings {
 
+	screenKey = ''
+
+	constructor(screenKey) {
+		this.screenKey = screenKey
+	}
+
 	render() {
 
+		// Set current model data.
+		app.data.currentModel = this.screenKey
+
+		// Fetch settings by user.
+		app.dm.fetchSettingsByUser(app.data.currentModel)
+
+		// Callback for data loaded.
+		this.dataLoadedCallback()
+
+		// Make UI.
+		this.ui()
+	}
+
+	dataLoadedCallback() {
+		document.addEventListener('app_user_settings_loaded', (event) => {
+
+			if(event.detail.modelKey === app.data.currentModel) {
+
+				// Isolate record data.
+				const record = event.detail.record
+
+				// Update form ID field.
+				const idField = document.getElementById('field-id')
+				idField.value = record.id
+
+				// Update form fields.
+				app.def[app.data.currentModel].fields.forEach(( field ) => {
+					const el = document.getElementById('field-'+field.key)
+					el.value = record[field.key]
+				})
+
+			}
+
+		});
+	}
+
+	ui() {
 		// AppShell.
 		const appShell = new AppShell()
 		appShell.addClass('overflow-hidden')
