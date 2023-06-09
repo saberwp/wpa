@@ -43,7 +43,8 @@ class Api {
 		// Load data.
 		global $wpdb;
 		$table_name = $this->make_table_name( $app_key, $model_key );
-    $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC LIMIT 10");
+		$results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC LIMIT 100");
+
     $records = array();
     foreach ($results as $result) {
 	    $records[] = $result;
@@ -51,7 +52,7 @@ class Api {
 
 		// Return the data as a JSON response.
 		$data = new \stdClass;
-		$data->message = "Hey nice job!";
+		$data->message = "Records loaded from $table_name.";
 		$data->model_key = $model_key;
 		$data->records = $records;
 		return rest_ensure_response($data);
@@ -128,8 +129,8 @@ class Api {
 		return rest_ensure_response($response);
 	}
 
-	private static function model_has_title($modelDef) {
-		if(!isset($model->title_field) || $model->title_field) {
+	private static function model_has_title($model_def) {
+		if(!isset($model_def->title_field) || $model_def->title_field) {
 			return true;
 		}
 		return false;
@@ -237,43 +238,102 @@ class Api {
         // Define the route for this model based on the model key.
         $route_base = $app_def->key.'/'.$model_key;
 
-						// Register read list route.
-		        register_rest_route('wp/v2', $route_base, array(
-		            'methods' => 'GET',
-		            'callback' => [$this, 'list_callback'],
-		            //'args' => array(),
-		            'permission_callback' => [$this, 'permission_callback'],
-		        ));
+				// Fetch list route.
+        register_rest_route('wp/v2', $route_base, array(
+            'methods' => 'GET',
+            'callback' => [$this, 'list_callback'],
+            //'args' => array(),
+            'permission_callback' => [$this, 'permission_callback'],
+        ));
 
-						// Edit one route.
-						register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
-		          'methods' => 'PUT',
-		          'callback' => ['\\WPA\Api', 'edit_callback'],
-		          'args' => array('id'),
-		          'permission_callback' => [$this, 'permission_callback'],
-		        ));
+				// Edit one route.
+				register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
+          'methods' => 'PUT',
+          'callback' => ['\\WPA\Api', 'edit_callback'],
+          'args' => array('id'),
+          'permission_callback' => [$this, 'permission_callback'],
+        ));
 
-						// Create route.
-						register_rest_route('wp/v2', $route_base, array(
-		          'methods' => 'POST',
-		          'callback' => ['\\WPA\Api', 'create_callback'],
-		          'args' => array('id'),
-		          'permission_callback' => [$this, 'permission_callback'],
-		        ));
+				// Create route.
+				register_rest_route('wp/v2', $route_base, array(
+          'methods' => 'POST',
+          'callback' => ['\\WPA\Api', 'create_callback'],
+          'args' => array('id'),
+          'permission_callback' => [$this, 'permission_callback'],
+        ));
 
-						// Edit one route.
-						register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
-		          'methods' => 'DELETE',
-		          'callback' => [$this, 'delete_callback'],
-		          'args' => array('id'),
-		          'permission_callback' => [$this, 'permission_callback'],
-		        ));
+				// Delete one route.
+				register_rest_route('wp/v2', $route_base . '/(?P<id>\d+)', array(
+          'methods' => 'DELETE',
+          'callback' => [$this, 'delete_callback'],
+          'args' => array('id'),
+          'permission_callback' => [$this, 'permission_callback'],
+        ));
 
-		    }
-			}
+				// Add special relation routes.
+				$model_def = $app->def->{$model_key};
+				if($model_def->type === 'relation') {
+
+					// Fetch left relation list route.
+	        register_rest_route('wp/v2', $route_base . '/' . $model_def->relations->left->model . '/(?P<id>\d+)', array(
+	            'methods' => 'GET',
+	            'callback' => [$this, 'relation_fetch_callback'],
+							'args' => array('id'),
+	            'permission_callback' => [$this, 'permission_callback'],
+	        ));
+
+					// Fetch right relation list route.
+	        register_rest_route('wp/v2', $route_base . '/' . $model_def->relations->right->model . '/(?P<id>\d+)', array(
+	            'methods' => 'GET',
+	            'callback' => [$this, 'relation_fetch_callback'],
+							'args' => array('id'),
+	            'permission_callback' => [$this, 'permission_callback'],
+	        ));
+
+				}
+
+	    }
 		}
+}
 
-		public function permission_callback() {
+	public function relation_fetch_callback($request) {
+
+		// Get model key from API path.
+		$route = $request->get_route();
+    $route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
+    $model_key = $route_parts[4];
+		$relation_model_key = $route_parts[5];
+
+		// Get Record ID.
+		$record_id = $request->get_param('id');
+
+		// Create where col name.
+		$relation_col_name = $relation_model_key.'_id';
+
+		// Load data.
+		global $wpdb;
+		$table_name = $this->make_table_name( $app_key, $model_key );
+		$results = $wpdb->get_results(
+			"SELECT * FROM $table_name
+				WHERE $relation_col_name = $record_id
+				ORDER BY id DESC LIMIT 100");
+
+    $records = array();
+    foreach ($results as $result) {
+	    $records[] = $result;
+    }
+
+		// Return the data as a JSON response.
+		$data = new \stdClass;
+		$data->message = "Fetch from relation_fetch_callback.";
+		$data->records = $records;
+		$data->query = $wpdb->last_query;
+		return rest_ensure_response($data);
+
+	}
+
+	public function permission_callback() {
 
 			// Get key passed in request.
 			$api_key_header = isset( $_SERVER['HTTP_API_KEY'] ) ? $_SERVER['HTTP_API_KEY'] : ''; // Get the API key from the request header

@@ -1,9 +1,3 @@
-body {
-	font-family: 'Inter', sans-serif;
-	font-size: 16px;
-	margin: 0;
-}
-
 #app-container {
 	display: flex;
 	flex-direction: column;
@@ -15,43 +9,9 @@ body {
   display: flex;
 }
 
-#app-sidebar {
-	flex-basis: 25%;
-	display: flex;
-	flex-grow: 0;
-	flex-shrink: 1;
-	flex-direction: column;
-	border-right: solid 1px #FFF;
-}
-
 #app-main-wrap {
 	flex-basis: 75%;
 	flex-shrink: 1;
-}
-
-#app-body {
-	height: calc(100vh - 10rem);
-	overflow: auto;
-}
-
-.font-xl {
-	font-size: 1.5rem;
-}
-
-.bg-black {
-	background-color: #000;
-}
-
-.text-white {
-	color: #FFF;
-}
-
-.clickable {
-	cursor: pointer;
-}
-
-.flex {
-	display: flex;
 }
 
 .modal {
@@ -76,72 +36,9 @@ body {
 	font-weight: 600;
 }
 
-.min-w-20 {
-	min-width: 20rem;
-}
-
-.font-lg {
-	font-size: 1.25rem;
-}
-
-.font-semibold {
-	font-weight: 600;
-}
-
-.app-logo {
-	margin: 0 0 0 0;
-}
-
-.wpa-logo svg {
-	max-width: 100%;
-}
-
-footer .wpa-logo svg {
-	max-width: 8rem;
-}
-
 #app-header {
 	padding: 0.5rem 1rem;
 	box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.2);
-}
-
-#app-menu-main {
-	margin-top: 0.5rem;
-	font-family: "Inter", sans-serif;
-}
-
-#app-menu-main li {
-	border-radius: 0.5rem;
-	color: #79808D;
-	font-size: 1.05rem;
-}
-
-#app-menu-main li a {
-	color: #79808D;
-}
-
-#app-menu-main li:hover {
-	background-color: #1F2937;
-	color: #FFF;
-}
-
-.items-center {
-	align-items: center;
-}
-
-#app-footer {
-	height: 3rem;
-	margin: auto 0 0 0;
-	padding: 0.5rem;
-	gap: 1rem;
-	align-items: center;
-	justify-content: center;
-	border-top: 1px solid #FFF;
-}
-
-#app-footer .app-logo svg {
-	width: 32px;
-	height: 32px;
 }
 
 button {
@@ -151,10 +48,6 @@ button {
 	font-weight: 600;
 	font-family: "Inter", sans-serif;
 	border-radius: 0.5rem;
-}
-
-.gap-1 {
-	gap: 1rem;
 }
 
 /* Form & Fields */
@@ -167,17 +60,6 @@ form {
 	padding: 1.25rem 1.75rem;
 	border-radius: 0.25rem;
 	min-width: 10rem;
-}
-
-select {
-	min-width: 10rem;
-	max-width: 21.2rem;
-	width: 100%;
-	padding: 0.4rem 0.6rem;
-	border: solid 1px #FFF;
-	border-radius: 0.25rem;
-	margin: 0.5rem 0;
-	font-size: 0.9rem;
 }
 
 input {
@@ -207,14 +89,6 @@ textarea {
 	color: #000;
 }
 
-.mr-0\.125 {
-	margin-right: 0.125rem;
-}
-
-.w-full {
-	width: 100%;
-}
-
 input[type=submit] {
 	cursor: pointer;
 	background-color: #1F2937;
@@ -228,25 +102,6 @@ input[type=submit] {
 
 input[type=submit]:hover {
 	opacity: 0.7;
-}
-
-.app-brand {
-	border-bottom: solid 1px #1F2937;
-	padding-bottom: 0.5rem;
-}
-
-.px-0\.5 {
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
-}
-
-.py-1 {
-	padding-left: 1rem;
-	padding-right: 1rem;
-}
-
-.grid {
-	display: grid;
 }
 
 #model-list li {
@@ -265,14 +120,6 @@ input[type=submit]:hover {
 #model-list button {
 	font-size: 0.80rem;
 	font-weight: 400;
-}
-
-#app-footer {
-	background-color: var(--primary-color);
-}
-
-.menu-item-active {
-	background: #FFF;
 }
 
 #model-list-container {

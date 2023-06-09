@@ -52,6 +52,31 @@ class Router {
 
 		$this->deregister_registered_stylesheets();
 
+		wp_enqueue_script('wpa-classyui-component-base', WPA_URL . 'classyui/base/ComponentBase.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-svg', WPA_URL . 'classyui/Svg.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-logo', WPA_URL . 'classyui/IconLogo.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-anchor', WPA_URL . 'classyui/Anchor.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-nav-h', WPA_URL . 'classyui/NavH.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-nav-item', WPA_URL . 'classyui/NavItem.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-nav-item', WPA_URL . 'classyui/IconNavItem.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-span', WPA_URL . 'classyui/Span.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-avatar', WPA_URL . 'classyui/Avatar.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-divider-h', WPA_URL . 'classyui/DividerH.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-nav-dropdown', WPA_URL . 'classyui/NavDropdown.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-form-h', WPA_URL . 'classyui/FormH.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-form-element-input', WPA_URL . 'classyui/FormElementInput.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-form-button', WPA_URL . 'classyui/FormButton.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-form-select', WPA_URL . 'classyui/FormSelect.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-form-select-option', WPA_URL . 'classyui/FormSelectOption.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-app-shell', WPA_URL . 'classyui/AppShell/AppShell.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-app-shell-sidebar', WPA_URL . 'classyui/AppShell/AppShellSidebar.js', array(), '1.0', true);
+
+		wp_enqueue_script('wpa-classyui-text-button', WPA_URL . 'classyui/TextButton.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-icon-button', WPA_URL . 'classyui/IconButton.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-sidebar', WPA_URL . 'classyui/Sidebar.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-flex', WPA_URL . 'classyui/Flex.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-alert-message', WPA_URL . 'modules/alert/AlertMessage.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-alert', WPA_URL . 'modules/alert/Alert.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-validator', WPA_URL . 'modules/form/FormValidator.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form-field', WPA_URL . 'modules/field/Field.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-field-validator', WPA_URL . 'modules/field/FieldValidator.js', array(), '1.0', true);
@@ -76,6 +101,7 @@ class Router {
 		wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-docs', WPA_URL . 'render/screens/ScreenDocs.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-screen-settings', WPA_URL . 'render/screens/ScreenSettings.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-report', WPA_URL . 'render/Report.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form', WPA_URL . 'modules/form/Form.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-edit', WPA_URL . 'render/Edit.js', array(), '1.0', true);
@@ -84,6 +110,7 @@ class Router {
 		wp_enqueue_script('wpa-list', WPA_URL . 'render/List.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-modal', WPA_URL . 'render/Modal.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-menu', WPA_URL . 'render/Menu.js', array(), '1.0', true);
+
 		wp_enqueue_script('wpa-app', WPA_URL . 'render/App.js', array(), '1.0', true);
 	}
 

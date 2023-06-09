@@ -16,20 +16,27 @@ class Screen {
 
 		// Dashboard handler.
 		if(screenKey === 'dashboard') {
-			const screen = new ScreenDashboard()
+			let screen = new ScreenDashboard()
 			screen.render(screenKey)
 			return
 		}
 
 		// Docs handler.
 		if(screenKey === 'docs') {
-			const screen = new ScreenDocs()
+			let screen = new ScreenDocs()
 			screen.render(screenKey)
 			return
 		}
 
+		// Settings handler.
+		if(screenKey === 'settings') {
+			let screen = new ScreenSettings()
+			screen.render()
+			return
+		}
+
 		// Model handler.
-		const screen = new ScreenModel()
+		let screen = new ScreenModel()
 		screen.render(screenKey)
 
 	}

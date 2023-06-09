@@ -24,7 +24,7 @@ class Edit {
 		modal.open()
 
 		const id = e.target.getAttribute('object-id')
-		const record = app.record(id)
+		const record = app.dm.record(id)
 		const idField = document.getElementById('field-id')
 		idField.value = id
 
@@ -52,8 +52,8 @@ class Edit {
 	update(record) {
 
 		// Local store.
-		app.recordReplace(record)
-		app.data[app.data.currentModel].index = app.recordIndex(app.data[app.data.currentModel].record)
+		app.dm.recordReplace(record)
+		app.data[app.data.currentModel].index = app.dm.recordIndex(app.data[app.data.currentModel].record)
 
 		// Send API request.
 		fetch(app.apiUrl+app.def.key+'/'+app.data.currentModel+'/'+record.id, {
@@ -71,6 +71,15 @@ class Edit {
 			return response.json();
 		})
 		.then((responseJson) => {
+
+			const recordId = responseJson.model_id
+
+			// Show alert.
+			const alert = new Alert()
+			alert.bg = 'bg-green-800'
+			alert.setMessage('Record Edited Successfully', 'Changes to record ID '+recordId+' were saved.')
+			alert.build()
+			alert.render()
 
 			// Do table refresh.
 			app.table.refresh()

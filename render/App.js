@@ -30,7 +30,7 @@ class App {
 		document.addEventListener('wpa_app_def_loaded', (event) => {
 
 			// Init data store.
-			this.dataInit()
+			this.dm.dataInit()
 			this.load()
 
 		})
@@ -42,14 +42,10 @@ class App {
 		app.shell = new DefaultAppShell()
 		app.shell.appContainer()
 
-		// Bind the class instance to the menuClickHandler function
-		this.menuClickHandler = this.menuClickHandler.bind(this)
-
 		// Call menuClickInit function to initialize the menu clicks
 		if(app.def.sidebar !== false) {
-			this.menuClickInit()
+			this.menu.clickInit()
 		}
-
 
 		// Init routing.
 		this.route = new Route
@@ -101,102 +97,6 @@ class App {
 			console.error(error);
 		});
 
-	}
-
-	menuClickInit() {
-		const ulElement  = document.getElementById('app-menu-main');
-		const liElements = ulElement.getElementsByTagName('li');
-
-		for (let i = 0; i < liElements.length; i++) {
-			const liElement = liElements[i];
-			liElement.addEventListener('click', this.menuClickHandler);
-		}
-	}
-
-	menuClickHandler(e) {
-		const screenKey = e.target.getAttribute('screen')
-		const menu = new Menu()
-		menu.setActive(e.target)
-		const screen = new Screen()
-		screen.render(screenKey)
-	}
-
-	dataInit() {
-
-		this.data = {}
-		app.def.models.forEach(( modelKey ) => {
-			this.data[modelKey] = {
-				record: [],
-				index: {}
-			}
-		})
-
-	}
-
-	// Automatically loads from current model data storage.
-	record(id) {
-		return this.data[app.data.currentModel].index[id]
-	}
-
-	recordIndex(records) {
-	  const index = {};
-	  for (let i = 0; i < records.length; i++) {
-	    const record = records[i];
-	    index[record.id] = record;
-	  }
-	  return index;
-	}
-
-	currentModelRecordStore() {
-		return this.data[app.data.currentModel].record
-	}
-
-	setModelRecordStore(modelKey, records) {
-		this.data[modelKey].record = records
-		const index = this.recordIndex(this.data[modelKey].record)
-		this.setModelIndexStore(modelKey, index)
-	}
-
-	setModelIndexStore(modelKey, index) {
-		this.data[modelKey].index = index
-	}
-
-	currentModelIndexStore() {
-		return this.data[app.data.currentModel].index
-	}
-
-	recordReplace(record) {
-
-		const records = this.currentModelRecordStore();
-
-    // Convert the id property to an integer
-    record.id = parseInt(record.id, 10);
-
-    // Find the object with a matching id and replace it with the updated object
-    for (let i = 0; i < records.length; i++) {
-      if ( parseInt(records[i].id) === record.id) {
-        records[i] = record;
-        return;
-      }
-    }
-
-	}
-
-	recordDeleteFromObject(id) {
-		const index = this.currentModelIndexStore();
-		if (index.hasOwnProperty(id)) {
-			delete index[id];
-		}
-  }
-
-	recordDeleteFromArray(id) {
-		const records = this.currentModelRecordStore();
-		for (let i = 0; i < records.length; i++) {
-			if (parseInt(records[i].id) === parseInt(id, 10)) {
-				records.splice(i, 1);
-				return;
-			}
-		}
 	}
 
 	getModel(modelKey) {

@@ -18,8 +18,8 @@ class Delete {
 	delete(id) {
 
 		// Local store.
-		app.recordDeleteFromObject(id)
-		app.recordDeleteFromArray(id)
+		app.dm.recordDeleteFromObject(id)
+		app.dm.recordDeleteFromArray(id)
 
 		// Send API request.
 		fetch(app.apiUrl+app.def.key+'/'+app.data.currentModel+'/'+id, {
@@ -54,7 +54,7 @@ class Delete {
 	handleDeleteClick(e) {
 
 		const id = e.target.getAttribute('object-id')
-		const record = app.record(id)
+		const record = app.dm.record(id)
 
 		// Open modal to confirm.
 		app.modal.setHeaderLabel('Delete Confirm')
@@ -76,7 +76,7 @@ class Delete {
 	handleConfirmClick(e) {
 		const id = e.target.getAttribute('object-id')
 
-		const record = app.record(id)
+		const record = app.dm.record(id)
 
 		// Do delete from data store.
 		this.delete(id)

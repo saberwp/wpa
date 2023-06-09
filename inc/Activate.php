@@ -1,5 +1,7 @@
 <?php
 
+// FQN: \WPA\Activate
+
 namespace WPA;
 
 class Activate {

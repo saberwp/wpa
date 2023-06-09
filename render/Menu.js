@@ -1,46 +1,33 @@
 class Menu {
 
-	make() {
-		const el = document.createElement('ul')
-		el.id = 'app-menu-main'
-		el.classList.add('menu-horiz')
-		el.classList.add('list-none')
-		el.classList.add('p-0')
-		el.classList.add('m-0')
-		el.classList.add('font-lg')
-		el.classList.add('font-semibold')
-		el.appendChild(this.menuItem('Dashboard', 'dashboard'))
+	setType(type) {
+		this.type = type
+	}
 
-		
-
+	processModels() {
+		const navModels = {
+			primary: [],
+			secondary: []
+		}
 		app.def.models.forEach(( modelKey ) => {
 			const model = app.def[modelKey]
-			if( model.type === 'standard' || model.type === 'settings' ) {
-				el.appendChild( this.menuItemModel( model ))
+			const appMenu = this.getAppMenu(model)
+			if( model.type === 'standard' && appMenu === 'primary' || model.type === 'settings' && appMenu === 'primary' ) {
+				navModels.primary.push(model)
+			}
+			if( model.type === 'standard' && appMenu === 'secondary' || model.type === 'settings' && appMenu === 'secondary' ) {
+				navModels.secondary.push(model)
 			}
 		})
-		el.appendChild(this.menuItem('Docs', 'docs'))
-		return el
+		return navModels
 	}
 
-	menuItem( title, screenKey ) {
-		const el = document.createElement('li')
-		el.innerHTML = title
-		el.classList.add('clickable')
-		el.classList.add('py-1')
-		el.classList.add('px-0.5')
-		el.setAttribute('screen', screenKey)
-		return el
-	}
-
-	menuItemModel( model ) {
-		const el = document.createElement('li')
-		el.innerHTML = model.title_plural
-		el.classList.add('clickable')
-		el.classList.add('py-1')
-		el.classList.add('px-0.5')
-		el.setAttribute('screen', model.key)
-		return el
+	getAppMenu(model) {
+	  if (model && model.app_menu) {
+	    return model.app_menu;
+	  } else {
+	    return "primary";
+	  }
 	}
 
 	setActive(el) {
@@ -61,6 +48,31 @@ class Menu {
 	    }
 	  }
 	  return null;
+	}
+
+	clickInit() {
+	  const liElements = document.getElementsByClassName('wpa-app-menu-item');
+
+	  for (let i = 0; i < liElements.length; i++) {
+	    const liElement = liElements[i];
+	    liElement.addEventListener('click', this.clickHandler.bind(this));
+	  }
+	}
+
+	clickHandler(e) {
+		let target = ''
+		console.log(e)
+		if (e.target.tagName === 'LI') {
+	    target = e.target
+	  } else {
+	    target = e.currentTarget
+	  }
+		console.log(target)
+		const screenKey = target.getAttribute('screen')
+		const menu = new Menu()
+		menu.setActive(e.target)
+		const screen = new Screen()
+		screen.render(screenKey)
 	}
 
 }

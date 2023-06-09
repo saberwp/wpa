@@ -1,5 +1,7 @@
 <?php
 
+// FQN: \WPA\ApiRelations
+
 namespace WPA;
 
 class ApiRelations {

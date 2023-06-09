@@ -59,7 +59,7 @@ class Create {
 		})
 		.then((responseJson) => {
 
-			const recordId = responseJson.model_id
+			const recordId = responseJson.insert_id
 
 			const event = new CustomEvent('wpa_record_created', {
 				detail: {
@@ -71,7 +71,14 @@ class Create {
 
 			record.id = recordId
 			app.data[model.key].record.unshift(record)
-			app.data[model.key].index = app.recordIndex( app.data[model.key].record )
+			app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
+
+			// Show alert.
+			const alert = new Alert()
+			alert.bg = 'bg-green-800'
+			alert.setMessage('Record Created Successfully', 'Record ID '+recordId+' was created.')
+			alert.build()
+			alert.render()
 
 			// Do table refresh.
 			app.table.refresh()

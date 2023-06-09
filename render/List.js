@@ -53,7 +53,7 @@ class List {
 		return; // Turn off rendering to help focus on table create.
 		const container = document.getElementById('model-list')
 		container.innerHTML = '' // Clear any existing records.
-		const data = app.currentModelRecordStore()
+		const data = app.dm.currentModelRecordStore()
 		this.dataInsert(container, data)
 		this.init()
 	}
@@ -147,7 +147,7 @@ class List {
 		}
 
 		// Sort stored data.
-		app.currentModelRecordStore().sort((a, b) => {
+		app.dm.currentModelRecordStore().sort((a, b) => {
 			const aVal = a[field];
 			const bVal = b[field];
 
@@ -166,7 +166,7 @@ class List {
 	}
 
 	sortReverse() {
-		app.currentModelRecordStore().reverse();
+		app.dm.currentModelRecordStore().reverse();
 	}
 
 }

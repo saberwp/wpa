@@ -1,5 +1,7 @@
 <?php
 
+// FQN: \WPA\Admin
+
 namespace WPA;
 
 class Admin {
@@ -15,7 +17,7 @@ class Admin {
 	        'manage_options',
 	        'wpa',
 	        [$this, 'main_content'],
-	        'dashicons-admin-generic',
+	        WPA_URL.'assets/wp-menu-icon.svg',
 	        20
 	    );
 
@@ -281,21 +283,16 @@ class Admin {
 			// Stylesheets.
 			wp_enqueue_style( 'wpa-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'wpa-app-styles', WPA_URL.'/styles/app.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'wpa-app-admin-styles', WPA_URL.'/styles/app-admin.css', array(), '1.0.0', 'all' );
 		}
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa') {
 			wp_enqueue_script( 'wpa-admin', WPA_URL.'js/admin.js', array(), '1.0.0', true );
 			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
 		}
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa-debug') {
-			wp_enqueue_script( 'wpa-admin-debug', WPA_URL.'js/AdminDebug.js', array(), '1.0.0', true );
 			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'wpa-admin', WPA_URL.'/styles/admin.css', array(), '1.0.0', 'all' );
 		}
 
 
