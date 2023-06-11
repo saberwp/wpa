@@ -81,11 +81,13 @@ class Edit {
 			alert.build()
 			alert.render()
 
-			// Do table refresh.
-			app.table.refresh()
+			if(app.data.currentModel.type === 'standard') {
+				this.doStandardModelAfterEdit()
+			}
 
-			// Close modal.
-			app.modal.close()
+			if(app.data.currentModel.type === 'settings') {
+				this.doSettingsModelAfterEdit()
+			}
 
 		})
 		.catch((error) => {
@@ -94,5 +96,13 @@ class Edit {
 
 	}
 
+	doStandardModelAfterEdit() {
+		app.table.refresh()
+		app.modal.close()
+	}
+
+	doSettingsModelAfterEdit() {
+		console.log('settings model after edit...')
+	}
 
 }

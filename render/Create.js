@@ -69,22 +69,14 @@ class Create {
 			})
 			document.dispatchEvent(event)
 
-			record.id = recordId
-			app.data[model.key].record.unshift(record)
-			app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
+			if(app.data.currentModel.type === 'standard') {
+				this.doStandardModelAfterEdit()
+			}
 
-			// Show alert.
-			const alert = new Alert()
-			alert.bg = 'bg-green-800'
-			alert.setMessage('Record Created Successfully', 'Record ID '+recordId+' was created.')
-			alert.build()
-			alert.render()
+			if(app.data.currentModel.type === 'settings') {
+				this.doSettingsModelAfterEdit()
+			}
 
-			// Do table refresh.
-			app.table.refresh()
-
-			// Close modal.
-			app.modal.close()
 
 		})
 		.catch((error) => {
@@ -104,6 +96,26 @@ class Create {
 		el.classList.add('hover:bg-white/30')
 
 		return el
+	}
+
+	doStandardModelAfterEdit() {
+
+		// Local record store updates.
+		record.id = recordId
+		app.data[model.key].record.unshift(record)
+		app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
+
+		// Show alert.
+		const alert = new Alert()
+		alert.bg = 'bg-green-800'
+		alert.setMessage('Record Created Successfully', 'Record ID '+recordId+' was created.')
+		alert.build()
+		alert.render()
+
+		// Refresh table or list and close modal.
+		// @todo refactor to call the current view. 
+		app.table.refresh()
+		app.modal.close()
 	}
 
 	buttonIcon() {

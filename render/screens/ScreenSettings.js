@@ -29,14 +29,25 @@ class ScreenSettings {
 				// Isolate record data.
 				const record = event.detail.record
 
+				if(!record) { return }
+
 				// Update form ID field.
 				const idField = document.getElementById('field-id')
 				idField.value = record.id
 
 				// Update form fields.
 				app.def[app.data.currentModel].fields.forEach(( field ) => {
-					const el = document.getElementById('field-'+field.key)
-					el.value = record[field.key]
+
+					console.log('test field key:')
+					console.log(record[field.key])
+
+					// Avoid loading undefined record data which may occur after new fields set in definition.
+					// @todo create a better check that accounts for empty and other defined data that should skip render.
+					if(record[field.key] === 'undefined') {
+						const el = document.getElementById('field-'+field.key)
+						el.value = record[field.key]
+					}
+
 				})
 
 			}
