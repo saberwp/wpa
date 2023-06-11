@@ -42,7 +42,7 @@ class Menu {
 	}
 
 	findMenuItemByScreenKey(screenKey) {
-	  var parentUl = document.querySelector('#app-menu-main');
+	  var parentUl = document.querySelector('#app-menu-primary');
 	  var menuItems = parentUl.querySelectorAll('li');
 	  for (var i = 0; i < menuItems.length; i++) {
 	    var menuItem = menuItems[i];

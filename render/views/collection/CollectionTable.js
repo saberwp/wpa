@@ -174,8 +174,6 @@ class CollectionTable {
 	 */
 	itemMake(item) {
 
-		console.log(item)
-
 		const el = document.createElement('tr')
 
 		// By default we show ID, so if it's undefined or true, we render it.

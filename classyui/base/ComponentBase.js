@@ -23,7 +23,8 @@ class ComponentBase {
 		InputID,
 		SaveButton,
 		SaveForm,
-		Input
+		Input,
+		TimePicker
 	}
 	defaultClasses = []
 	classes = []
