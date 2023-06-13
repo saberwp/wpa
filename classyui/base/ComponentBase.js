@@ -38,9 +38,16 @@ class ComponentBase {
 			this.el.id = this.id
 		}
 
+		console.log('DEBUG in make()')
+		console.log(this)
+
 		this.children.forEach((childComponent) => {
 			childComponent.build()
-		  this.el.appendChild(childComponent.get());
+			const childEl = childComponent.get()
+			if(childEl) {
+				this.el.appendChild(childComponent.get())
+			}
+
 		})
 
 	}

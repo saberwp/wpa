@@ -31,6 +31,10 @@ class Svg extends ComponentBase {
 				.then(svgData => {
 					this.loaded = true
 					const newEl = this.svgObjectify(svgData)
+
+					console.log('is newEl an el?')
+					console.log(newEl)
+
 					const result = this.el.replaceWith(newEl)
 					this.el = newEl
 					this.fadeIn()
