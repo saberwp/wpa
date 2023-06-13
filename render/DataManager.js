@@ -65,6 +65,32 @@ class DataManager {
 			.catch(error => console.error(error));
 	}
 
+	fetchSettingsByUser(modelKey) {
+
+		const apiUrl = app.apiUrl+app.def.key+'/'+modelKey+'/user/'+app.userId
+
+		fetch(apiUrl, { headers: {
+        'API-KEY': 'KR928NV81G01'
+    	}
+		})
+			.then(response => response.json())
+			.then(data => {
+
+				app.dm.setUserSettingsRecordStore(data.model_key, data.record)
+
+				// Dispatch custom event "app_data_loaded".
+			  const event = new CustomEvent('app_user_settings_loaded', {
+					detail: {
+						modelKey: data.model_key,
+						record: data.record
+					}
+				})
+			  document.dispatchEvent(event)
+
+			})
+			.catch(error => console.error(error));
+	}
+
 	// Automatically loads from current model data storage.
 	record(id) {
 		return app.data[app.data.currentModel].index[id]
@@ -87,6 +113,10 @@ class DataManager {
 		app.data[modelKey].record = records
 		const index = this.recordIndex(app.data[modelKey].record)
 		this.setModelIndexStore(modelKey, index)
+	}
+
+	setUserSettingsRecordStore(modelKey, record) {
+		app.data[modelKey].record = record
 	}
 
 	setModelIndexStore(modelKey, index) {

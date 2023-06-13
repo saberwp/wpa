@@ -19,7 +19,11 @@ class ComponentBase {
 		DividerH,
 		FormSelect,
 		FormElementInput,
-		FormButton
+		FormButton,
+		InputID,
+		SaveButton,
+		SaveForm,
+		Input
 	}
 	defaultClasses = []
 	classes = []
