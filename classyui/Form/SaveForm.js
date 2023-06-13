@@ -7,7 +7,7 @@ class SaveForm extends ComponentBase {
 		super()
 		this.elType = 'form'
 		this.setId('save-form')
-		this.defaultClasses = ['bg-red-100', 'p-4']
+		this.defaultClasses = ['bg-white/90', 'p-4']
 
 	}
 
@@ -34,13 +34,14 @@ class SaveForm extends ComponentBase {
 		const el = document.createElement('div')
 		this.modelDef.fields.forEach((field) => {
 
+			console.log(field)
+
 			/* Load field type from Field() class. */
 			const fieldClass = new Field()
 			const fieldType = fieldClass.loadFieldTypeClass(field.type, field)
 			if(fieldType) {
 				this.fieldInstances.push(fieldType)
 				const component = this.addChild(fieldType.componentType())
-				console.log(component)
 				fieldType.setComponent(component)
 				fieldType.componentConfigure()
 			} else {

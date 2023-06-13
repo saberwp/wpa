@@ -6,17 +6,22 @@ class SelectField {
 		this.fieldDef = fieldDef
 	}
 
-	make(field) {
-
-		// Init field create.
-		const el = document.createElement('select')
-		el.id = 'field-' + field.key
-		el.name = 'field-' + field.key
-		this.choicesStatic(el, field)
-		return el
+	componentType() {
+		return 'FormSelect'
 	}
 
-	init() {}
+	setComponent(component) {
+		this.component = component
+	}
+
+	componentConfigure(component) {
+
+		console.log('componentConfigure/SelectField.js:')
+		console.log(this.fieldDef)
+
+		this.component.setId('field-'+this.fieldDef.key)
+		this.component.setData(this.fieldDef.choices)
+	}
 
 	choicesStatic(el, field) {
 		field.choices.forEach((choice) => {
