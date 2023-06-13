@@ -1,7 +1,61 @@
 class ScreenSettings {
 
+	screenKey = ''
+
+	constructor(screenKey) {
+		this.screenKey = screenKey
+	}
+
 	render() {
 
+		// Set current model data.
+		app.data.currentModel = this.screenKey
+
+		// Fetch settings by user.
+		app.dm.fetchSettingsByUser(app.data.currentModel)
+
+		// Callback for data loaded.
+		this.dataLoadedCallback()
+
+		// Make UI.
+		this.ui()
+	}
+
+	dataLoadedCallback() {
+		document.addEventListener('app_user_settings_loaded', (event) => {
+
+			if(event.detail.modelKey === app.data.currentModel) {
+
+				// Isolate record data.
+				const record = event.detail.record
+
+				if(!record) { return }
+
+				// Update form ID field.
+				const idField = document.getElementById('field-id')
+				idField.value = record.id
+
+				// Update form fields.
+				app.def[app.data.currentModel].fields.forEach(( field ) => {
+
+					console.log('test field key:')
+					console.log(record[field.key])
+
+					// Avoid loading undefined record data which may occur after new fields set in definition.
+					// @todo create a better check that accounts for empty and other defined data that should skip render.
+					if(record[field.key] === 'undefined') {
+						const el = document.getElementById('field-'+field.key)
+						el.value = record[field.key]
+					}
+
+				})
+
+			}
+
+		});
+	}
+
+	ui() {
 		// AppShell.
 		const appShell = new AppShell()
 		appShell.addClass('overflow-hidden')
@@ -14,7 +68,6 @@ class ScreenSettings {
 
 		// Sidebar
 		const sidebar = wrapper.addChild('AppShellSidebar')
-		sidebar.addClass('bg-gray-300')
 
 		// AppBody
 		const appBody = wrapper.addChild('Flex')
@@ -29,13 +82,13 @@ class ScreenSettings {
 
 		// App Content
 		const appContent = appBody.addChild('Flex')
-		appContent.addClass('bg-green-100')
+		const saveForm = appContent.addChild('SaveForm')
+		saveForm.setModelDef(app.def.settings)
+		appContent.removeDefaultClass('items-center')
+		appContent.addClass('p-4')
 		appContent.addClass('w-full')
 		appContent.addClass('h-full')
-		//appContent.addClass('overflow-hidden')
 		appContent.addClass('overflow-x-auto')
-		const cText = appContent.addChild('Span')
-		cText.setText(' app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here app content text here')
 
 		// App Footer
 		this.footer(appBody)
@@ -45,6 +98,7 @@ class ScreenSettings {
 		document.body.classList.remove('bg-gray-800')
 		document.body.innerHTML = ''
 		appShell.build()
+
 		document.body.appendChild(appShell.get())
 	}
 

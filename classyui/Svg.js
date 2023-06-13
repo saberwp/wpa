@@ -11,6 +11,11 @@ class Svg extends ComponentBase {
 
 	make() {
 
+		if(!this.svgMarkup && !this.svgURL) {
+			this.el = document.createElement('div')
+			this.el.classList.add('animate-pulse', 'bg-gray-300', 'rounded', 'opacity-0', 'transition-opacity', 'duration-500', 'ease-in')
+		}
+
 		// Load SVG from existing markup.
 		if(this.svgMarkup) {
 			this.el = this.svgObjectify(this.svgMarkup)
@@ -53,8 +58,6 @@ class Svg extends ComponentBase {
 	}
 
 	async svgLoad(url) {
-		console.log('svgLoad:')
-		console.log(url)
 	  try {
 	    const response = await fetch(url);
 	    if (response.ok) {

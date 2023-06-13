@@ -2,34 +2,18 @@
 class Create {
 
 	init() {
-
-		// Bind the class instance to the click handler function
 		this.handleCreateClick = this.handleCreateClick.bind(this);
-
 		const createButton = document.getElementById('create-button')
-
-		// Remove then add to ensure only 1.
-		console.log('adding create click event')
 		createButton.removeEventListener('click', this.handleCreateClick);
 		createButton.addEventListener('click', this.handleCreateClick);
-
 	}
 
 	handleCreateClick(e) {
-
-		console.log('handleCreateClick in Create()')
-
 		const modal = new Modal()
 		const formContent = app.form.make(app.def[app.data.currentModel])
 		modal.setHeaderLabel('Create '+app.def[app.data.currentModel].title)
 		modal.setContent(formContent)
-
-		// Attach form submit handler.
-		app.form.submit(formContent)
-
 		modal.open()
-
-		// Run field init to enable fields to attach events.
 		app.form.init(app.def[app.data.currentModel])
 	}
 
@@ -69,22 +53,14 @@ class Create {
 			})
 			document.dispatchEvent(event)
 
-			record.id = recordId
-			app.data[model.key].record.unshift(record)
-			app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
+			if(app.data.currentModel.type === 'standard') {
+				this.doStandardModelAfterEdit()
+			}
 
-			// Show alert.
-			const alert = new Alert()
-			alert.bg = 'bg-green-800'
-			alert.setMessage('Record Created Successfully', 'Record ID '+recordId+' was created.')
-			alert.build()
-			alert.render()
+			if(app.data.currentModel.type === 'settings') {
+				this.doSettingsModelAfterEdit()
+			}
 
-			// Do table refresh.
-			app.table.refresh()
-
-			// Close modal.
-			app.modal.close()
 
 		})
 		.catch((error) => {
@@ -102,12 +78,27 @@ class Create {
 		el.classList.add('clickable', 'flex', 'gap-4', 'items-center')
 		el.classList.add('bg-white/20', 'my-2', 'py-2', 'px-6', 'shadow-sm', 'text-white', 'mb-6')
 		el.classList.add('hover:bg-white/30')
-
 		return el
 	}
 
-	buttonIcon() {
+	doStandardModelAfterEdit() {
 
+		// Local record store updates.
+		record.id = recordId
+		app.data[model.key].record.unshift(record)
+		app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
+
+		// Show alert.
+		const alert = new Alert()
+		alert.bg = 'bg-green-800'
+		alert.setMessage('Record Created Successfully', 'Record ID '+recordId+' was created.')
+		alert.build()
+		alert.render()
+
+		// Refresh table or list and close modal.
+		// @todo refactor to call the current view.
+		app.table.refresh()
+		app.modal.close()
 	}
 
 }

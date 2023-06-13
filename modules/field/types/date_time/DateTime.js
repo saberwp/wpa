@@ -9,6 +9,19 @@ class DateTime {
 		this.fieldDef = fieldDef
 	}
 
+	componentType() {
+		return 'TimePicker'
+	}
+
+	setComponent(component) {
+		this.component = component
+	}
+
+	componentConfigure(component) {
+		this.component.setId('field-'+this.fieldDef.key)
+		this.component.setPlaceholder(this.fieldDef.placeholder)
+	}
+
 	make() {
 		const el = document.createElement('div')
 		let content = ''

@@ -90,7 +90,7 @@ class Api {
 
 		$edit_data = array();
 
-		if(self::model_has_title($model)) {
+		if(Model::title_field_active($model)) {
 			$edit_data['title'] = $form_data['title'];
 		}
 
@@ -136,53 +136,6 @@ class Api {
 		return false;
 	}
 
-	public static function create_callback($request) {
-
-		// Get model key from API path.
-	  $route = $request->get_route();
-	  $route_parts = explode('/', $route);
-		$app_key = $route_parts[3];
-	  $model_key = $route_parts[4];
-
-		// Init the ApiCreate class.
-		$api_create = new ApiCreate();
-		$api_create->app_key = $app_key;
-		$api_create->model_key = $model_key;
-		$api_create->form_data = $request->get_json_params();
-		$api_create->table_name = self::make_table_name($app_key, $model_key);
-		$api_create->init();
-		$api_create->parse_form_data();
-		$api_create->db_insert();
-
-	  if ($api_create->insert_result === false) {
-	    // Handle insert error.
-	    $response = new \stdClass;
-	    $response->success = false;
-	    $response->message = 'Error processing insert request.';
-	  } else {
-	    // Handle insert success.
-	    $response = new \stdClass;
-	    $response->success = true;
-	    $response->message = 'Request processed successfully.';
-			$response->insert_id = $api_create->insert_id;
-			$response->model_key = $api_create->model_def->key;
-	  }
-
-		// If relations exist, do relations handling.
-		if( $api_create->relations_exist === 1 ) {
-			$api_relations = new ApiRelations;
-			$api_relations->app_key = $api_create->app_key;
-			$api_relations->model_def = $api_create->model_def;
-			$api_relations->record_id = $api_create->insert_id;
-			$api_relations->storage_path = $api_create->storage_path;
-			$api_relations->form_data = $api_create->form_data;
-			$response->relations = $api_relations->process();
-		}
-
-		return rest_ensure_response($response);
-
-	}
-
 	public function delete_callback($request) {
 
 		// Get model key from API path.
@@ -194,7 +147,7 @@ class Api {
 		// Get ID.
 		$id = $request->get_param('id');
 
-		// Do DB update.
+		// Do DB delete.
 		global $wpdb;
 		$table_name = $this->make_table_name($app_key, $model_key);
 
@@ -257,7 +210,7 @@ class Api {
 				// Create route.
 				register_rest_route('wp/v2', $route_base, array(
           'methods' => 'POST',
-          'callback' => ['\\WPA\Api', 'create_callback'],
+          'callback' => ['\\WPA\ApiCreate', 'create_callback'],
           'args' => array('id'),
           'permission_callback' => [$this, 'permission_callback'],
         ));
@@ -270,8 +223,10 @@ class Api {
           'permission_callback' => [$this, 'permission_callback'],
         ));
 
-				// Add special relation routes.
+				// Isolate current model def.
 				$model_def = $app->def->{$model_key};
+
+				// Add special relation routes.
 				if($model_def->type === 'relation') {
 
 					// Fetch left relation list route.
@@ -286,6 +241,19 @@ class Api {
 	        register_rest_route('wp/v2', $route_base . '/' . $model_def->relations->right->model . '/(?P<id>\d+)', array(
 	            'methods' => 'GET',
 	            'callback' => [$this, 'relation_fetch_callback'],
+							'args' => array('id'),
+	            'permission_callback' => [$this, 'permission_callback'],
+	        ));
+
+				}
+
+				// Add special settings routes.
+				if($model_def->type === 'settings') {
+
+					// Fetch settings for a given user.
+	        register_rest_route('wp/v2', $route_base . '/user/(?P<id>\d+)', array(
+	            'methods' => 'GET',
+	            'callback' => [$this, 'settings_by_user_fetch_callback'],
 							'args' => array('id'),
 	            'permission_callback' => [$this, 'permission_callback'],
 	        ));
@@ -333,6 +301,36 @@ class Api {
 
 	}
 
+	public function settings_by_user_fetch_callback($request) {
+
+		// Get model key from API path.
+		$route = $request->get_route();
+    $route_parts = explode('/', $route);
+		$app_key = $route_parts[3];
+    $model_key = $route_parts[4];
+		$relation_model_key = $route_parts[5];
+
+		// Get User ID.
+		$user_id = $request->get_param('id');
+
+		// Load data.
+		global $wpdb;
+		$table_name = $this->make_table_name( $app_key, $model_key );
+		$result = $wpdb->get_row(
+			"SELECT * FROM $table_name
+				WHERE author_user_id = $user_id
+				ORDER BY id DESC");
+
+		// Return the data as a JSON response.
+		$data = new \stdClass;
+		$data->message = "Fetch from settings_by_user_fetch_callback().";
+		$data->model_key = $model_key;
+		$data->record = $result;
+		$data->query = $wpdb->last_query;
+		return rest_ensure_response($data);
+
+	}
+
 	public function permission_callback() {
 
 			// Get key passed in request.
@@ -346,7 +344,7 @@ class Api {
 
 		}
 
-	private static function make_table_name( $app_key, $model_key ) {
+	public static function make_table_name( $app_key, $model_key ) {
 		global $wpdb;
 		return $wpdb->prefix . $app_key . '_' . $model_key;
 	}

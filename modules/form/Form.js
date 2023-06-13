@@ -8,41 +8,21 @@ class Form {
 
 	fieldInstances = []
 
-	/* @param modelDef the definition of the model to build the form for. */
+	/*
+	 * Maker Method
+	 * @example form.make(modelDef)
+	 * @param modelDef the definition of the model to build the form for.
+	 * @return DomElement type=form
+	 */
 	make(modelDef) {
 
-		const el = document.createElement('form')
-		el.setAttribute('model-key', modelDef.key)
-		el.id = 'save-form'
-		el.name = 'save-form'
+		console.log(modelDef.fields)
 
-		el.appendChild( this.fieldId() )
+		const saveForm = new SaveForm()
+		saveForm.setModelDef(modelDef)
+		saveForm.build()
+		return saveForm.get()
 
-		// Conditional display title field.
-		if(modelDef.title_field !== false) {
-			el.appendChild( this.fieldTitle() )
-		}
-
-		// Add fields to form.
-		modelDef.fields.forEach((field) => {
-
-			let fieldEl = ''
-
-			/* Load field type from Field() class. */
-			const fieldClass = new Field()
-			const fieldType = fieldClass.loadFieldTypeClass(field.type, field)
-			if(fieldType) {
-				this.fieldInstances.push(fieldType)
-				fieldEl = fieldType.make(field)
-				el.appendChild( fieldEl )
-			} else {
-				console.error('Could not load field.type '+field.type)
-			}
-
-		})
-
-		el.appendChild( this.saveButton() )
-		return el
 	}
 
 	init(modelDef) {
@@ -77,14 +57,6 @@ class Form {
 		el.id = 'field-title'
 		el.name = 'field-title'
 		el.placeholder = 'Record title...'
-		return el
-	}
-
-	saveButton() {
-		const el = document.createElement('input')
-		el.type = 'submit'
-		el.value = 'Save'
-		el.id = 'button-save'
 		return el
 	}
 

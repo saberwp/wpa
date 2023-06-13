@@ -12,10 +12,10 @@ class Menu {
 		app.def.models.forEach(( modelKey ) => {
 			const model = app.def[modelKey]
 			const appMenu = this.getAppMenu(model)
-			if( model.type === 'standard' && appMenu === 'primary' || model.type === 'settings' && appMenu === 'primary' ) {
+			if( appMenu === 'primary' ) {
 				navModels.primary.push(model)
 			}
-			if( model.type === 'standard' && appMenu === 'secondary' || model.type === 'settings' && appMenu === 'secondary' ) {
+			if( appMenu === 'secondary' ) {
 				navModels.secondary.push(model)
 			}
 		})
@@ -23,11 +23,14 @@ class Menu {
 	}
 
 	getAppMenu(model) {
-	  if (model && model.app_menu) {
+		// Type is set.
+	  if(model?.app_menu) {
 	    return model.app_menu;
-	  } else {
-	    return "primary";
 	  }
+		if(model?.type && model.type === 'standard') {
+	    return 'primary';
+	  }
+		return false;
 	}
 
 	setActive(el) {
@@ -39,7 +42,7 @@ class Menu {
 	}
 
 	findMenuItemByScreenKey(screenKey) {
-	  var parentUl = document.querySelector('#app-menu-main');
+	  var parentUl = document.querySelector('#app-menu-primary');
 	  var menuItems = parentUl.querySelectorAll('li');
 	  for (var i = 0; i < menuItems.length; i++) {
 	    var menuItem = menuItems[i];
