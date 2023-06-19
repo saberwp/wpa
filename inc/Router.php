@@ -91,7 +91,6 @@ class Router {
 		wp_enqueue_script('wpa-field-validator', WPA_URL . 'modules/field/FieldValidator.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-required-field', WPA_URL . 'modules/field/validators/required/RequiredField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-date-time-picker', WPA_URL . 'js/date-time-picker-component.min.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-default-app-shell', WPA_URL . 'render/views/app-shells/DefaultAppShell.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-route', WPA_URL . 'render/Route.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen', WPA_URL . 'render/Screen.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-collection-sorting', WPA_URL . 'render/views/collection/CollectionSorting.js', array(), '1.0', true);
