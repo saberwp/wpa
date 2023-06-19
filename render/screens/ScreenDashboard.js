@@ -4,10 +4,6 @@ class ScreenDashboard {
 
 	render() {
 
-
-
-		console.log('render dashboard')
-
 		let content = ''
 		content += '<div class="wpa-app-container flex flex-wrap gap-6">'
 		const body = document.getElementById('app-body')
@@ -55,16 +51,12 @@ class ScreenDashboard {
 		body.innerHTML = content
 
 		document.addEventListener('wpa_screen_change', (e) => {
-			console.log('caught wpa_screen_change...')
 			this.unload()
 		})
 	}
 
 	// This needs to be called when the screen changes.
 	unload() {
-		console.log('unload dashboard:')
-		console.log(this.report.chart)
-		console.log('destroying chart: ' +this.report.chart.id)
 		if(this?.report?.chart) {
 			this.report.chart.destroy()
 		}
