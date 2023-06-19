@@ -17,8 +17,11 @@ class DefaultAppShell {
 		el.appendChild( this.main() )
 
 		if(app.def.footer !== false) {
-			const footer = new Footer()
-			el.appendChild( footer.render() )
+			const footer = new AppShellFooter()
+			const iconLogo = footer.addChild('IconLogo')
+			iconLogo.setSvgMarkup(app.def.logo)
+			footer.build()
+			el.appendChild(footer.get())
 		}
 
 		const appContainer = document.getElementById('wpa-app')

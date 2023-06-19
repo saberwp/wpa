@@ -74,6 +74,7 @@ class Router {
 		wp_enqueue_script('wpa-classyui-form-select-option', WPA_URL . 'classyui/Form/FormSelectOption.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-app-shell', WPA_URL . 'classyui/AppShell/AppShell.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-app-shell-sidebar', WPA_URL . 'classyui/AppShell/AppShellSidebar.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-app-shell-footer', WPA_URL . 'classyui/AppShell/AppShellFooter.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-input-id', WPA_URL . 'classyui/Form/InputID.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-save-button', WPA_URL . 'classyui/Form/SaveButton.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-save-form', WPA_URL . 'classyui/Form/SaveForm.js', array(), '1.0', true);
@@ -90,8 +91,6 @@ class Router {
 		wp_enqueue_script('wpa-field-validator', WPA_URL . 'modules/field/FieldValidator.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-required-field', WPA_URL . 'modules/field/validators/required/RequiredField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-date-time-picker', WPA_URL . 'js/date-time-picker-component.min.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-logo', WPA_URL . 'render/components/Logo.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-footer', WPA_URL . 'render/components/Footer.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-default-app-shell', WPA_URL . 'render/views/app-shells/DefaultAppShell.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-route', WPA_URL . 'render/Route.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen', WPA_URL . 'render/Screen.js', array(), '1.0', true);
