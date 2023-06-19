@@ -11,10 +11,12 @@ class Router {
 
 	}
 
-
+	// Main routing handler.
 	// @TODO Add support for WP Admin routes.
-
 	public function routes( $template ) {
+
+		// Do not serve apps to logged out users.
+		if(!is_user_logged_in()) { return $template; }
 
 		$plugin = new Plugin;
 		$app_data  = $this->app_data();
@@ -23,7 +25,12 @@ class Router {
 		global $wp_query;
 
 		// Detect route in query vars.
-		if ( isset( $wp_query->query_vars['name'] ) && in_array( $wp_query->query_vars['name'], $app_paths ) ) {
+		if ( $this->require_scripts($wp_query->query_vars['name'], $app_paths) ) {
+
+			$app_selector_path_segment = $wp_query->query_vars['name'];
+			if($app_selector_path_segment === '') {
+				$app_selector_path_segment = '/';
+			}
 
 			add_action('wp_enqueue_scripts', [$this,'enqueue_scripts']);
 
@@ -33,11 +40,10 @@ class Router {
 
 			remove_action('wp_head', '_admin_bar_bump_cb');
 
-
 			// Set global to indicate the app key for the current app, because this is needed in the app template.
 			$app_map = $app_data['app_map'];
-			$GLOBALS['wpa_app_dir_name'] = $app_map->{$wp_query->query_vars['name']}['app_dir_name'];
-			$GLOBALS['wpa_app_key'] = $app_map->{$wp_query->query_vars['name']}['app_key'];
+			$GLOBALS['wpa_app_dir_name'] = $app_map->{$app_selector_path_segment}['app_dir_name'];
+			$GLOBALS['wpa_app_key'] = $app_map->{$app_selector_path_segment}['app_key'];
 
 			// Load template.
 			$template = WPA_PATH.'templates/app.php';
@@ -171,4 +177,15 @@ class Router {
 
 		return $app_data;
 	}
+
+	public function require_scripts($query_vars_name, $app_paths) {
+		if( isset( $query_vars_name ) && $query_vars_name === '' && in_array( '/', $app_paths ) ) {
+			return true;
+		}
+		if( isset( $query_vars_name ) && in_array( $query_vars_name, $app_paths ) ) {
+			return true;
+		}
+		return false;
+	}
+
 }
