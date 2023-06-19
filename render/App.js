@@ -39,8 +39,18 @@ class App {
 
 	load() {
 
+		// Init routing.
+		this.route = new Route
+		const route = this.route.get()
+		const screenKey = route[0]
 
-		// Load app shell.
+		const recordId = route[1] ? route[1] : false;
+		if(recordId) {
+			//this.route.renderSingle(screenKey, recordId)
+		} else {
+			//this.route.render(screenKey)
+		}
+
 		// AppShell.
 		const appShell = new AppShell()
 		appShell.addClass('overflow-hidden')
@@ -68,7 +78,7 @@ class App {
 		// App Content
 		const appContent = appBody.addChild('Flex')
 		const saveForm = appContent.addChild('SaveForm')
-		saveForm.setModelDef(app.def.settings)
+		saveForm.setModelDef(app.def[screenKey])
 		appContent.removeDefaultClass('items-center')
 		appContent.addClass('p-4')
 		appContent.addClass('w-full')
@@ -88,17 +98,6 @@ class App {
 		// Call menuClickInit function to initialize the menu clicks
 		if(app.def.sidebar !== false) {
 			this.menu.clickInit()
-		}
-
-		// Init routing.
-		this.route = new Route
-		const route = this.route.get()
-		const screenKey = route[0]
-		const recordId = route[1] ? route[1] : false;
-		if(recordId) {
-			this.route.renderSingle(screenKey, recordId)
-		} else {
-			this.route.render(screenKey)
 		}
 
 	}
@@ -166,7 +165,7 @@ class App {
 		const formButton = parent.addChild('FormButton')
 
 	}
-	
+
 	footer(parent) {
 		const appFooter = parent.addChild('Flex')
 		appFooter.addClass('hidden')

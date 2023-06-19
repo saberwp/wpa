@@ -16,7 +16,6 @@ class ScreenModel {
 		}
 
 		const body = document.getElementById('app-body')
-		body.innerHTML = ''
 		body.appendChild(app.create.button())
 
 		// Table make.

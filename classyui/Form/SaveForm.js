@@ -34,16 +34,20 @@ class SaveForm extends ComponentBase {
 		const el = document.createElement('div')
 		this.modelDef.fields.forEach((field) => {
 
-			console.log(field)
-
 			/* Load field type from Field() class. */
 			const fieldClass = new Field()
 			const fieldType = fieldClass.loadFieldTypeClass(field.type, field)
 			if(fieldType) {
 				this.fieldInstances.push(fieldType)
-				const component = this.addChild(fieldType.componentType())
-				fieldType.setComponent(component)
-				fieldType.componentConfigure()
+
+				console.log(fieldType)
+
+				if (typeof fieldType.componentType === 'function') {
+					const component = this.addChild(fieldType.componentType())
+					fieldType.setComponent(component)
+					fieldType.componentConfigure()
+				}
+
 			} else {
 				console.error('Could not load field.type '+field.type)
 			}
