@@ -103,6 +103,7 @@ class Router {
 		wp_enqueue_script('wpa-module-fields-types-user-select', WPA_URL . 'render/field/types/user_select/UserSelectField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/field/types/relation_select/RelationSelectField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/field/types/relation_select_multiple/RelationSelectMultipleField.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-screen-controller', WPA_URL . 'render/screens/ScreenController.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-docs', WPA_URL . 'render/screens/ScreenDocs.js', array(), '1.0', true);

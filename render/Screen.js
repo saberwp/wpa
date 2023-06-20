@@ -14,6 +14,8 @@ class Screen {
 		const route = new Route()
 		route.setScreenHash(screenKey)
 
+		console.log('screenKey at 17: ' +screenKey)
+
 		// Dashboard handler.
 		if(screenKey === 'dashboard') {
 			let screen = new ScreenDashboard()

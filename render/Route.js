@@ -2,6 +2,7 @@ class Route {
 
 	get() {
 		const route = this.parseHash()
+		console.log('route parseHash returned: '+route)
 		return route
 	}
 
