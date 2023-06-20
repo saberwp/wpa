@@ -1,6 +1,8 @@
-class ScreenModel {
+class ScreenModel extends ScreenController {
 
 	render(screenKey) {
+
+		this.appShell()
 
 		// Set current model data.
 		app.data.currentModel = screenKey
@@ -15,8 +17,14 @@ class ScreenModel {
 			return; // Return before any rendering and before the event hook into app_loaded_data.
 		}
 
-		const body = document.getElementById('app-body')
-		body.appendChild(app.create.button())
+		const body = document.getElementById('app-body-content')
+
+		// Add create button.
+		const createButton = new TextButton()
+		createButton.setId('create-button')
+		createButton.setContent('Create New')
+		createButton.build()
+		body.appendChild(createButton.get())
 
 		// Table make.
 		app.table = new CollectionTable('list-table', app.data.currentModel)
@@ -24,7 +32,6 @@ class ScreenModel {
 		body.appendChild(tableElement)
 
 		app.create.init()
-
 
 		// Delay making list until after custom event "app_data_loaded".
 		document.addEventListener('app_data_loaded', (event) => {
@@ -87,12 +94,6 @@ class ScreenModel {
 
 		// Run field init to enable fields to attach events.
 		app.form.init(app.def[app.data.currentModel])
-
-		// Delay making list until after custom event "app_data_loaded".
-		document.addEventListener('app_data_loaded', () => {
-
-
-		});
 
 	}
 

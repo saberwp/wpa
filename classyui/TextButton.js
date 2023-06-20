@@ -1,30 +1,21 @@
-class TextButton {
+class TextButton extends ComponentBase {
 
-	el = null
-	id = null
 	content = ''
 
-	make() {
-		let el = document.createElement('button')
+	constructor() {
+		super()
+		this.elType = 'button'
+		this.defaultClasses = ['bg-gray-700', 'rounded-md', 'px-4', 'py-2', 'hover:bg-gray-900', 'text-white', 'max-w-sm']
+	}
+
+	build() {
+		this.make()
 		if(this.id) {
-			el.id = this.id
+			this.el.id = this.id
 		}
-		el.classList.add('bg-red-500', 'rounded-md', 'px-4', 'py-2', 'hover:bg-red-600', 'text-white')
-		el.innerHTML += this.content
-		this.el = el
-	}
-
-
-	get() {
-		return this.el
-	}
-
-	markup() {
-		return this.el.outerHTML
-	}
-
-	setId(id) {
-		this.id = id
+		if(this.content) {
+			this.el.innerHTML = this.content
+		}
 	}
 
 	setContent(text) {

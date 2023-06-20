@@ -27,48 +27,6 @@ class ScreenDashboard extends ScreenController {
 
 	}
 
-	appShell() {
-
-		// AppShell.
-		const appShell = new AppShell()
-		appShell.addClass('overflow-hidden')
-
-		// App wrapper.
-		const wrapper = appShell.addChild('Flex')
-		wrapper.removeDefaultClass('gap-4')
-		wrapper.addClass('items-stretch')
-		wrapper.addClass('h-full')
-
-		// Sidebar
-		const sidebar = wrapper.addChild('AppShellSidebar')
-
-		// AppBody
-		const appBody = wrapper.addChild('Flex')
-		appBody.setId('app-body')
-		appBody.addClass('justify-between')
-		appBody.addClass('w-full')
-		appBody.addClass('flex-col')
-		appBody.removeDefaultClass('gap-4')
-
-		// App Header
-		this.header(appBody)
-
-		// App Content
-		const appContent = appBody.addChild('Flex')
-			// @TODO add reports here.
-
-		// App Footer
-		this.footer(appBody)
-
-		// Build app shell.
-		document.body.classList.remove('bg-gray-800')
-		document.body.innerHTML = ''
-		appShell.build()
-
-		document.body.appendChild(appShell.get())
-
-	}
-
 	makeReports() {
 		let content = ''
 
