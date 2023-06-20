@@ -43,6 +43,13 @@ class Create {
 		})
 		.then((responseJson) => {
 
+			console.log(responseJson)
+
+			if(!responseJson.success) {
+				console.error('Insert failed.')
+				return;
+			}
+
 			const recordId = responseJson.insert_id
 
 			const event = new CustomEvent('wpa_record_created', {
@@ -53,11 +60,14 @@ class Create {
 			})
 			document.dispatchEvent(event)
 
-			if(app.data.currentModel.type === 'standard') {
+			console.log(app.data.currentModel.type)
+
+			if(app.def[app.data.currentModel].type === 'standard') {
+				console.log('standard model response handling...')
 				this.doStandardModelAfterEdit()
 			}
 
-			if(app.data.currentModel.type === 'settings') {
+			if(app.def[app.data.currentModel].type === 'settings') {
 				this.doSettingsModelAfterEdit()
 			}
 

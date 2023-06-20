@@ -1,5 +1,7 @@
 class TimePicker extends ComponentBase {
 
+	name = ''
+
 	constructor() {
 		super()
 		this.elType = 'input'
@@ -7,6 +9,7 @@ class TimePicker extends ComponentBase {
 
 	build() {
 		this.make()
+		this.el.name = this.name
 		this.setCurrentTime()
 	}
 
@@ -22,6 +25,9 @@ class TimePicker extends ComponentBase {
 		this.el.value = currentTime;
 	}
 
+	setName(name) {
+		this.name = name
+	}
 	setPlaceholder() {}
 
 }

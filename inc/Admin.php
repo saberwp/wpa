@@ -283,7 +283,6 @@ class Admin {
 			// Stylesheets.
 			wp_enqueue_style( 'wpa-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'wpa-admin-tailwind', WPA_URL.'/dist/output.css', array(), '1.0.0', 'all' );
-			wp_enqueue_style( 'wpa-app-styles', WPA_URL.'/styles/app.css', array(), '1.0.0', 'all' );
 		}
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa') {

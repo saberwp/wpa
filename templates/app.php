@@ -32,9 +32,6 @@ if( $app->brand_styles ) {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="<?php echo WPA_URL; ?>dist/output.css">
-    <link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/app.css">
-		<link rel="stylesheet" href="<?php echo WPA_URL; ?>styles/date-time-picker-component.min.css">
-
 		<?php
 
 			// Render base URL for the API.

@@ -19,7 +19,7 @@ class DateTime {
 
 	componentConfigure(component) {
 		this.component.setId('field-'+this.fieldDef.key)
-		this.component.setPlaceholder(this.fieldDef.placeholder)
+		this.component.setName('field-'+this.fieldDef.key)
 	}
 
 	make() {
@@ -37,6 +37,25 @@ class DateTime {
 			this.fieldInit = true
 			console.log(dateTimePicker)
 		}
+	}
+
+	valueFilter(value) {
+		const dateTimeParts = value.split(' ');
+		const dateParts = dateTimeParts[0].split('-');
+		const timeParts = dateTimeParts[1].split(/:|(?=[AP]M)/);
+
+		let hour = parseInt(timeParts[0], 10);
+		const minute = timeParts[1];
+		const period = timeParts[2];
+
+		if (period === 'PM' && hour !== 12) {
+		  hour += 12;
+		} else if (period === 'AM' && hour === 12) {
+		  hour = 0;
+		}
+
+		const formattedDateTime = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]} ${String(hour).padStart(2, '0')}:${minute}:00`;
+		return formattedDateTime;
 	}
 
 }

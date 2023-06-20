@@ -63,8 +63,14 @@ class Form {
 	// For a drafted record, add the defined field values from the model.
 	// Form values passed in values param.
 	definedFieldValues(record, model, values) {
+		const fieldClass = new Field()
 		model.fields.forEach((field) => {
-			record[field.key] = values['field-'+field.key]
+			const fieldType = fieldClass.loadFieldTypeClass(field.type, field)
+			if(fieldType && typeof fieldType.valueFilter === 'function') {
+				record[field.key] = fieldType.valueFilter(values['field-'+field.key])
+			} else {
+				record[field.key] = values['field-'+field.key]
+			}
 		})
 		return record
 	}
