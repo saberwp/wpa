@@ -2,6 +2,8 @@ class IconLogo extends ComponentBase {
 
 	svgMarkup = false
 	svgURL = false
+	linkURL = '#'
+	fillClass = 'fill-white/50'
 
 	constructor() {
 		super()
@@ -16,8 +18,12 @@ class IconLogo extends ComponentBase {
 		if(this.svgURL) {
 			icon.svgURL = this.svgURL
 		}
+		if(this.fillClass !== 'fill-white/50') {
+			icon.removeDefaultClass('fill-white/50')
+			icon.addClass(this.fillClass)
+		}
 		this.make()
-		this.el.href = 'https://saberwp.com'
+		this.el.href = this.linkURL
 	}
 
 	setSvgMarkup(svgMarkup) {
@@ -26,6 +32,14 @@ class IconLogo extends ComponentBase {
 
 	setSvgURL(svgURL) {
 		this.svgURL = svgURL
+	}
+
+	setLinkURL(linkURL) {
+		this.linkURL = linkURL
+	}
+
+	setFillClass(fillClass) {
+		this.fillClass = fillClass
 	}
 
 }

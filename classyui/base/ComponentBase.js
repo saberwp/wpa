@@ -15,6 +15,8 @@ class ComponentBase {
 		FormSelectOption,
 		Flex,
 		AppShellSidebar,
+		AppShellHeader,
+		AppShellFooter,
 		NavDropdown,
 		DividerH,
 		FormSelect,

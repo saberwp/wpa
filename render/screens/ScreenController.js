@@ -37,7 +37,10 @@ class ScreenController {
 		appContent.removeDefaultClass('items-center')
 
 		// App Footer
-		this.footer(appBody)
+		const appFooter = appBody.addChild('AppShellFooter')
+		const iconLogo = appFooter.addChild('IconLogo')
+		iconLogo.setSvgMarkup(app.def.logo)
+		iconLogo.setFillClass('fill-gray-300')
 
 		// Build app shell.
 		document.body.classList.remove('bg-gray-800')
@@ -51,11 +54,10 @@ class ScreenController {
 	header(parent) {
 
 		// Header wrap.
-		const appHeader = parent.addChild('Flex')
-		appHeader.addClass('w-full')
-		appHeader.addClass('py-2')
+		const appHeader = parent.addChild('AppShellHeader')
 
-		this.headerForm(appHeader)
+		// Move to trax app.
+		//this.headerForm(appHeader)
 
 		// Notification icon.
 		const notifyIcon = appHeader.addChild('Svg')
@@ -110,20 +112,6 @@ class ScreenController {
 		// Make save button.
 		const formButton = parent.addChild('FormButton')
 
-	}
-
-	footer(parent) {
-		const appFooter = parent.addChild('Flex')
-		appFooter.addClass('hidden')
-		appFooter.addClass('sm:flex')
-		appFooter.addClass('w-full')
-		appFooter.addClass('justify-center')
-		appFooter.addClass('py-2')
-		appFooter.addClass('border-t-2')
-		appFooter.addClass('border-gray-500')
-		const icon = appFooter.addChild('Svg')
-		icon.setSvgMarkup(app.def.logo)
-		icon.addClass('fill-gray-800')
 	}
 
 }

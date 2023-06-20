@@ -74,6 +74,7 @@ class Router {
 		wp_enqueue_script('wpa-classyui-form-select-option', WPA_URL . 'classyui/Form/FormSelectOption.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-app-shell', WPA_URL . 'classyui/AppShell/AppShell.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-app-shell-sidebar', WPA_URL . 'classyui/AppShell/AppShellSidebar.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-app-shell-header', WPA_URL . 'classyui/AppShell/AppShellHeader.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-app-shell-footer', WPA_URL . 'classyui/AppShell/AppShellFooter.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-input-id', WPA_URL . 'classyui/Form/InputID.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-form-save-button', WPA_URL . 'classyui/Form/SaveButton.js', array(), '1.0', true);
