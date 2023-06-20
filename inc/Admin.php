@@ -248,37 +248,8 @@ class Admin {
 		global $pagenow;
 
 		if ($pagenow === 'admin.php' && isset($_GET['page']) && $_GET['page'] === 'wpa-keys') {
-			wp_enqueue_script('wpa-form-validator', WPA_URL . 'render/modules/form/FormValidator.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-form-field', WPA_URL . 'render/modules/form/Field.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-field-validator', WPA_URL . 'render/modules/form/fields/FieldValidator.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-required-field', WPA_URL . 'render/modules/form/validators/required/RequiredField.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-date-time-picker', WPA_URL . 'js/date-time-picker-component.min.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-logo', WPA_URL . 'render/components/Logo.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-footer', WPA_URL . 'render/components/Footer.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-default-app-shell', WPA_URL . 'render/views/app-shells/DefaultAppShell.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-route', WPA_URL . 'render/Route.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-screen', WPA_URL . 'render/Screen.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-collection-sorting', WPA_URL . 'render/views/collection/CollectionSorting.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-collection-table', WPA_URL . 'render/views/collection/CollectionTable.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-data-manager', WPA_URL . 'render/DataManager.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-text-area', WPA_URL . 'render/fields/TextArea.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-select', WPA_URL . 'render/fields/Select.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-module-fields-types-keygen', WPA_URL . 'modules/field/types/keygen/KeyGen.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-module-fields-types-date-time', WPA_URL . 'modules/field/types/date_time/DateTime.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-module-fields-types-text', WPA_URL . 'modules/field/types/text/TextField.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-module-fields-types-user-select', WPA_URL . 'modules/field/types/user_select/UserSelectField.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/fields/RelationSelectMultiple.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-screen-docs', WPA_URL . 'render/screens/ScreenDocs.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-form', WPA_URL . 'render/Form.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-edit', WPA_URL . 'render/Edit.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-create', WPA_URL . 'render/Create.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-delete', WPA_URL . 'render/Delete.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-list', WPA_URL . 'render/List.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-modal', WPA_URL . 'render/Modal.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-menu', WPA_URL . 'render/Menu.js', array(), '1.0', true);
-			wp_enqueue_script('wpa-app', WPA_URL . 'render/App.js', array(), '1.0', true);
+
+			// @TODO update enqueue scripts here.
 
 			// Stylesheets.
 			wp_enqueue_style( 'wpa-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), '1.0.0', 'all' );

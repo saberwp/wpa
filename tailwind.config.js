@@ -5,7 +5,6 @@ module.exports = {
 		"./classyui/**/*.{html,js}",
 		"./inc/**/*.php",
 		"./js/**/*.js",
-		"./modules/**/*.js",
 		"./templates/**/*.php",
 	],
   theme: {

@@ -176,7 +176,7 @@ class ScreenSettings {
 		appFooter.addClass('border-t-2')
 		appFooter.addClass('border-gray-500')
 		const icon = appFooter.addChild('Svg')
-		icon.setSvgURL('/wp-content/wpa/wpa_exercise_tracker/logo.svg')
+		icon.setSvgMarkup(app.def.logo)
 		icon.addClass('fill-gray-800')
 	}
 
