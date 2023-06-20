@@ -62,6 +62,7 @@ class App {
 
 		const data = {
 			'app_key': document.getElementById('wpa-app').getAttribute('app-key'),
+			'user_id': WPA_CurrentUserID,
 		};
 
 		// Send API request.
@@ -81,6 +82,7 @@ class App {
 		})
 		.then((responseJson) => {
 			app.def = responseJson.app_def
+			app.user = responseJson.user
 
 			// Send event wpa_app_def_loaded.
 			const event = new CustomEvent('wpa_app_def_loaded', {

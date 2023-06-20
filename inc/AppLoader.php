@@ -21,9 +21,17 @@ class AppLoader {
 
 	public function app_load_callback( $request ) {
 		$resp = new \stdClass;
+		$resp->user = false;
+
+
     $params = $request->get_json_params();
 
 		$this->log[] = 'App loader called.';
+
+		if ( isset( $params['user_id'] ) ) {
+			$user_id = $params['user_id'];
+			$resp->user = get_userdata($user_id);
+		}
 
     // Check if app_key parameter is set
     if ( isset( $params['app_key'] ) ) {

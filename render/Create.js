@@ -59,16 +59,14 @@ class Create {
 				}
 			})
 			document.dispatchEvent(event)
-
-			console.log(app.data.currentModel.type)
-
-			if(app.def[app.data.currentModel].type === 'standard') {
-				console.log('standard model response handling...')
-				this.doStandardModelAfterEdit()
+			const modelDef = app.def[app.data.currentModel]
+			record.id = recordId
+			if(modelDef.type === 'standard') {
+				this.doStandardModelAfterEdit(modelDef, record)
 			}
 
-			if(app.def[app.data.currentModel].type === 'settings') {
-				this.doSettingsModelAfterEdit()
+			if(modelDef.type === 'settings') {
+				this.doSettingsModelAfterEdit(recordId)
 			}
 
 
@@ -78,17 +76,16 @@ class Create {
 		});
 	}
 
-	doStandardModelAfterEdit() {
+	doStandardModelAfterEdit(modelDef, record) {
 
 		// Local record store updates.
-		record.id = recordId
-		app.data[model.key].record.unshift(record)
-		app.data[model.key].index = app.dm.recordIndex( app.data[model.key].record )
+		app.data[modelDef.key].record.unshift(record)
+		app.data[modelDef.key].index = app.dm.recordIndex( app.data[modelDef.key].record )
 
 		// Show alert.
 		const alert = new Alert()
 		alert.bg = 'bg-green-800'
-		alert.setMessage('Record Created Successfully', 'Record ID '+recordId+' was created.')
+		alert.setMessage('Record Created Successfully', 'Record ID '+record.id+' was created.')
 		alert.build()
 		alert.render()
 

@@ -69,7 +69,8 @@ class ScreenController {
 		const divider = appHeader.addChild('DividerH')
 		divider.addClass('h-8')
 		appHeader.addChild('Avatar')
-		appHeader.addChild('NavDropdown')
+		const userMenu = appHeader.addChild('NavDropdown')
+		userMenu.setLabel(app.user.data.display_name)
 
 	}
 
