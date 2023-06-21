@@ -114,7 +114,6 @@ class Router {
 		wp_enqueue_script('wpa-edit', WPA_URL . 'render/Edit.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-create', WPA_URL . 'render/Create.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-delete', WPA_URL . 'render/Delete.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-list', WPA_URL . 'render/List.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-modal', WPA_URL . 'render/Modal.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-menu', WPA_URL . 'render/Menu.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-app', WPA_URL . 'render/App.js', array(), '1.0', true);

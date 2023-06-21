@@ -6,7 +6,6 @@ class App {
 
 		// Add feature controllers to app.
 		this.form   = new Form();
-		this.list   = new List()
 		this.edit   = new Edit()
 		this.create = new Create()
 		this.delete = new Delete()

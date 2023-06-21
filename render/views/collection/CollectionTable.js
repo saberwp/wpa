@@ -195,10 +195,34 @@ class CollectionTable {
 			}
 		})
 
+		/* Add control column. */
+		const controlCol = document.createElement('td')
+		controlCol.classList.add(
+		  'px-3',
+		  'py-4',
+		  'text-sm',
+		  'text-gray-300'
+		)
+		el.appendChild(controlCol)
+
+		/* Edit button. */
 		if(this.provideEditOperation()) {
-			el.appendChild(this.makeEditButton(item))
+			const editButton = new TextButton()
+			editButton.setContent('EDIT')
+			editButton.addClass('edit-button')
+			editButton.addClass('mr-3')
+			editButton.build()
+			editButton.el.setAttribute('object-id', item.id)
+			controlCol.appendChild(editButton.get())
 		}
-		el.appendChild( this.makeDeleteButton(item) )
+
+		/* Delete button. */
+		const deleteButton = new TextButton()
+		deleteButton.setContent('DELETE')
+		deleteButton.addClass('delete-button')
+		deleteButton.build()
+		deleteButton.el.setAttribute('object-id', item.id)
+		controlCol.appendChild(deleteButton.get())
 
 		return el
 	}
