@@ -39,6 +39,7 @@ class ScreenController {
 		appContent.id = 'app-body-content'
 		appContent.addClass('flex-col')
 		appContent.addClass('flex-grow')
+		appContent.addClass('overflow-hidden')
 		appContent.addClass('p-2')
 		appContent.removeDefaultClass('items-center')
 

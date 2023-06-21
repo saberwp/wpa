@@ -36,13 +36,16 @@ class CollectionTable {
 	}
 
 	make() {
+		const wrapEl = document.createElement('div')
+		wrapEl.classList.add('flex-grow', 'overflow-y-auto', 'bg-gray-600', 'p-2', 'rounded', 'box-border')
 		const el = document.createElement('table')
 		el.id = this.id
-		el.classList.add('min-w-full', 'divide-y', 'divide-gray-700', 'bg-gray-600')
+		el.classList.add('table-fixed', 'w-full', 'divide-y', 'divide-gray-700', 'bg-gray-600')
 		el.appendChild(this.header())
 		el.appendChild(this.tbody())
 		el.appendChild(this.footer())
-		return el
+		wrapEl.appendChild(el)
+		return wrapEl
 	}
 
 	renderId() {
