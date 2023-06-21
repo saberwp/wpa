@@ -1,8 +1,10 @@
 /* Base class for screens. */
 class ScreenController {
 
-	constructor() {
-		
+	screenKey = ''
+
+	constructor(screenKey) {
+		this.screenKey = screenKey
 	}
 
 	appShell() {

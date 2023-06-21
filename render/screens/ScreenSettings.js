@@ -1,10 +1,7 @@
 class ScreenSettings extends ScreenController {
 
-	screenKey = ''
-
 	constructor(screenKey) {
-		super()
-		this.screenKey = screenKey
+		super(screenKey)
 	}
 
 	render() {

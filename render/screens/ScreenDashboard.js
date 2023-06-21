@@ -1,10 +1,9 @@
 class ScreenDashboard extends ScreenController {
 
-	screenKey = 'dashboard'
 	reports = []
 
 	constructor() {
-		super()
+		super('dashboard')
 	}
 
 	render() {

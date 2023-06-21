@@ -109,6 +109,7 @@ class Router {
 		wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-docs', WPA_URL . 'render/screens/ScreenDocs.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-settings', WPA_URL . 'render/screens/ScreenSettings.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-screen-account', WPA_URL . 'render/screens/ScreenAccount.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-report', WPA_URL . 'render/Report.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-form', WPA_URL . 'render/form/Form.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-edit', WPA_URL . 'render/Edit.js', array(), '1.0', true);

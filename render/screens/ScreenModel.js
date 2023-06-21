@@ -1,5 +1,9 @@
 class ScreenModel extends ScreenController {
 
+	constructor(screenKey) {
+		super(screenKey)
+	}
+
 	render(screenKey) {
 
 		this.appShell()

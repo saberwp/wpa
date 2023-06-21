@@ -38,6 +38,14 @@ class Screen {
 			return
 		}
 
+		// Account handler.
+		if(screenKey === 'account') {
+			let screen = new ScreenAccount(screenKey)
+			screen.render()
+			this.sendScreenChangeCompleteEvent()
+			return
+		}
+
 		// Model handler.
 		let screen = new ScreenModel()
 		screen.render(screenKey)

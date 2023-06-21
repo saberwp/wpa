@@ -1,11 +1,14 @@
 class ScreenDocs extends ScreenController {
 
 	constructor() {
-		super()
+		super('docs')
 	}
 
 	render() {
-		const body = document.getElementById('app-body')
+
+		this.appShell()
+
+		const body = document.getElementById('app-body-content')
 		let content = ''
 		content += this.userDocs()
 		app.def.models.forEach((modelKey) => {
