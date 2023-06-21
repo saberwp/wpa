@@ -9,6 +9,9 @@ class Screen {
 
 	render(screenKey) {
 
+		// Set current model data.
+		app.data.screenKey = screenKey
+
 		this.sendScreenChangeEvent()
 
 		const route = new Route()

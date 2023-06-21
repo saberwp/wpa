@@ -43,6 +43,8 @@ class App {
 		const route = this.route.get()
 		const screenKey = route[0]
 
+		this.screenChangeCompleteRoutine()
+
 		const recordId = route[1] ? route[1] : false;
 		if(recordId) {
 			//this.route.renderSingle(screenKey, recordId)
@@ -51,12 +53,28 @@ class App {
 		}
 
 		// Call menu.clickInit() function to initialize the menu clicks
-		// Attach menu.clickInit() to the wpa_screen_change event.
 		this.menu.clickInit()
-		document.addEventListener('wpa_screen_change_complete', (e) => {
-			this.menu.clickInit()
-		})
 
+	}
+
+	screenChangeCompleteRoutine() {
+		// Screen change complete routine.
+		document.addEventListener('wpa_screen_change_complete', (e) => {
+
+			console.log('caught screen change complete...')
+			console.log(app.data.screenKey)
+
+			// Menu click events.
+			this.menu.clickInit()
+
+			// Menu set active item.
+			if(app.def.sidebar !== false) {
+				const activeMenuEl = app.menu.findMenuItemByScreenKey(app.data.screenKey)
+				if(activeMenuEl) {
+					app.menu.setActive(activeMenuEl);
+				}
+			}
+		})
 	}
 
 	fetchAppDef() {

@@ -8,9 +8,6 @@ class ScreenAccount extends ScreenController {
 
 		this.appShell()
 
-		// Set current model data.
-		app.data.currentModel = this.screenKey
-
 	}
 
 }

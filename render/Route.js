@@ -2,7 +2,6 @@ class Route {
 
 	get() {
 		const route = this.parseHash()
-		console.log('route parseHash returned: '+route)
 		return route
 	}
 
@@ -31,19 +30,11 @@ class Route {
 	render(screenKey) {
 		const screen = new Screen()
 		screen.render(screenKey)
-
-		if(app.def.sidebar !== false) {
-			const activeMenuEl = app.menu.findMenuItemByScreenKey(screenKey)
-			app.menu.setActive(activeMenuEl)
-		}
-
 	}
 
 	renderSingle(screenKey, recordId) {
 		const screen = new Screen()
 		screen.renderSingle(screenKey, recordId)
-		const activeMenuEl = app.menu.findMenuItemByScreenKey(screenKey)
-		app.menu.setActive(activeMenuEl)
 	}
 
 }

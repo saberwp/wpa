@@ -1,9 +1,5 @@
 class Menu {
 
-	setType(type) {
-		this.type = type
-	}
-
 	processModels() {
 		const navModels = {
 			primary: [],
@@ -22,6 +18,7 @@ class Menu {
 		return navModels
 	}
 
+	/* For a given model, determine the app_menu setting (which determines if it is a primary or secondary menu item). */
 	getAppMenu(model) {
 		// Type is set.
 	  if(model?.app_menu) {
@@ -34,20 +31,29 @@ class Menu {
 	}
 
 	setActive(el) {
+
+		console.log('setActive() called with el:')
+		console.log(el)
+
 		const activeItems = document.querySelectorAll('.menu-item-active');
 		activeItems.forEach(function(item) {
 		  item.classList.remove('menu-item-active');
+			item.classList.remove('bg-green-900');
+			item.classList.remove('text-white');
+			item.classList.remove('rounded-md')
+			item.classList.remove('px-2')
+			item.classList.remove('py-0.5')
 		});
 		el.classList.add('menu-item-active')
+		el.classList.add('bg-green-900', 'text-white', 'rounded-md', 'px-2', 'py-0.5')
 	}
 
 	findMenuItemByScreenKey(screenKey) {
-	  var parentUl = document.querySelector('#app-menu-primary');
-	  var menuItems = parentUl.querySelectorAll('li');
-	  for (var i = 0; i < menuItems.length; i++) {
-	    var menuItem = menuItems[i];
-	    if (menuItem.getAttribute('screen') === screenKey) {
-	      return menuItem;
+	  const liElements = document.getElementsByClassName('wpa-app-menu-item');
+	  for (let i = 0; i < liElements.length; i++) {
+	    const liElement = liElements[i];
+	    if (liElement.getAttribute('screen') === screenKey) {
+	      return liElement;
 	    }
 	  }
 	  return null;
@@ -65,16 +71,12 @@ class Menu {
 
 	clickHandler(e) {
 		let target = ''
-		console.log(e)
 		if (e.target.tagName === 'LI') {
 	    target = e.target
 	  } else {
 	    target = e.currentTarget
 	  }
-		console.log(target)
 		const screenKey = target.getAttribute('screen')
-		const menu = new Menu()
-		menu.setActive(e.target)
 		const screen = new Screen()
 		screen.render(screenKey)
 	}
