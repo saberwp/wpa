@@ -1,6 +1,10 @@
 /* Base class for screens. */
 class ScreenController {
 
+	constructor() {
+		
+	}
+
 	appShell() {
 
 		// AppShell.

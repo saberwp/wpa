@@ -50,10 +50,12 @@ class App {
 			this.route.render(screenKey)
 		}
 
-		// Call menuClickInit function to initialize the menu clicks
-		if(app.def.sidebar !== false) {
+		// Call menu.clickInit() function to initialize the menu clicks
+		// Attach menu.clickInit() to the wpa_screen_change event.
+		this.menu.clickInit()
+		document.addEventListener('wpa_screen_change_complete', (e) => {
 			this.menu.clickInit()
-		}
+		})
 
 	}
 

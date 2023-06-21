@@ -93,7 +93,7 @@ class Router {
 		wp_enqueue_script('wpa-required-field', WPA_URL . 'render/field/validators/required/RequiredField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-date-time-picker', WPA_URL . 'js/date-time-picker-component.min.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-route', WPA_URL . 'render/Route.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-screen', WPA_URL . 'render/Screen.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-screen', WPA_URL . 'render/Screens/Screen.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-collection-table', WPA_URL . 'render/views/collection/CollectionTable.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-data-manager', WPA_URL . 'render/DataManager.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-text-area', WPA_URL . 'render/field/types/textarea/TextareaField.js', array(), '1.0', true);

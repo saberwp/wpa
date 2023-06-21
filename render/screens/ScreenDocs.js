@@ -1,4 +1,8 @@
-class ScreenDocs {
+class ScreenDocs extends ScreenController {
+
+	constructor() {
+		super()
+	}
 
 	render() {
 		const body = document.getElementById('app-body')

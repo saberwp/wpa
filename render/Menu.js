@@ -58,6 +58,7 @@ class Menu {
 
 	  for (let i = 0; i < liElements.length; i++) {
 	    const liElement = liElements[i];
+			liElement.removeEventListener('click', this.clickHandler)
 	    liElement.addEventListener('click', this.clickHandler.bind(this));
 	  }
 	}
