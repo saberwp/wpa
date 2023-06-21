@@ -6,11 +6,13 @@ class ComponentBase {
 	classes = []
 	children = []
 	classMap = {
+		Div,
 	  Svg,
 	  Anchor,
 		Avatar,
 		NavH,
 		IconLogo,
+		IconButton,
 		Span,
 		FormSelectOption,
 		Flex,
@@ -24,6 +26,7 @@ class ComponentBase {
 		FormButton,
 		InputID,
 		SaveButton,
+		TextButton,
 		SaveForm,
 		Input,
 		TimePicker
@@ -80,6 +83,11 @@ class ComponentBase {
 
 	addClass(className) {
 		this.classes.push(className)
+	}
+
+	// Set entire class array.
+	setClasses(classes) {
+		this.classes = classes
 	}
 
 	removeDefaultClass(className) {
