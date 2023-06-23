@@ -19,7 +19,7 @@ class Screen {
 
 		// Dashboard handler.
 		if(screenKey === 'dashboard') {
-			let screen = new ScreenDashboard()
+			let screen = new DashboardScreen()
 			screen.render(screenKey)
 			this.sendScreenChangeCompleteEvent()
 			return
@@ -57,13 +57,11 @@ class Screen {
 	}
 
 	sendScreenChangeEvent() {
-		// Send event wpa_app_def_loaded.
 		const event = new CustomEvent('wpa_screen_change')
 		document.dispatchEvent(event)
 	}
 
 	sendScreenChangeCompleteEvent() {
-		// Send event wpa_app_def_loaded.
 		const event = new CustomEvent('wpa_screen_change_complete')
 		document.dispatchEvent(event)
 	}

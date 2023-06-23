@@ -58,6 +58,7 @@ class Router {
 		$this->deregister_registered_stylesheets();
 		wp_enqueue_script('wpa-classyui-component-base', WPA_URL . 'classyui/base/ComponentBase.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-div', WPA_URL . 'classyui/Div.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-classyui-grid', WPA_URL . 'classyui/Grid.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-icon-svg', WPA_URL . 'classyui/Svg.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-icon-logo', WPA_URL . 'classyui/IconLogo.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-classyui-anchor', WPA_URL . 'classyui/Anchor.js', array(), '1.0', true);
@@ -107,7 +108,13 @@ class Router {
 		wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/field/types/relation_select/RelationSelectField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-relation-select-multiple', WPA_URL . 'render/field/types/relation_select_multiple/RelationSelectMultipleField.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-controller', WPA_URL . 'render/screens/ScreenController.js', array(), '1.0', true);
-		wp_enqueue_script('wpa-screen-dashboard', WPA_URL . 'render/screens/ScreenDashboard.js', array(), '1.0', true);
+
+		/* Dashboard Module */
+		wp_enqueue_script('wpa-dashboard-widget', WPA_URL . 'render/dashboard/widgets/DashboardWidget.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-dashboard-section', WPA_URL . 'render/dashboard/sections/DashboardSection.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-dashboard-full-width-section', WPA_URL . 'render/dashboard/sections/FullWidthDashboardSection.js', array(), '1.0', true);
+		wp_enqueue_script('wpa-dashboard-screen', WPA_URL . 'render/dashboard/DashboardScreen.js', array(), '1.0', true);
+
 		wp_enqueue_script('wpa-screen-model', WPA_URL . 'render/screens/ScreenModel.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-docs', WPA_URL . 'render/screens/ScreenDocs.js', array(), '1.0', true);
 		wp_enqueue_script('wpa-screen-settings', WPA_URL . 'render/screens/ScreenSettings.js', array(), '1.0', true);
