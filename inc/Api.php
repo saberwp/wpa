@@ -34,30 +34,42 @@ class Api {
 	// @param $limit
 	public function list_callback($request) {
 
-		// Get model key from API path.
-		$route = $request->get_route();
+    // Get model key from API path.
+    $route = $request->get_route();
     $route_parts = explode('/', $route);
-		$app_key = $route_parts[3];
+    $app_key = $route_parts[3];
     $model_key = $route_parts[4];
 
-		// Load data.
-		global $wpdb;
-		$table_name = $this->make_table_name( $app_key, $model_key );
-		$results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC LIMIT 100");
+    // Get user_id from query parameters.
+    $user_id = $request->get_param('user_id');
+
+    // Load data.
+    global $wpdb;
+    $table_name = $this->make_table_name($app_key, $model_key);
+
+    if ($user_id) {
+        // If user_id is provided, use it in the query.
+        $sql = $wpdb->prepare("SELECT * FROM $table_name WHERE author_user_id = %d ORDER BY id DESC LIMIT 100", $user_id);
+    } else {
+        // Otherwise, get all records.
+        $sql = "SELECT * FROM $table_name ORDER BY id DESC LIMIT 100";
+    }
+
+    $results = $wpdb->get_results($sql);
 
     $records = array();
     foreach ($results as $result) {
-	    $records[] = $result;
+        $records[] = $result;
     }
 
-		// Return the data as a JSON response.
-		$data = new \stdClass;
-		$data->message = "Records loaded from $table_name.";
-		$data->model_key = $model_key;
-		$data->records = $records;
-		return rest_ensure_response($data);
-
+    // Return the data as a JSON response.
+    $data = new \stdClass;
+    $data->message = "Records loaded from $table_name.";
+    $data->model_key = $model_key;
+    $data->records = $records;
+    return rest_ensure_response($data);
 	}
+
 
 	public static function edit_callback($request) {
 

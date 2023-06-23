@@ -14,7 +14,7 @@ class DataManager {
 
 	fetch(modelKey) {
 
-		const apiUrl = app.apiUrl+app.def.key+'/'+modelKey
+		const apiUrl = `${app.apiUrl}${app.def.key}/${modelKey}?user_id=${app.user.ID}`;
 
 		fetch(apiUrl, { headers: {
         'API-KEY': 'KR928NV81G01'
