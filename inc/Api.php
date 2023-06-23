@@ -43,16 +43,24 @@ class Api {
     // Get user_id from query parameters.
     $user_id = $request->get_param('user_id');
 
+		// Get timestamp field and date range from query parameters.
+		$timestampField = $request->get_param('timestampField');
+		$startDate = $request->get_param('startDate');
+		$endDate = $request->get_param('endDate');
+
     // Load data.
     global $wpdb;
     $table_name = $this->make_table_name($app_key, $model_key);
 
-    if ($user_id) {
-        // If user_id is provided, use it in the query.
-        $sql = $wpdb->prepare("SELECT * FROM $table_name WHERE author_user_id = %d ORDER BY id DESC LIMIT 100", $user_id);
-    } else {
-        // Otherwise, get all records.
-        $sql = "SELECT * FROM $table_name ORDER BY id DESC LIMIT 100";
+		if ($user_id && $timestampField && $startDate && $endDate) {
+	    $sql = $wpdb->prepare(
+	      "SELECT * FROM $table_name WHERE author_user_id = %d AND $timestampField BETWEEN %s AND %s ORDER BY id DESC LIMIT 100",
+				$user_id,
+				$startDate,
+	      $endDate
+	    );
+		} else {
+      $sql = "SELECT * FROM $table_name ORDER BY id DESC LIMIT 100";
     }
 
     $results = $wpdb->get_results($sql);

@@ -38,6 +38,35 @@ class DataManager {
 			.catch(error => console.error(error));
 	}
 
+	fetchReportRange(modelKey, timestampField, startDate, endDate) {
+
+		let apiUrl = `${app.apiUrl}${app.def.key}/${modelKey}?user_id=${app.user.ID}`;
+
+    // Add timestamp field and date range to the URL if provided.
+    if (timestampField && startDate && endDate) {
+      apiUrl += `&timestampField=${timestampField}&startDate=${startDate}&endDate=${endDate}`;
+    }
+
+		fetch(apiUrl, { headers: {
+        'API-KEY': 'KR928NV81G01'
+    	}
+		})
+			.then(response => response.json())
+			.then(data => {
+
+				// Dispatch custom event "app_data_loaded_report".
+			  const event = new CustomEvent('app_data_loaded_report', {
+					detail: {
+						modelKey: data.model_key,
+						records: data.records
+					}
+				})
+			  document.dispatchEvent(event)
+
+			})
+			.catch(error => console.error(error));
+	}
+
 	fetchRelation(recordModelKey, recordId, relation) {
 
 		const relationModelKey = relation.model

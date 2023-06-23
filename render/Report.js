@@ -16,6 +16,8 @@ class Report {
 
 		if(!this.chart) {
 			this.chartInit()
+		} else {
+			this.updateChartData()
 		}
 
 		const reportContainerEl = document.getElementById('wpa-report-'+this.def.key)
@@ -26,10 +28,31 @@ class Report {
 
 	make() {
 
-		document.removeEventListener('app_data_loaded', this.appDataLoadedCallback)
-		document.addEventListener('app_data_loaded', this.appDataLoadedCallback.bind(this))
+		document.removeEventListener('app_data_loaded_report', this.appDataLoadedCallback)
+		document.addEventListener('app_data_loaded_report', this.appDataLoadedCallback.bind(this))
 
-		app.dm.fetch(this.def.dataModelKey)
+		// Get the current date and time.
+		const endDate = new Date();
+
+		// Get the start of the previous calendar day.
+		const startDate = new Date();
+		startDate.setDate(startDate.getDate() - 1); // Subtract one day
+		startDate.setHours(0, 0, 0, 0); // Set the time to 00:00:00
+
+		// Format dates in 'YYYY-MM-DD HH:mm:ss' format.
+		const formatDate = (date) => {
+		    const year = date.getFullYear();
+		    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed.
+		    const day = String(date.getDate()).padStart(2, '0');
+		    const hours = String(date.getHours()).padStart(2, '0');
+		    const minutes = String(date.getMinutes()).padStart(2, '0');
+		    const seconds = String(date.getSeconds()).padStart(2, '0');
+		    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+		};
+
+		const formattedStartDate = formatDate(startDate);
+		const formattedEndDate = formatDate(endDate);
+		app.dm.fetchReportRange(this.def.dataModelKey, 'timestamp', formattedStartDate, formattedEndDate)
 
 		let content = ''
 		content += '<section id="wpa-report-'+this.def.key+'">'
@@ -171,5 +194,17 @@ class Report {
 
 	  return { data, labels };
 	}
+
+	updateChartData() {
+    // Retrieve the new data
+    const grouped = this.groupRecordsByDay();
+
+    // Update the chart's data
+    this.chart.data.labels = grouped.labels;
+    this.chart.data.datasets[0].data = grouped.data;
+
+    // Refresh the chart
+    this.chart.update();
+  }
 
 }
